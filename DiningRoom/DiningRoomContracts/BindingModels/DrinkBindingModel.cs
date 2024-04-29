@@ -12,7 +12,7 @@ namespace DiningRoomContracts.BindingModels
 
 		public double Cost { get; set; }
 
-		public Dictionary<int, (IComponentModel, int)> ProductComponents { get; set; } = new();
+		public Dictionary<int, (IComponentModel, int)> DrinkComponents { get; set; } = new();
 
 	}
 }
