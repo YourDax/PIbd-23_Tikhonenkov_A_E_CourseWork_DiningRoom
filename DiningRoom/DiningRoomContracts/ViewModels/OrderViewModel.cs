@@ -13,15 +13,16 @@ namespace DiningRoomContracts.ViewModels
 	{
 		[DisplayName("Номер")]
 		public int Id { get; set; }
-		
+		public int ProductId { get; set; }
 		public int UserId { get; set; }
 		[DisplayName("Дата Создания")]
 		public DateTime DateCreate { get; set; } = DateTime.Now;
-        public Dictionary<int, (IProductModel, int)> ProductOrder { get; set; } = new();
-        public Dictionary<int, (IDrinkModel, int)> DrinkOrder { get; set; } = new(); 
-		[DisplayName("Статус")]
+        [DisplayName("Блюдо")]
+        public string ProductName { get; set; } = string.Empty;
+        [DisplayName("Статус")]
 		public OrderStatus Status { get; set; } = OrderStatus.Неизвестен;
-
+        [DisplayName("Стоимость")]
+        public int Count { get; set; }
 		[DisplayName("Стоимость")]
 		public double Sum { get; set; }
 

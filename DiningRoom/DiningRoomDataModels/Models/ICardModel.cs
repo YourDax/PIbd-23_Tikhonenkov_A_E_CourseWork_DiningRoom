@@ -11,13 +11,8 @@
 		int UserId { get; }
 
 		/// <summary>
-		/// Название напитка
+		/// Название карты
 		/// </summary>
 		string CardName { get; }
-
-		/// <summary>
-		/// Список комплектующих
-		/// </summary>
-		Dictionary<int, (IDrinkModel, int)> DrinkCard { get; }
 	}
 }

@@ -19,6 +19,7 @@
 		/// Стоимость товара
 		/// </summary>
 		double Cost { get; }
+		int CardId { get; }
 
 		/// <summary>
 		/// Список комплектующих

@@ -15,10 +15,9 @@ namespace DiningRoomContracts.SearchModels
 
 		public DateTime? DateFrom { get; set; }
 		public DateTime? DateTo { get; set; }
+		public string? ProductName { get; set; }
 
 		public OrderStatus? Status { get; set; }
-        public Dictionary<int, (IProductModel, int)> ProductOrder { get; set; } = new();
-        public Dictionary<int, (IDrinkModel, int)> DrinkOrder { get; set; } = new();
 
         public double? Sum { get; set; }
 	}

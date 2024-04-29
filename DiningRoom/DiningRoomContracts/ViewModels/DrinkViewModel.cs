@@ -8,8 +8,10 @@ namespace DiningRoomContracts.ViewModels
 		public int Id { get; set; }
 
 		public int UserId { get; set; }
+		public int CardId {  get; set; }
+        public string CardName { get; set; } = string.Empty;
 
-		[DisplayName("Название товара")]
+        [DisplayName("Название товара")]
 		public string DrinkName { get; set; } = string.Empty;
 
 		[DisplayName("Стоимость")]

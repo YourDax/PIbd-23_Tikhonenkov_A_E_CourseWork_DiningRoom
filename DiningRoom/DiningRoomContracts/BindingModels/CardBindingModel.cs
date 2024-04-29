@@ -15,7 +15,5 @@ namespace DiningRoomContracts.BindingModels
 		public int UserId { get; set; }
 
         public string CardName { get; set; } = string.Empty;
-        
-        public Dictionary<int, (IDrinkModel, int)> DrinkCard { get; set; } = new();
 	}
 }

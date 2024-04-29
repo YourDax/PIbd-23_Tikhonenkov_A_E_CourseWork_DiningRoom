@@ -16,16 +16,16 @@ namespace DiningRoomDataModels.Models
 		/// </summary>
 		DateTime DateCreate { get; }
 
-		/// <summary>
-		/// Статус заказа
-		/// </summary>
-		OrderStatus Status { get; }
-
-		/// <summary>
-		/// Стоимость  заказа
-		/// </summary>
-		double Sum { get; }
-        Dictionary<int, (IProductModel, int)> ProductOrder { get; }
-        Dictionary<int, (IDrinkModel, int)> DrinkOrder { get; }
+        int ProductId { get; }
+        /// <summary>
+        /// Статус заказа
+        /// </summary>
+        OrderStatus Status { get; }
+        int Count { get; }
+        /// <summary>
+        /// Стоимость  заказа
+        /// </summary>
+        double Sum { get; }
+        
     }
 }

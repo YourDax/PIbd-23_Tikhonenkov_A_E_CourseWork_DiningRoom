@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiningRoomView", "DiningRoomView\DiningRoomView.csproj", "{611756F0-9DBA-41CB-ABD1-15A094CCAFFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiningRoomView", "DiningRoomView\DiningRoomView.csproj", "{611756F0-9DBA-41CB-ABD1-15A094CCAFFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiningRoomContracts", "DiningRoomContracts\DiningRoomContracts.csproj", "{432450B8-A672-40A6-98D5-FA0F3FD8BF78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiningRoomContracts", "DiningRoomContracts\DiningRoomContracts.csproj", "{432450B8-A672-40A6-98D5-FA0F3FD8BF78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiningRoomDataModels", "DiningRoomDataModels\DiningRoomDataModels.csproj", "{49474CED-88C8-440C-AAFA-5DCCF868D03F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiningRoomDataModels", "DiningRoomDataModels\DiningRoomDataModels.csproj", "{49474CED-88C8-440C-AAFA-5DCCF868D03F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiningRoomDatabaseImplement", "DiningRoomDatabaseImplement\DiningRoomDatabaseImplement.csproj", "{348BD2CC-C93D-42E8-A890-FC7807476625}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{49474CED-88C8-440C-AAFA-5DCCF868D03F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49474CED-88C8-440C-AAFA-5DCCF868D03F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49474CED-88C8-440C-AAFA-5DCCF868D03F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{348BD2CC-C93D-42E8-A890-FC7807476625}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{348BD2CC-C93D-42E8-A890-FC7807476625}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{348BD2CC-C93D-42E8-A890-FC7807476625}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{348BD2CC-C93D-42E8-A890-FC7807476625}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

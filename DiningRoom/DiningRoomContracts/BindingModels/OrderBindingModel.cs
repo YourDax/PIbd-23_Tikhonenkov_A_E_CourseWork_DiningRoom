@@ -13,13 +13,13 @@ namespace DiningRoomContracts.BindingModels
 		public int Id { get; set; }
 
 		public int UserId { get; set; }
+        public int ProductId { get; set; }
 
-		public DateTime DateCreate { get; set; } = DateTime.Now;
+        public DateTime DateCreate { get; set; } = DateTime.Now;
+        public string ProductName { get; set; } = string.Empty;
 
-		public OrderStatus Status { get; set; } = OrderStatus.Неизвестен;
-        public Dictionary<int, (IProductModel, int)> ProductOrder { get; set; } = new();
-        public Dictionary<int, (IDrinkModel, int)> DrinkOrder { get; set; } = new();
-
+        public OrderStatus Status { get; set; } = OrderStatus.Неизвестен;
+        public int Count { get; set; }
         public double Sum { get; set; }
 	}
 }
