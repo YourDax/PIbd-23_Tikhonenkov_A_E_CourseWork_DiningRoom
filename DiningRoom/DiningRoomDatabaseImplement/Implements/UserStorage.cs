@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DiningRoomDatabaseImplement.Implements
 {
-	//!!!МБ У USER ХРАНИТЬ СПИСКИ ВСЕХ СОЗДАННЫХ СУШНОСТЕЙ И ТОГДА ПРИ СОЗДАНИИ, УДАЛЕНИИ СУЩНОСТЕЙ ЕЩЁ СОЗДАВАТЬ И УДАЛЯТЬ ИЗ СПИСКА У ПОЛЬЗОВАТЕЛЯ
+
 	public class UserStorage : IUserStorage
 	{
 		public List<UserViewModel> GetFullList()
@@ -21,19 +21,6 @@ namespace DiningRoomDatabaseImplement.Implements
 			return context.Users.Select(x => x.GetViewModel).ToList();
 		}
 
-		//Фильтрация пользователей логически нужна только для роли (по остальным параметрам будет 1 или 0 пользователей)
-		public List<UserViewModel> GetFilteredList(UserSearchModel model)
-		{
-			if (model.Role == null || model.Role == UserRole.Неизвестная)
-			{
-				return new();
-			}
-			using var context = new DiningRoomDatabase();
-			return context.Users.Where(x => x.Role == model.Role).Select(x => x.GetViewModel).ToList();
-		}
-
-		//!!!ПРОВЕРИТЬ
-		//id, почта и логин уникальны, можно получать по ним
 		public UserViewModel? GetElement(UserSearchModel model)
 		{
 			//!!!МБ ЭТУ ПРОВЕРКУ УБРАТЬ
@@ -46,7 +33,7 @@ namespace DiningRoomDatabaseImplement.Implements
 			//Поиск пользователя при входе в систему по логину, паролю и его роли (чтобы не могли войти в аккаунты другой роли) 
 			if (!string.IsNullOrEmpty(model.Login) && !string.IsNullOrEmpty(model.Password) && model.Role.HasValue)
 			{
-				return context.Users.FirstOrDefault(x => x.Login == model.Login && x.Password == model.Password && x.Role == model.Role)?.GetViewModel;
+				return context.Users.FirstOrDefault(x => x.Login == model.Login && x.Password == model.Password)?.GetViewModel;
 			}
 			//!!!НИЖЕ МБ НЕ НАДО
 			//Получение по логину (пользователей с таким логином будет 1 или 0)

@@ -45,65 +45,51 @@ namespace DiningRoomDatabaseImplement.Implements
             using var context = new DiningRoomDatabase();
 
             return context.Orders
-                    .Include(x => x.Client)
-                    .Include(x => x.Implementer)
-                    .FirstOrDefault(x =>
-                        (model.Statuses == null || model.Statuses != null && model.Statuses.Contains(x.Status)) &&
-                        model.ImplementerId.HasValue && x.ImplementerId == model.ImplementerId ||
-                        model.Id.HasValue && x.Id == model.Id
-                    )
-                    ?.GetViewModel;
+                    .Include(x=> x.Product)
+                    .FirstOrDefault(x => x.Id == model.Id)?.GetViewModel;
         }
 
         public List<OrderViewModel> GetFilteredList(OrderSearchModel model)
         {
-            if (model.Id.HasValue)
-            {
-                var result = GetElement(model);
-                return result != null ? new() { result } : new();
-            }
-
-            using var context = new CarpentryWorkshopDatabase();
-            IQueryable<Order>? queryWhere = null;
-
+            using var context = new DiningRoomDatabase();
+            
             if (model.DateFrom.HasValue && model.DateTo.HasValue)
             {
-                queryWhere = context.Orders
-                    .Where(x => model.DateFrom <= x.DateCreate.Date &&
-                                                  x.DateCreate.Date <= model.DateTo);
+                return context.Orders
+                    .Where(x => (x.UserId == model.UserId) && (x.DateCreate >= model.DateFrom && x.DateCreate <= model.DateTo))
+                    .Include(x => x.Product)
+                    .ToList()
+                    .Select(x => x.GetViewModel)
+                    .ToList();
             }
-
-            else if (model.Statuses != null)
+            
+            else if (model.Status.HasValue)
             {
-                queryWhere = context.Orders.Where(x => model.Statuses.Contains(x.Status));
+                return context.Orders
+                    .Where(x => (x.UserId == model.UserId) && (x.Status == model.Status))
+                    .Include(x => x.Product)
+                    .ToList()
+                    .Select(x => x.GetViewModel)
+                    .ToList();
             }
-
-            else if (model.ClientId.HasValue)
-            {
-                queryWhere = context.Orders.Where(x => x.ClientId == model.ClientId);
-            }
-
-            else
-            {
-                return new();
-            }
-
-            return queryWhere
-                    .Include(x => x.Client)
-                    .Include(x => x.Implementer)
+            
+            return context.Orders
+                    .Where(x => x.UserId == model.UserId)
+                    .Include(x => x.Product)
+                    .ToList()
                     .Select(x => x.GetViewModel)
                     .ToList();
         }
 
         public List<OrderViewModel> GetFullList()
         {
-            using var context = new CarpentryWorkshopDatabase();
+            using var context = new DiningRoomDatabase();
 
             return context.Orders
-                .Include(x => x.Wood)
-                .Include(x => x.Client)
-                .Include(x => x.Implementer)
-                .Select(x => x.GetViewModel).ToList();
+                .Include(x => x.Product)
+                .ToList()
+                .Select(x => x.GetViewModel)
+                .ToList();
         }
 
         public OrderViewModel? Insert(OrderBindingModel model)
@@ -115,37 +101,27 @@ namespace DiningRoomDatabaseImplement.Implements
                 return null;
             }
 
-            using var context = new CarpentryWorkshopDatabase();
-
+            using var context = new DiningRoomDatabase();
+            if (newOrder == null)
+            {
+                return null;
+            }
             context.Orders.Add(newOrder);
             context.SaveChanges();
-
-            return context.Orders
-                          .Include(x => x.Wood)
-                          .Include(x => x.Client)
-                          .Include(x => x.Implementer)
-                          .FirstOrDefault(x => x.Id == newOrder.Id)
-                          ?.GetViewModel;
+            return newOrder.GetViewModel;
         }
 
         public OrderViewModel? Update(OrderBindingModel model)
         {
-            using var context = new CarpentryWorkshopDatabase();
+            using var context = new DiningRoomDatabase();
 
-            var order = context.Orders
-                .Include(x => x.Wood)
-                .Include(x => x.Client)
-                .Include(x => x.Implementer)
-                .FirstOrDefault(x => x.Id == model.Id);
-
+            var order = context.Orders.FirstOrDefault(x => x.Id == model.Id);
             if (order == null)
             {
                 return null;
             }
-
             order.Update(model);
             context.SaveChanges();
-
             return order.GetViewModel;
         }
     }
