@@ -21,7 +21,7 @@
 		double Cost { get; }
 
 		/// <summary>
-		/// Список комплектующих
+		/// Список продуктов
 		/// </summary>
 		Dictionary<int, (IComponentModel, int)> ProductComponents { get; }
 	}

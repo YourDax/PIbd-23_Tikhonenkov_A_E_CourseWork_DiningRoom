@@ -23,6 +23,6 @@
 		/// <summary>
 		/// Список комплектующих
 		/// </summary>
-		Dictionary<int, (IComponentModel, int)> ProductComponents { get; }
+		Dictionary<int, (IComponentModel, int)> DrinkComponents { get; }
 	}
 }

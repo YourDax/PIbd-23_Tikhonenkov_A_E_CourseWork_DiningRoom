@@ -18,10 +18,6 @@
         /// Единица измерения
         /// </summary>
         string Unit {  get; }
-        /// <summary>
-        /// Количество
-        /// </summary>
-        int count { get; }
 
 		/// <summary>
 		/// Цена продукта
