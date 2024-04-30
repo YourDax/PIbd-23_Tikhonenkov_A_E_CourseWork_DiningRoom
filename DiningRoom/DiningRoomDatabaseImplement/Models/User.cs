@@ -5,7 +5,9 @@ using DiningRoomDataModels.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,13 +23,24 @@ namespace DiningRoomDatabaseImplement.Models
 		[Required]
 		public string Password { get; set; } = string.Empty;
 
-		//!!!МБ ТУТ НУЖНА ДОП. АННОТАЦИЯ ПРОВЕРКИ ПОЧТЫ
+		
 		[Required]
 		public string Email { get; set; } = string.Empty;
+        [ForeignKey("UserId")]
+        public virtual List<Card> Cards { get; set; } = new();
+        [ForeignKey("UserId")]
+        public virtual List<Order> Orders { get; set; } = new();
+
+        [ForeignKey("UserId")]
+        public virtual List<Drink> Drinks { get; set; } = new();
+        [ForeignKey("UserId")]
+        public virtual List<Component> Components { get; set; } = new();
+
+        [ForeignKey("UserId")]
+        public virtual List<Product> Products { get; set; } = new();
 
 
-		//!!!МБ ТУТ НАДО БУДЕТ СОЗДАТЬ 2 РАЗНЫХ МЕТОДА: СОЗДАНИЕ ИСПОЛНИТЕЛЯ и СОЗДАНИЕ ПОРУЧИТЕЛЯ (хотя мб где-то потом будем задавать роль в BindingModel)
-		public static User Create(UserBindingModel model)
+        public static User Create(UserBindingModel model)
 		{
 			return new User
 			{
@@ -49,7 +62,7 @@ namespace DiningRoomDatabaseImplement.Models
 			Email = model.Email;
 		}
 
-		//!!!МБ ТУТ НЕ НАДО РОЛЬ
+		
 		public UserViewModel GetViewModel => new()
 		{
 			Id = Id,

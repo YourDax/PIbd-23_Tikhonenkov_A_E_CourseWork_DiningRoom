@@ -20,10 +20,19 @@ namespace DiningRoomDatabaseImplement.Implements
 			using var context = new DiningRoomDatabase();
 			return context.Users.Select(x => x.GetViewModel).ToList();
 		}
+        public List<UserViewModel> GetFilteredList(UserSearchModel model)
+        {
+            if (model.Id == null)
+            {
+                return new();
+            }
+            using var context = new DiningRoomDatabase();
+            return context.Users.Where(x => x.Id == model.Id).Select(x => x.GetViewModel).ToList();
+        }
 
-		public UserViewModel? GetElement(UserSearchModel model)
+        public UserViewModel? GetElement(UserSearchModel model)
 		{
-			//!!!МБ ЭТУ ПРОВЕРКУ УБРАТЬ
+			
 			if (string.IsNullOrEmpty(model.Login) && string.IsNullOrEmpty(model.Email) && !model.Id.HasValue)
 			{
 				return null;
@@ -35,7 +44,7 @@ namespace DiningRoomDatabaseImplement.Implements
 			{
 				return context.Users.FirstOrDefault(x => x.Login == model.Login && x.Password == model.Password)?.GetViewModel;
 			}
-			//!!!НИЖЕ МБ НЕ НАДО
+			
 			//Получение по логину (пользователей с таким логином будет 1 или 0)
 			if (!string.IsNullOrEmpty(model.Login))
 			{

@@ -12,7 +12,8 @@ namespace DiningRoomContracts.StorageContracts
 	public interface IUserStorage
 	{
 		List<UserViewModel> GetFullList();
-		UserViewModel? GetElement(UserSearchModel model);
+        List<UserViewModel> GetFilteredList(UserSearchModel model);
+        UserViewModel? GetElement(UserSearchModel model);
 		UserViewModel? Insert(UserBindingModel model);
 		UserViewModel? Update(UserBindingModel model);
 		UserViewModel? Delete(UserBindingModel model);
