@@ -44,7 +44,7 @@ namespace DiningRoomDatabaseImplement.Models
 			Unit = Model.Unit;
 		}
 
-		public ComponentViewModel ViewModel => new()
+		public ComponentViewModel GetViewModel => new()
 		{
 			Id = Id,
 			UserId = UserId,

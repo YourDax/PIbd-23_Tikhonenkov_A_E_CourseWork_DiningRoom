@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 
 namespace DiningRoomDatabaseImplement.Implements
 {
-	//!!!ПОДОБИЕ component
 	public class OrderStorage : IOrderStorage
 	{
         public OrderViewModel? Delete(OrderBindingModel model)
