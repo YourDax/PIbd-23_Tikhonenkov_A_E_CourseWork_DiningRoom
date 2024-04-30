@@ -56,7 +56,7 @@ namespace DiningRoomDatabaseImplement.Models
 			Login = Login,
 			Password = Password,
 			Email = Email,
-			Role = Role
+
 		};
 	}
 }

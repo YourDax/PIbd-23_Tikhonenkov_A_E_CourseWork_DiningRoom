@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiningRoomContracts", "Dini
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiningRoomDataModels", "DiningRoomDataModels\DiningRoomDataModels.csproj", "{49474CED-88C8-440C-AAFA-5DCCF868D03F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiningRoomDatabaseImplement", "DiningRoomDatabaseImplement\DiningRoomDatabaseImplement.csproj", "{348BD2CC-C93D-42E8-A890-FC7807476625}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiningRoomDatabaseImplement", "DiningRoomDatabaseImplement\DiningRoomDatabaseImplement.csproj", "{348BD2CC-C93D-42E8-A890-FC7807476625}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

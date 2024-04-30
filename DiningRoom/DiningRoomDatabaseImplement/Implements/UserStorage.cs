@@ -30,8 +30,8 @@ namespace DiningRoomDatabaseImplement.Implements
 			}
 			using var context = new DiningRoomDatabase();
 
-			//Поиск пользователя при входе в систему по логину, паролю и его роли (чтобы не могли войти в аккаунты другой роли) 
-			if (!string.IsNullOrEmpty(model.Login) && !string.IsNullOrEmpty(model.Password) && model.Role.HasValue)
+			//Поиск пользователя при входе в систему по логину, паролю
+			if (!string.IsNullOrEmpty(model.Login) && !string.IsNullOrEmpty(model.Password))
 			{
 				return context.Users.FirstOrDefault(x => x.Login == model.Login && x.Password == model.Password)?.GetViewModel;
 			}
@@ -76,7 +76,6 @@ namespace DiningRoomDatabaseImplement.Implements
 			return user.GetViewModel;
 		}
 
-		//!!!МБ И НЕ НУЖЕН
 		public UserViewModel? Delete(UserBindingModel model)
 		{
 			using var context = new DiningRoomDatabase();

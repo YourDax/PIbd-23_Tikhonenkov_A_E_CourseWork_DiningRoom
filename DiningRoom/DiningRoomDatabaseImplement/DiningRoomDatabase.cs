@@ -5,14 +5,14 @@ namespace DiningRoomDatabaseImplement
 {
     public class DiningRoomDatabase : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder OptionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!OptionsBuilder.IsConfigured)
+            if (optionsBuilder.IsConfigured == false)
             {
-                OptionsBuilder.UseNpgsql(@"Host=localhost;Port=5432;Database=DiningRoom;Username=postgres;Password=postgres");
+                optionsBuilder.UseNpgsql(@"Host=localhost;Port=5432;Database=DiningRoomDatabase;Username=postgres;Password=postgres");
             }
 
-            base.OnConfiguring(OptionsBuilder);
+            base.OnConfiguring(optionsBuilder);
 
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
