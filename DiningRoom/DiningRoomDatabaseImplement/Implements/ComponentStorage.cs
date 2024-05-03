@@ -118,32 +118,27 @@ namespace DiningRoomDatabaseImplement.Implements
         {
             using var Context = new DiningRoomDatabase();
 
-            return Context.Components
-                .Where(c => c.UserId == UserModel.Id)
-                .Include(x => x.ProductComponents)
-                    .ThenInclude(pc => pc.Product)
-                .Include(c => c.DrinkComponents)
-                    .ThenInclude(ac => ac.Drink)
-                        .ThenInclude(a => a.Cards.Where(r => r.DateCardCreate >= ReportModel.DateFrom && r.DateCardCreate <= ReportModel.DateTo))
+            return Context.Cards
+                .Where(card => card.UserId == UserModel.Id && card.DateCardCreate >= ReportModel.DateFrom && card.DateCardCreate <= ReportModel.DateTo)
+                .Include(card => card.Drinks)
+                    .ThenInclude(d => d.Components)
+                        .ThenInclude(dc => dc.Component)
+                            .ThenInclude(c => c.ProductComponents)
+                                .ThenInclude(pc => pc.Product)
                 .ToList()
-                .SelectMany(c => c.DrinkComponents
-                    .SelectMany(ac => ac.Drink.Cards, (ac, r) => new { ac, r })
-                    .SelectMany(temp => c.ProductComponents, (temp, pc) => new { temp.ac, temp.r, pc })
-                    .Select(temp => new ReportComponentByDateViewModel
-                    {
-                        ComponentId = c.Id,
-                        ComponentName = c.ComponentName,
-                        ComponentCost = c.Cost,
-                        ProductId = temp.pc.Product.Id,
-                        ProductName = temp.pc.Product.ProductName,
-                        ProductPrice = temp.pc.Product.Cost,
-                        CardId = temp.r.Id,
-                        CardName = temp.r.CardName,
-                    }))
-                .ToList();
+                .SelectMany(card => card.Drinks
+            .SelectMany(d => d.Components.SelectMany(dc => dc.Component.ProductComponents.Select(pc => new ReportComponentByDateViewModel
+            {
+                ComponentId = pc.ComponentId,
+                ComponentName = dc.Component.ComponentName,
+                ComponentCost = dc.Component.Cost,
+                ProductId = pc.ProductId,
+                ProductName = pc.Product.ProductName,
+                ProductPrice = pc.Product.Cost,
+                CardId = card.Id,
+                CardName = card.CardName,
+            }))))
+            .ToList();
         }
-
-
-
     }
 }

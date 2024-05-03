@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DiningRoomDatabaseImplement.Migrations
 {
     [DbContext(typeof(DiningRoomDatabase))]
-    [Migration("20240503165534_InitialCreate")]
+    [Migration("20240503210711_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -40,15 +40,10 @@ namespace DiningRoomDatabaseImplement.Migrations
                     b.Property<DateTime>("DateCardCreate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int?>("DrinkId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DrinkId");
 
                     b.HasIndex("UserId");
 
@@ -95,10 +90,6 @@ namespace DiningRoomDatabaseImplement.Migrations
                     b.Property<int>("CardId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<double>("Cost")
                         .HasColumnType("double precision");
 
@@ -110,6 +101,8 @@ namespace DiningRoomDatabaseImplement.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CardId");
 
                     b.HasIndex("UserId");
 
@@ -190,9 +183,6 @@ namespace DiningRoomDatabaseImplement.Migrations
                     b.Property<double>("Cost")
                         .HasColumnType("double precision");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -260,17 +250,11 @@ namespace DiningRoomDatabaseImplement.Migrations
 
             modelBuilder.Entity("DiningRoomDatabaseImplement.Models.Card", b =>
                 {
-                    b.HasOne("DiningRoomDatabaseImplement.Models.Drink", "Drink")
-                        .WithMany("Cards")
-                        .HasForeignKey("DrinkId");
-
                     b.HasOne("DiningRoomDatabaseImplement.Models.User", null)
                         .WithMany("Cards")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Drink");
                 });
 
             modelBuilder.Entity("DiningRoomDatabaseImplement.Models.Component", b =>
@@ -284,11 +268,19 @@ namespace DiningRoomDatabaseImplement.Migrations
 
             modelBuilder.Entity("DiningRoomDatabaseImplement.Models.Drink", b =>
                 {
+                    b.HasOne("DiningRoomDatabaseImplement.Models.Card", "Card")
+                        .WithMany("Drinks")
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DiningRoomDatabaseImplement.Models.User", null)
                         .WithMany("Drinks")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Card");
                 });
 
             modelBuilder.Entity("DiningRoomDatabaseImplement.Models.DrinkComponent", b =>
@@ -355,6 +347,11 @@ namespace DiningRoomDatabaseImplement.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("DiningRoomDatabaseImplement.Models.Card", b =>
+                {
+                    b.Navigation("Drinks");
+                });
+
             modelBuilder.Entity("DiningRoomDatabaseImplement.Models.Component", b =>
                 {
                     b.Navigation("DrinkComponents");
@@ -364,8 +361,6 @@ namespace DiningRoomDatabaseImplement.Migrations
 
             modelBuilder.Entity("DiningRoomDatabaseImplement.Models.Drink", b =>
                 {
-                    b.Navigation("Cards");
-
                     b.Navigation("Components");
                 });
 

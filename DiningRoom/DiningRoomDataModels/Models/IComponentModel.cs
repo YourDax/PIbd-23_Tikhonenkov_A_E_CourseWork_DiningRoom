@@ -1,7 +1,7 @@
 ﻿namespace DiningRoomDataModels.Models
 {
 	/// <summary>
-	/// Комплектующая
+	/// Продукт
 	/// </summary>
 	public interface IComponentModel : IId
 	{

@@ -27,6 +27,5 @@
         /// <summary>
         /// Привязка блюда к заказу
         /// </summary>
-        int? OrderId { get; }
     }
 }

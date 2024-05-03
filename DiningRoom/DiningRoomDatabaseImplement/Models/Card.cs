@@ -17,12 +17,12 @@ namespace DiningRoomDatabaseImplement.Models
 	{
         public int Id { get; set; }
         public int UserId { get; set; }
+        [Required]
         public string CardName { get; set; } = string.Empty;
-        public int? DrinkId { get; set; }
-
-        public virtual Drink? Drink { get; set; } = new();
         [Required]
         public DateTime DateCardCreate { get; set; }
+        [ForeignKey("CardId")]
+        public virtual List<Drink> Drinks { get; set; } = new();
         public static Card Create(DiningRoomDatabase context, CardBindingModel model)
         {
             return new Card()
@@ -30,6 +30,7 @@ namespace DiningRoomDatabaseImplement.Models
                 Id = model.Id,
                 CardName = model.CardName,
                 UserId = model.UserId,
+                DateCardCreate = model.DateCardCreate,
             };
         }
         public void Update(CardBindingModel model)
@@ -41,6 +42,7 @@ namespace DiningRoomDatabaseImplement.Models
             Id = Id,
             CardName = CardName,
             UserId = UserId,
+            DateCardCreate = DateCardCreate,
         };
     }
 }

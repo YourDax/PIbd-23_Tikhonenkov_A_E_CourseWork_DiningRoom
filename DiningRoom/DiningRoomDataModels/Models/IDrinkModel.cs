@@ -22,7 +22,7 @@
 		int CardId { get; }
 
 		/// <summary>
-		/// Список комплектующих
+		/// Список продуктов
 		/// </summary>
 		Dictionary<int, (IComponentModel, int)> DrinkComponents { get; }
 	}

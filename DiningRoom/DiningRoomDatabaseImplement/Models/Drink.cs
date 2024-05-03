@@ -4,6 +4,7 @@ using DiningRoomDataModels.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace DiningRoomDatabaseImplement.Models
 {
@@ -21,13 +22,10 @@ namespace DiningRoomDatabaseImplement.Models
 		public double Cost { get; private set; }
 
 		public int CardId { get; private set; }
-        [ForeignKey("DrinkId")]
-        public virtual List<Card> Cards { get; set; } = new();
+        public virtual Card? Card { get; set; } = new();
 
-        [Required]
-		public string Category { get; private set; } = string.Empty;
 
-		[ForeignKey("ComponentId")]
+        [ForeignKey("ComponentId")]
 		public virtual List<DrinkComponent> Components { get; set; } = new();
 
 		private Dictionary<int, (IComponentModel, int)>? _drinkComponents;

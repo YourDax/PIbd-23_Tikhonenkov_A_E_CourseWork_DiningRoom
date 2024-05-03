@@ -16,7 +16,7 @@ namespace DiningRoomDatabaseImplement.Models
 
 		[Required]
 		public string ProductName { get; set; } = string.Empty;
-        public int? OrderId { get; set; }
+
         [Required]
 		public double Cost { get; set; }
         private Dictionary<int, (IComponentModel, int)>? _productComponents;
@@ -47,7 +47,6 @@ namespace DiningRoomDatabaseImplement.Models
 			{
 				Id = Model.Id,
 				UserId = Model.UserId,
-                OrderId = Model.OrderId,
                 ProductName = Model.ProductName,
 				Cost = Model.Cost,
 				Components = Model.ProductComponents.Select(x => new ProductComponent
@@ -59,7 +58,6 @@ namespace DiningRoomDatabaseImplement.Models
 		}
         public void Update(ProductBindingModel model)
         {
-            OrderId = model.OrderId;
             ProductName = model.ProductName;
             Cost = model.Cost;
         }
@@ -67,7 +65,6 @@ namespace DiningRoomDatabaseImplement.Models
         {
             Id = Id,
             UserId = UserId,
-            OrderId = OrderId,
             ProductName = ProductName,
             Cost = Cost,
             ProductComponents = ProductComponents

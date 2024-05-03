@@ -32,7 +32,7 @@ namespace DiningRoomDatabaseImplement.Implements
                     .Include(x => x.Order)
                     .Include(x => x.Components)
                         .ThenInclude(x => x.Component)
-                    .Where(x => x.UserId == model.UserId && x.OrderId == model.OrderId)
+                    .Where(x => x.UserId == model.UserId)
                     .Select(x => x.GetViewModel)
                     .ToList();
             }
