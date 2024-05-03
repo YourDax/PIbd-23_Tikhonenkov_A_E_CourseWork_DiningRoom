@@ -4,7 +4,7 @@ using DiningRoomContracts.ViewModels;
 
 namespace DiningRoomContracts.BusinessLogicContracts
 {
-	public interface IReportGuarantorLogic
+	public interface IReportLogic
 	{
 		/// <summary>
 		/// Получение отчёта для Word или Excel
@@ -14,7 +14,7 @@ namespace DiningRoomContracts.BusinessLogicContracts
 		/// <summary>
 		/// Получение отчёта для отправки на почту
 		/// </summary>
-		List<ReportComponentByDateViewModel> GetReportComponentsByRequestDate(UserSearchModel CurrentUser, ReportBindingModel Report);
+		List<ReportComponentByDateViewModel> GetReportComponentsByCardDate(UserSearchModel CurrentUser, ReportBindingModel Report);
 		
 		void SaveReportToWordFile(ReportBindingModel Model);
 

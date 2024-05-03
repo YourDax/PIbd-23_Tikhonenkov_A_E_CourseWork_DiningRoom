@@ -17,8 +17,6 @@ namespace DiningRoomDatabaseImplement.Models
 		[Required]
 		public string ProductName { get; set; } = string.Empty;
         public int? OrderId { get; set; }
-
-        public virtual Order? Order { get; set; }
         [Required]
 		public double Cost { get; set; }
         private Dictionary<int, (IComponentModel, int)>? _productComponents;
@@ -42,7 +40,7 @@ namespace DiningRoomDatabaseImplement.Models
         [ForeignKey("ProductId")]
         public virtual List<ProductComponent> Components { get; set; } = new();
         [ForeignKey("ProductId")]
-        public virtual List<Order> Orders { get; set; } = new();
+        public virtual List<Order> Order { get; set; } = new();
 		public static Product Create(DiningRoomDatabase Context, ProductBindingModel Model)
 		{
 			return new()

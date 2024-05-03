@@ -108,7 +108,7 @@ namespace DiningRoomDatabaseImplement.Implements
                     ComponentName = x.ComponentName,
                     ComponentCost = x.Cost,
                     Orders = x.ProductComponents
-                        .Select(y => (y.Count, y.Product.ProductName, y.Product.Cost, y.Product.Order.DateCreate))
+                        .Select(y => (y.Count, y.Product.ProductName, y.Product.Cost))
                         .ToList(),
                 })
                 .ToList();

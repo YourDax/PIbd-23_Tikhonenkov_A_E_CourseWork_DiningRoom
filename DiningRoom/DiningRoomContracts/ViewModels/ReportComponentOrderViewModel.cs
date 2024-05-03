@@ -8,6 +8,6 @@
 
 		public double ComponentCost { get; set; }
 
-		public List<(int Count, string ProductName, double ProductPrice, DateTime OrderDate)> Orders { get; set; } = new();
+		public List<(int Count, string ProductName, double ProductPrice)> Orders { get; set; } = new();
 	}
 }

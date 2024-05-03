@@ -6,11 +6,11 @@ using DiningRoomContracts.ViewModels;
 
 namespace DiningRoomBusinessLogic.BusinessLogics
 {
-	public class ReportGuarantorLogic : IReportGuarantorLogic
+	public class ReportLogic : IReportLogic
 	{
 		private readonly IComponentStorage _componentStorage;
 
-		public ReportGuarantorLogic(IComponentStorage ComponentStorage)
+		public ReportLogic(IComponentStorage ComponentStorage)
 		{
 			_componentStorage = ComponentStorage;
 		}
@@ -26,7 +26,7 @@ namespace DiningRoomBusinessLogic.BusinessLogics
 		/// <summary>
 		/// Получение отчёта для отправки на почту
 		/// </summary>
-		public List<ReportComponentByDateViewModel> GetReportComponentsByRequestDate(UserSearchModel CurrentUser, ReportBindingModel Report)
+		public List<ReportComponentByDateViewModel> GetReportComponentsByCardDate(UserSearchModel CurrentUser, ReportBindingModel Report)
 		{
 			return _componentStorage.GetComponentsByDate(Report, CurrentUser);
 		}

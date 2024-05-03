@@ -13,5 +13,7 @@ namespace DiningRoomContracts.ViewModels
 		[DisplayName("Название карты")]
 		public string CardName { get; set; } = string.Empty;
         public Dictionary<int, (IDrinkModel, int)> DrinkCard { get; set; } = new();
+        [DisplayName("Дата создания")]
+        public DateTime DateCardCreate { get; set; } = DateTime.Now;
     }
 }
