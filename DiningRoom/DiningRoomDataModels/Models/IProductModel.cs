@@ -16,7 +16,7 @@
 		string ProductName { get; }
 
 		/// <summary>
-		/// Стоимость товара
+		/// Стоимость блюда
 		/// </summary>
 		double Cost { get; }
 
@@ -24,5 +24,9 @@
 		/// Список продуктов
 		/// </summary>
 		Dictionary<int, (IComponentModel, int)> ProductComponents { get; }
-	}
+        /// <summary>
+        /// Привязка блюда к заказу
+        /// </summary>
+        int? OrderId { get; }
+    }
 }

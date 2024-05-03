@@ -14,24 +14,22 @@ namespace DiningRoomDatabaseImplement.Models
 {
 	public class Order : IOrderModel
 	{
-		public int Id { get; set; }
-		[ForeignKey("ProductId")]
-		public int ProductId { get; set; }
-		[ForeignKey("UserId")]
+        public int Id { get; set; }
+        [Required]
+        public int ProductId { get; set; }
+        [Required]
+        public string ProductName { get; set; } = string.Empty;
+        [Required]
+        public int Count { get; set; }
+        [Required]
+        public double Sum { get; set; }
+        [Required]
+        public OrderStatus Status { get; set; }
+        [Required]
+        public DateTime DateCreate { get; set; }
+        public virtual Product Product { get; set; }
 		[Required]
 		public int UserId { get; private set; }
-		public User User { get; set; }
-		public virtual Product Product { get; set; }
-		[Required]
-		public double Sum { get; private set; }
-		[Required]
-		public int Count { get; private set; }
-
-		[Required]
-		public DateTime DateCreate { get; private set; } = DateTime.Now;
-
-		[Required]
-		public OrderStatus Status { get; private set; } = OrderStatus.Неизвестен;
 
 		public static Order? Create(OrderBindingModel model)
 		{
@@ -43,6 +41,7 @@ namespace DiningRoomDatabaseImplement.Models
 			{
 				Id = model.Id,
 				ProductId = model.ProductId,
+				ProductName = model.ProductName,
 				UserId = model.UserId,
 				DateCreate = model.DateCreate,
 				Status = model.Status,
@@ -51,7 +50,7 @@ namespace DiningRoomDatabaseImplement.Models
 			};
 		}
 
-		public void Update(OrderBindingModel model)
+		public void Update(OrderBindingModel? model)
 		{
 			if (model == null)
 			{

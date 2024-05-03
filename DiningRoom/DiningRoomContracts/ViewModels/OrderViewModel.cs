@@ -21,7 +21,7 @@ namespace DiningRoomContracts.ViewModels
         public string ProductName { get; set; } = string.Empty;
         [DisplayName("Статус")]
 		public OrderStatus Status { get; set; } = OrderStatus.Неизвестен;
-        [DisplayName("Стоимость")]
+        [DisplayName("Количество")]
         public int Count { get; set; }
 		[DisplayName("Стоимость")]
 		public double Sum { get; set; }

@@ -27,7 +27,7 @@ namespace DiningRoomBusinessLogic.BusinessLogics
 
 		public List<OrderViewModel>? ReadList(OrderSearchModel? model)
 		{
-			//model.UserId = -1 для swagger, чтобы можно было считать все заказы всех пользователей
+			
 			var list = (model == null || model.UserId == -1) ? _orderStorage.GetFullList() : _orderStorage.GetFilteredList(model);
 			if (list == null)
 			{

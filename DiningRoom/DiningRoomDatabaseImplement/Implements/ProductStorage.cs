@@ -9,49 +9,67 @@ namespace DiningRoomDatabaseImplement.Implements
 {
     public class ProductStorage : IProductStorage
     {
-		public List<ProductViewModel> GetFullList()
-		{
-			using var context = new DiningRoomDatabase();
-			return context.Products
-					.Include(x => x.Components)
-					.ThenInclude(x => x.Component)
-					.ToList()
-					.Select(x => x.GetViewModel)
-					.ToList();
-		}
+        public List<ProductViewModel> GetFullList()
+        {
+            using var Context = new DiningRoomDatabase();
 
-		public List<ProductViewModel> GetFilteredList(ProductSearchModel model)
-		{
-			if (string.IsNullOrEmpty(model.ProductName))
-			{
-				return new();
-			}
-			using var context = new DiningRoomDatabase();
-			return context.Products
-					.Include(x => x.Components)
-					.ThenInclude(x => x.Component)
-					.Where(x => x.ProductName.Contains(model.ProductName))
-					.ToList()
-					.Select(x => x.GetViewModel)
-					.ToList();
-		}
+            return Context.Products
+                .Include(x => x.Order)
+                .Include(x => x.Components)
+                    .ThenInclude(x => x.Component)
+                .Select(x => x.GetViewModel)
+                .ToList();
+        }
 
-		public ProductViewModel? GetElement(ProductSearchModel model)
+        public List<ProductViewModel> GetFilteredList(ProductSearchModel model)
 		{
-			if (string.IsNullOrEmpty(model.ProductName) && !model.Id.HasValue)
-			{
-				return null;
-			}
-			using var context = new DiningRoomDatabase();
-			return context.Products
-				.Include(x => x.Components)
-				.ThenInclude(x => x.Component)
-				.FirstOrDefault(x => (!string.IsNullOrEmpty(model.ProductName) && x.ProductName == model.ProductName) ||
-								(model.Id.HasValue && x.Id == model.Id))
-				?.GetViewModel;
-		}
+            using var context = new DiningRoomDatabase();
+            
+            // Optional search by order
+            if (model.OrderId.HasValue)
+            {
+                return context.Products
+                    .Include(x => x.Order)
+                    .Include(x => x.Components)
+                        .ThenInclude(x => x.Component)
+                    .Where(x => x.UserId == model.UserId && x.OrderId == model.OrderId)
+                    .Select(x => x.GetViewModel)
+                    .ToList();
+            }
 
-		public ProductViewModel? Insert(ProductBindingModel model)
+            return context.Products
+                .Include(x => x.Order)
+                .Include(x => x.Components)
+                    .ThenInclude(x => x.Component)
+                .Where(x => x.UserId == model.UserId)
+                .Select(x => x.GetViewModel)
+                .ToList();
+        }
+
+        public ProductViewModel? GetElement(ProductSearchModel Model)
+        {
+            using var Context = new DiningRoomDatabase();
+
+            // ProductName is unique
+            if (!string.IsNullOrEmpty(Model.ProductName))
+            {
+                return Context.Products
+                    .Include(x => x.Order)
+                    .Include(x => x.Components)
+                        .ThenInclude(x => x.Component)
+                    .FirstOrDefault(x => x.ProductName == Model.ProductName)?
+                    .GetViewModel;
+            }
+
+            return Context.Products
+                .Include(x => x.Order)
+                .Include(x => x.Components)
+                    .ThenInclude(x => x.Component)
+                .FirstOrDefault(x => x.Id == Model.Id)?
+                .GetViewModel;
+        }
+
+        public ProductViewModel? Insert(ProductBindingModel model)
 		{
 			using var context = new DiningRoomDatabase();
 			var newProduct = Product.Create(context, model);

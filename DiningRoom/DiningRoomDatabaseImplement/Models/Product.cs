@@ -16,39 +16,41 @@ namespace DiningRoomDatabaseImplement.Models
 
 		[Required]
 		public string ProductName { get; set; } = string.Empty;
+        public int? OrderId { get; set; }
 
-		[Required]
+        public virtual Order? Order { get; set; }
+        [Required]
 		public double Cost { get; set; }
+        private Dictionary<int, (IComponentModel, int)>? _productComponents;
 
-		[ForeignKey("ComponentId")]
-		public virtual List<ProductComponent> Components { get; set; } = new();
+        [NotMapped]
+        public Dictionary<int, (IComponentModel, int)> ProductComponents
+        {
+            get
+            {
+                if (_productComponents == null)
+                {
+                    _productComponents = Components.ToDictionary(
+                        ProdComp => ProdComp.ComponentId,
+                        ProdComp => (ProdComp.Component as IComponentModel, ProdComp.Count)
+                    );
+                }
 
-		private Dictionary<int, (IComponentModel, int)>? _productComponents;
-
-		[NotMapped]
-		public Dictionary<int, (IComponentModel, int)> ProductComponents
-		{
-			get
-			{
-				if (_productComponents == null)
-				{
-					_productComponents = Components.ToDictionary(
-						ProdComp => ProdComp.ComponentId,
-						ProdComp => (ProdComp.Component as IComponentModel, ProdComp.Count)
-					);
-				}
-
-				return _productComponents;
-			}
-		}
-
+                return _productComponents;
+            }
+        }
+        [ForeignKey("ProductId")]
+        public virtual List<ProductComponent> Components { get; set; } = new();
+        [ForeignKey("ProductId")]
+        public virtual List<Order> Orders { get; set; } = new();
 		public static Product Create(DiningRoomDatabase Context, ProductBindingModel Model)
 		{
 			return new()
 			{
 				Id = Model.Id,
 				UserId = Model.UserId,
-				ProductName = Model.ProductName,
+                OrderId = Model.OrderId,
+                ProductName = Model.ProductName,
 				Cost = Model.Cost,
 				Components = Model.ProductComponents.Select(x => new ProductComponent
 				{
@@ -59,12 +61,15 @@ namespace DiningRoomDatabaseImplement.Models
 		}
         public void Update(ProductBindingModel model)
         {
+            OrderId = model.OrderId;
             ProductName = model.ProductName;
             Cost = model.Cost;
         }
         public ProductViewModel GetViewModel => new()
         {
             Id = Id,
+            UserId = UserId,
+            OrderId = OrderId,
             ProductName = ProductName,
             Cost = Cost,
             ProductComponents = ProductComponents

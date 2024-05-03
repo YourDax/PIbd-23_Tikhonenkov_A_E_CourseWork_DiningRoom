@@ -15,8 +15,8 @@ namespace DiningRoomDataModels.Models
 		/// Дата создания заказа
 		/// </summary>
 		DateTime DateCreate { get; }
-
         int ProductId { get; }
+        string ProductName { get; }
         /// <summary>
         /// Статус заказа
         /// </summary>

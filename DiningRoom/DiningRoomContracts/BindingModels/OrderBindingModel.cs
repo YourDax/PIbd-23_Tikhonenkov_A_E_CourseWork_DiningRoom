@@ -11,13 +11,10 @@ namespace DiningRoomContracts.BindingModels
 	public class OrderBindingModel : IOrderModel
 	{
 		public int Id { get; set; }
-
 		public int UserId { get; set; }
         public int ProductId { get; set; }
-
-        public DateTime DateCreate { get; set; } = DateTime.Now;
         public string ProductName { get; set; } = string.Empty;
-
+        public DateTime DateCreate { get; set; } = DateTime.Now;
         public OrderStatus Status { get; set; } = OrderStatus.Неизвестен;
         public int Count { get; set; }
         public double Sum { get; set; }

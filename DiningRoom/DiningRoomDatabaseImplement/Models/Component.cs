@@ -15,6 +15,7 @@ namespace DiningRoomDatabaseImplement.Models
 
 		[Required]
 		public string ComponentName { get; private set; } = string.Empty;
+        [Required]
         public string Unit { get; private set; } = string.Empty;
 
         [Required]
@@ -25,9 +26,13 @@ namespace DiningRoomDatabaseImplement.Models
         [ForeignKey("ComponentId")]
         public virtual List<ProductComponent> ProductComponents { get; set; } = new();
 
-        public static Component Create(ComponentBindingModel Model)
+        public static Component? Create(ComponentBindingModel Model)
 		{
-			return new()
+            if (Model == null)
+            {
+                return null;
+            }
+            return new Component()
 			{
 				Id = Model.Id,
 				UserId = Model.UserId,
@@ -36,10 +41,24 @@ namespace DiningRoomDatabaseImplement.Models
                 Unit = Model.Unit,
             };
 		}
-
-		public void Update(ComponentBindingModel Model)
+        public static Component Create(ComponentViewModel Model)
+        {
+            return new Component
+            {
+                Id = Model.Id,
+                UserId = Model.UserId,
+                ComponentName = Model.ComponentName,
+                Cost = Model.Cost,
+                Unit = Model.Unit,
+            };
+        }
+        public void Update(ComponentBindingModel Model)
 		{
-			ComponentName = Model.ComponentName;
+            if (Model == null)
+            {
+                return;
+            }
+            ComponentName = Model.ComponentName;
 			Cost = Model.Cost;
 			Unit = Model.Unit;
 		}

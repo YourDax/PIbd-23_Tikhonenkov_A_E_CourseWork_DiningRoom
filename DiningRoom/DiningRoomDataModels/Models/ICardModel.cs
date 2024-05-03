@@ -14,5 +14,6 @@
 		/// Название карты
 		/// </summary>
 		string CardName { get; }
-	}
+        DateTime DateCardCreate { get; }
+    }
 }

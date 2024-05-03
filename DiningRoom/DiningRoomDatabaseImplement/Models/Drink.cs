@@ -21,8 +21,10 @@ namespace DiningRoomDatabaseImplement.Models
 		public double Cost { get; private set; }
 
 		public int CardId { get; private set; }
+        [ForeignKey("DrinkId")]
+        public virtual List<Card> Cards { get; set; } = new();
 
-		[Required]
+        [Required]
 		public string Category { get; private set; } = string.Empty;
 
 		[ForeignKey("ComponentId")]

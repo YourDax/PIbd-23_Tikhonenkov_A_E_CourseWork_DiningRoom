@@ -3,6 +3,7 @@ using DiningRoomContracts.SearchModels;
 using DiningRoomContracts.StorageContracts;
 using DiningRoomContracts.ViewModels;
 using DiningRoomDatabaseImplement.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DiningRoomDatabaseImplement.Implements
 {
@@ -30,56 +31,119 @@ namespace DiningRoomDatabaseImplement.Implements
                     .ToList();
         }
         //
-        public ComponentViewModel? GetElement(ComponentSearchModel model)
+        public ComponentViewModel? GetElement(ComponentSearchModel Model)
         {
-            if (string.IsNullOrEmpty(model.ComponentName) && !model.Id.HasValue)
+            using var Context = new DiningRoomDatabase();
+
+            // ComponentName is unique
+            if (!string.IsNullOrEmpty(Model.ComponentName))
             {
-                return null;
+                return Context.Components
+                    .FirstOrDefault(x => x.ComponentName == Model.ComponentName)?
+                    .GetViewModel;
             }
-            using var context = new DiningRoomDatabase();
-            return context.Components
-                    .FirstOrDefault(x => (!string.IsNullOrEmpty(model.ComponentName) && x.ComponentName == model.ComponentName) ||
-                                        (model.Id.HasValue && x.Id == model.Id))
-                    ?.GetViewModel;
+
+            return Context.Components
+                .FirstOrDefault(x => x.Id == Model.Id)?
+                .GetViewModel;
         }
         //
         public ComponentViewModel? Insert(ComponentBindingModel model)
         {
-            var newComponent = Component.Create(model);
-            if (newComponent == null)
-            {
-                return null;
-            }
-            using var context = new DiningRoomDatabase();
-            context.Components.Add(newComponent);
-            context.SaveChanges();
-            return newComponent.GetViewModel;
+            using var Context = new DiningRoomDatabase();
+
+            var NewComponent = Component.Create(model);
+            Context.Components.Add(NewComponent);
+            Context.SaveChanges();
+
+            return NewComponent.GetViewModel;
         }
 
         public ComponentViewModel? Update(ComponentBindingModel model)
         {
-            using var context = new DiningRoomDatabase();
-            var component = context.Components.FirstOrDefault(x => x.Id == model.Id);
-            if (component == null)
+            using var Context = new DiningRoomDatabase();
+
+            var ExistingComponent = Context.Components.FirstOrDefault(x => x.Id == model.Id);
+            if (ExistingComponent == null)
             {
                 return null;
             }
-            component.Update(model);
-            context.SaveChanges();
-            return component.GetViewModel;
+
+            ExistingComponent.Update(model);
+            Context.SaveChanges();
+
+            return ExistingComponent.GetViewModel;
         }
 
         public ComponentViewModel? Delete(ComponentBindingModel model)
         {
-            using var context = new DiningRoomDatabase();
-            var element = context.Components.FirstOrDefault(rec => rec.Id == model.Id);
-            if (element != null)
+            using var Context = new DiningRoomDatabase();
+
+            var ExistingComponent = Context.Components.FirstOrDefault(x => x.Id == model.Id);
+            if (ExistingComponent == null)
             {
-                context.Components.Remove(element);
-                context.SaveChanges();
-                return element.GetViewModel;
+                return null;
             }
-            return null;
+
+            Context.Components.Remove(ExistingComponent);
+            Context.SaveChanges();
+
+            return ExistingComponent.GetViewModel;
         }
+        public List<ReportComponentOrderViewModel> GetComponentsOrders(List<ComponentSearchModel> Models)
+        {
+            using var Context = new DiningRoomDatabase();
+
+            return Context.Components
+                .Include(x => x.ProductComponents)
+                    .ThenInclude(x => x.Product)
+                    .ThenInclude(x => x.Order)
+                .Where(x =>
+                    Models.Select(x => x.Id).Contains(x.Id)  // Компонент, указанный пользователем,
+                    && x.ProductComponents.Any(y => y.Product.Order != null))  
+                .ToList()
+                .Select(x => new ReportComponentOrderViewModel
+                {
+                    ComponentId = x.Id,
+                    ComponentName = x.ComponentName,
+                    ComponentCost = x.Cost,
+                    Orders = x.ProductComponents
+                        .Select(y => (y.Count, y.Product.ProductName, y.Product.Cost, y.Product.Order.DateCreate))
+                        .ToList(),
+                })
+                .ToList();
+        }
+
+        public List<ReportComponentByDateViewModel> GetComponentsByDate(ReportBindingModel ReportModel, UserSearchModel UserModel)
+        {
+            using var Context = new DiningRoomDatabase();
+
+            return Context.Components
+                .Where(c => c.UserId == UserModel.Id)
+                .Include(x => x.ProductComponents)
+                    .ThenInclude(pc => pc.Product)
+                .Include(c => c.DrinkComponents)
+                    .ThenInclude(ac => ac.Drink)
+                        .ThenInclude(a => a.Cards.Where(r => r.DateCardCreate >= ReportModel.DateFrom && r.DateCardCreate <= ReportModel.DateTo))
+                .ToList()
+                .SelectMany(c => c.DrinkComponents
+                    .SelectMany(ac => ac.Drink.Cards, (ac, r) => new { ac, r })
+                    .SelectMany(temp => c.ProductComponents, (temp, pc) => new { temp.ac, temp.r, pc })
+                    .Select(temp => new ReportComponentByDateViewModel
+                    {
+                        ComponentId = c.Id,
+                        ComponentName = c.ComponentName,
+                        ComponentCost = c.Cost,
+                        ProductId = temp.pc.Product.Id,
+                        ProductName = temp.pc.Product.ProductName,
+                        ProductPrice = temp.pc.Product.Cost,
+                        CardId = temp.r.Id,
+                        CardName = temp.r.CardName,
+                    }))
+                .ToList();
+        }
+
+
+
     }
 }
