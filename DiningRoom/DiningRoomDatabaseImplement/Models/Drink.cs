@@ -112,5 +112,10 @@ namespace DiningRoomDatabaseImplement.Models
             }
             _drinkComponents = null;
         }
+        public void ConnectDrink(DiningRoomDatabase context, DrinkBindingModel model)
+        {
+            CardId = model.CardId;
+            Card = context.Cards.First(x => x.Id == model.CardId);
+        }
     }
 }

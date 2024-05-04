@@ -75,13 +75,9 @@ namespace DiningRoomBusinessLogic.BusinessLogics
 			return true;
 		}
 
-		public bool ConnectCardDrink(CardBindingModel model)
-		{
-			_logger.LogInformation("Connect Card {rId} with drink {aId}", model.Id, model.DrinkId);
-			return _CardStorage.ConnectCardDrink(model);
-		}
+        
 
-		public bool Delete(CardBindingModel model)
+        public bool Delete(CardBindingModel model)
 		{
 			CheckModel(model, false);
 			_logger.LogInformation("Delete. Id:{Id}", model.Id);

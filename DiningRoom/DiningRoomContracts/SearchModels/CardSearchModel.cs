@@ -6,7 +6,9 @@
 
 		public int? UserId { get; set; }
 		public DateTime? DateCardCreate { get; set; }
-		public int? DrinkId { get; set; }
+        public DateTime? DateFrom { get; set; }
+        public DateTime? DateTo { get; set; }
+        public int? DrinkId { get; set; }
 
 		public string? Cardname { get; set; }
 	}

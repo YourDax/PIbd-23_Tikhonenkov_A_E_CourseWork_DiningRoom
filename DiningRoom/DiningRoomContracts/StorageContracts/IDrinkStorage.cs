@@ -17,5 +17,6 @@ namespace DiningRoomContracts.StorageContracts
 		DrinkViewModel? Update(DrinkBindingModel Model);
 
         DrinkViewModel? Delete(DrinkBindingModel Model);
-	}
+        bool ConnectCardDrink(DrinkBindingModel model);
+    }
 }

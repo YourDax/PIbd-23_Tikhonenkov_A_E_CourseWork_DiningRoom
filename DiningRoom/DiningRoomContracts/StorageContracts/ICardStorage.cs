@@ -17,6 +17,5 @@ namespace DiningRoomContracts.StorageContracts
         CardViewModel? Update(CardBindingModel Model);
 
         CardViewModel? Delete(CardBindingModel Model);
-        bool ConnectCardDrink(CardBindingModel model);
     }
 }

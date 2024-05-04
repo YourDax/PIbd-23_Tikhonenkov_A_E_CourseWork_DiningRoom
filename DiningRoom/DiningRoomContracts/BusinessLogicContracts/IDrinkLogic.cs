@@ -15,5 +15,6 @@ namespace DiningRoomContracts.BusinessLogicContracts
 		bool Update(DrinkBindingModel Model);
 
 		bool Delete(DrinkBindingModel Model);
-	}
+        bool ConnectCardDrink(DrinkBindingModel model);
+    }
 }

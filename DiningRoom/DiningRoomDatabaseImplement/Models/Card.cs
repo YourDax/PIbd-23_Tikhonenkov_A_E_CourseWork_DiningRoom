@@ -44,5 +44,6 @@ namespace DiningRoomDatabaseImplement.Models
             UserId = UserId,
             DateCardCreate = DateCardCreate,
         };
+        
     }
 }
