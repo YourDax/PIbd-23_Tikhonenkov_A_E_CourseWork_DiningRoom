@@ -38,24 +38,7 @@ namespace DiningRoomRestApi.Controllers
 			}
 		}
 
-		/// <summary>
-		/// Получение заказов по id пользователя (полный список, кот. будет выводиться)
-		/// </summary>
-		/// <param name="userId"></param>
-		/// <returns></returns>
-		[HttpGet]
-		public List<OrderViewModel>? GetOrders(int? userId)
-		{
-			try
-			{
-				return _logic.ReadList(new OrderSearchModel { UserId = userId });
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "Ошибка получения списка заказов клиента id={Id}", userId);
-				throw;
-			}
-		}
+
 
 		[HttpPost]
 		public void CreateOrder(OrderBindingModel model)

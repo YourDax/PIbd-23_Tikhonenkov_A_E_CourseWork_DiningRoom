@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiningRoomBusinessLogic.BusinessLogics
+namespace DiningRoomBusinessLogic.BusinessLogic
 {
 	public class UserLogic : IUserLogic
 	{

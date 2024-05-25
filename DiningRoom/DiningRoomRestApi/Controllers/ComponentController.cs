@@ -36,22 +36,6 @@ namespace DiningRoomRestApi.Controllers
 			}
 		}
 
-		[HttpGet]
-		public List<ComponentViewModel>? GetComponents(int? UserId)
-		{
-			try
-			{
-				return _componentLogic.ReadList(new ComponentSearchModel
-				{
-					UserId = UserId 
-				});
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "Ошибка получения списка продуктов пользователя с Id = {Id}", UserId);
-				throw;
-			}
-		}
 
 		[HttpPost]
 		public void CreateComponent(ComponentBindingModel Model)

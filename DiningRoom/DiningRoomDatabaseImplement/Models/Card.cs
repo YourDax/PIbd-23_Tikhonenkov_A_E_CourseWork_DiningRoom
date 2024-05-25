@@ -16,7 +16,6 @@ namespace DiningRoomDatabaseImplement.Models
 	public class Card : ICardModel
 	{
         public int Id { get; set; }
-        public int UserId { get; set; }
         [Required]
         public string CardName { get; set; } = string.Empty;
         [Required]
@@ -29,7 +28,6 @@ namespace DiningRoomDatabaseImplement.Models
             {
                 Id = model.Id,
                 CardName = model.CardName,
-                UserId = model.UserId,
                 DateCardCreate = model.DateCardCreate,
             };
         }
@@ -41,7 +39,6 @@ namespace DiningRoomDatabaseImplement.Models
         {
             Id = Id,
             CardName = CardName,
-            UserId = UserId,
             DateCardCreate = DateCardCreate,
         };
         

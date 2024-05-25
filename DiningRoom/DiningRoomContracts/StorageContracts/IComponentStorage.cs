@@ -19,6 +19,6 @@ namespace DiningRoomContracts.StorageContracts
 		ComponentViewModel? Delete(ComponentBindingModel Model);
         List<ReportComponentOrderViewModel> GetComponentsOrders(List<ComponentSearchModel> Models);
 
-        List<ReportComponentByDateViewModel> GetComponentsByDate(ReportBindingModel ReportModel, UserSearchModel UserModel);
+        List<ReportComponentByDateViewModel> GetComponentsByDate(ReportBindingModel ReportModel);
     }
 }

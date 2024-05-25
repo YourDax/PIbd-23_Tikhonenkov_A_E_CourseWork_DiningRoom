@@ -6,7 +6,7 @@ using DiningRoomContracts.ViewModels;
 using Microsoft.Extensions.Logging;
 
 
-namespace DiningRoomBusinessLogic.BusinessLogics
+namespace DiningRoomBusinessLogic.BusinessLogic
 {
     public class DrinkLogic : IDrinkLogic
     {
@@ -103,11 +103,6 @@ namespace DiningRoomBusinessLogic.BusinessLogics
             {
                 throw new InvalidOperationException("Напиток с таким названием уже есть");
             }
-        }
-        public bool ConnectCardDrink(DrinkBindingModel model)
-        {
-            _logger.LogInformation("Connect Card {rId} with drink {aId}", model.Id, model.CardId);
-            return _DrinkStorage.ConnectCardDrink(model);
         }
     }
 }

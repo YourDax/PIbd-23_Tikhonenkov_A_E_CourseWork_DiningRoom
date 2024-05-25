@@ -36,35 +36,6 @@ namespace DiningRoomRestApi.Controllers
 			}
 		}
 
-		[HttpGet]
-		public List<DrinkViewModel>? GetDrinks(int? UserId)
-		{
-			try
-			{
-				return _DrinkLogic.ReadList(new DrinkSearchModel
-				{
-					UserId = UserId
-				});
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "Ошибка получения списка напитков пользователя с Id = {Id}", UserId);
-				throw;
-			}
-		}
-        [HttpPost]
-        public void ConnectCardDrink(int CardId, int DrinkId)
-        {
-            try
-            {
-                _DrinkLogic.ConnectCardDrink(new DrinkBindingModel { Id = DrinkId, CardId = CardId });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ошибка связывания заявки со сборкой");
-                throw;
-            }
-        }
 
         [HttpPost]
 		public void CreateDrink(DrinkBindingModel Model)

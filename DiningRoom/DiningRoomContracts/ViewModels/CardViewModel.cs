@@ -7,8 +7,6 @@ namespace DiningRoomContracts.ViewModels
 	{
 		public int Id { get; set; }
 
-		public int UserId { get; set; }
-
 
 		[DisplayName("Название карты")]
 		public string CardName { get; set; } = string.Empty;

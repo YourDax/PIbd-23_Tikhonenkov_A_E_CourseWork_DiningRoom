@@ -6,9 +6,6 @@ namespace DiningRoomContracts.BindingModels
 	{
 		public int Id { get; set; }
 
-		public int UserId { get; set; }
-        public int? OrderId { get; set; }
-
         public string ProductName { get; set; } = string.Empty;
 
 		public double Cost { get; set; }

@@ -5,10 +5,6 @@
 	/// </summary>
 	public interface IProductModel : IId
 	{
-		/// <summary>
-		/// Пользователь, который добавил блюдо
-		/// </summary>
-		int UserId { get; }
 
 		/// <summary>
 		/// Название блюда

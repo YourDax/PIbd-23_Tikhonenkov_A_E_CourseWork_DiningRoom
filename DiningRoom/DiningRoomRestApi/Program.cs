@@ -1,4 +1,4 @@
-using DiningRoomBusinessLogic.BusinessLogics;
+using DiningRoomBusinessLogic.BusinessLogic;
 using DiningRoomContracts.BusinessLogicContracts;
 using DiningRoomContracts.StorageContracts;
 using DiningRoomDatabaseImplement.Implements;

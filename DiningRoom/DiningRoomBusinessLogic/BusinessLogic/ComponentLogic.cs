@@ -6,7 +6,7 @@ using DiningRoomContracts.ViewModels;
 using Microsoft.Extensions.Logging;
 
 
-namespace DiningRoomBusinessLogic.BusinessLogics
+namespace DiningRoomBusinessLogic.BusinessLogic
 {
     public class ComponentLogic : IComponentLogic
     {

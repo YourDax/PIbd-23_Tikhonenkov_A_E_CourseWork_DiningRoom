@@ -1,4 +1,5 @@
-﻿using DiningRoomDataModels.Models;
+﻿using DiningRoomDataModels.Enums;
+using DiningRoomDataModels.Models;
 
 namespace DiningRoomContracts.BindingModels
 {
@@ -6,10 +7,8 @@ namespace DiningRoomContracts.BindingModels
 	{
 		public int Id { get; set; }
 
-		public int UserId { get; set; }
-
 		public string ComponentName { get; set; } = string.Empty;
-		public string Unit {  get; set; } = string.Empty;
+		public ComponentUnit Unit {  get; set; } = ComponentUnit.Неизвестна;
 		public double Cost { get; set; }
 	}
 }

@@ -12,9 +12,6 @@ namespace DiningRoomDatabaseImplement.Models
 		public int Id { get; set; }
 
 		[Required]
-		public int UserId { get; set; }
-
-		[Required]
 		public string ProductName { get; set; } = string.Empty;
 
         [Required]
@@ -46,7 +43,6 @@ namespace DiningRoomDatabaseImplement.Models
 			return new()
 			{
 				Id = Model.Id,
-				UserId = Model.UserId,
                 ProductName = Model.ProductName,
 				Cost = Model.Cost,
 				Components = Model.ProductComponents.Select(x => new ProductComponent
@@ -64,7 +60,6 @@ namespace DiningRoomDatabaseImplement.Models
         public ProductViewModel GetViewModel => new()
         {
             Id = Id,
-            UserId = UserId,
             ProductName = ProductName,
             Cost = Cost,
             ProductComponents = ProductComponents

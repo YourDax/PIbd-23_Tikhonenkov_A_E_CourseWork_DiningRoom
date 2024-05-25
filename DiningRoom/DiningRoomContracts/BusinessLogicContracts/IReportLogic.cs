@@ -14,7 +14,7 @@ namespace DiningRoomContracts.BusinessLogicContracts
 		/// <summary>
 		/// Получение отчёта для отправки на почту
 		/// </summary>
-		List<ReportComponentByDateViewModel> GetReportComponentsByCardDate(UserSearchModel CurrentUser, ReportBindingModel Report);
+		List<ReportComponentByDateViewModel> GetReportComponentsByCardDate(ReportBindingModel Report);
 		
 		void SaveReportToWordFile(ReportBindingModel Model);
 

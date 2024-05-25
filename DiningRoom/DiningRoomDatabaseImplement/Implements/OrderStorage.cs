@@ -55,7 +55,7 @@ namespace DiningRoomDatabaseImplement.Implements
             if (model.DateFrom.HasValue && model.DateTo.HasValue)
             {
                 return context.Orders
-                    .Where(x => (x.UserId == model.UserId) && (x.DateCreate >= model.DateFrom && x.DateCreate <= model.DateTo))
+                    .Where(x =>(x.DateCreate >= model.DateFrom && x.DateCreate <= model.DateTo))
                     .Include(x => x.Product)
                     .ToList()
                     .Select(x => x.GetViewModel)
@@ -65,7 +65,7 @@ namespace DiningRoomDatabaseImplement.Implements
             else if (model.Status.HasValue)
             {
                 return context.Orders
-                    .Where(x => (x.UserId == model.UserId) && (x.Status == model.Status))
+                    .Where(x => (x.Status == model.Status))
                     .Include(x => x.Product)
                     .ToList()
                     .Select(x => x.GetViewModel)
@@ -73,7 +73,7 @@ namespace DiningRoomDatabaseImplement.Implements
             }
             
             return context.Orders
-                    .Where(x => x.UserId == model.UserId)
+                    .Where(x => x.Id == model.Id)
                     .Include(x => x.Product)
                     .ToList()
                     .Select(x => x.GetViewModel)

@@ -13,19 +13,14 @@ namespace DiningRoomDatabaseImplement.Models
 		public int Id { get; private set; }
 
 		[Required]
-		public int UserId { get; private set; }
-
-		[Required]
 		public string DrinkName { get; private set; } = string.Empty;
 
 		[Required]
 		public double Cost { get; private set; }
+        [ForeignKey("DrinkId")]
+        public virtual List<Card> Card { get; set; } = new();
 
-		public int CardId { get; private set; }
-        public virtual Card? Card { get; set; } = new();
-
-
-        [ForeignKey("ComponentId")]
+        [ForeignKey("DrinkId")]
 		public virtual List<DrinkComponent> Components { get; set; } = new();
 
 		private Dictionary<int, (IComponentModel, int)>? _drinkComponents;
@@ -52,10 +47,8 @@ namespace DiningRoomDatabaseImplement.Models
 			return new()
 			{
 				Id = Model.Id,
-				UserId = Model.UserId,
 				DrinkName = Model.DrinkName,
 				Cost = Model.Cost,
-				CardId = Model.CardId,
 				Components = Model.DrinkComponents.Select(x => new DrinkComponent
 				{
 					Component = Context.Components.First(y => y.Id == x.Key),
@@ -78,7 +71,6 @@ namespace DiningRoomDatabaseImplement.Models
 				{
 					Id = Id,
 					DrinkName = DrinkName,
-					CardName = context.Cards.FirstOrDefault(x => x.Id == CardId)?.CardName ?? string.Empty,
 					Cost = Cost,
 					DrinkComponents = DrinkComponents
 				};
@@ -111,11 +103,6 @@ namespace DiningRoomDatabaseImplement.Models
                 context.SaveChanges();
             }
             _drinkComponents = null;
-        }
-        public void ConnectDrink(DiningRoomDatabase context, DrinkBindingModel model)
-        {
-            CardId = model.CardId;
-            Card = context.Cards.First(x => x.Id == model.CardId);
         }
     }
 }

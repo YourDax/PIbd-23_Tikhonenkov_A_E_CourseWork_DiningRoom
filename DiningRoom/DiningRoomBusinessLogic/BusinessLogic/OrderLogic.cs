@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiningRoomBusinessLogic.BusinessLogics
+namespace DiningRoomBusinessLogic.BusinessLogic
 {
 	public class OrderLogic : IOrderLogic
 	{
@@ -28,7 +28,7 @@ namespace DiningRoomBusinessLogic.BusinessLogics
 		public List<OrderViewModel>? ReadList(OrderSearchModel? model)
 		{
 			
-			var list = (model == null || model.UserId == -1) ? _orderStorage.GetFullList() : _orderStorage.GetFilteredList(model);
+			var list = (model == null) ? _orderStorage.GetFullList() : _orderStorage.GetFilteredList(model);
 			if (list == null)
 			{
 				_logger.LogWarning("ReadList return null list");

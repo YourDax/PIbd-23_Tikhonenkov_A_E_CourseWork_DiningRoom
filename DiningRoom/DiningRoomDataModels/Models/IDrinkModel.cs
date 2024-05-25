@@ -5,10 +5,6 @@
 	/// </summary>
 	public interface IDrinkModel : IId
 	{
-		/// <summary>
-		/// Пользователь, который добавил напиток
-		/// </summary>
-		int UserId { get; }
 
 		/// <summary>
 		/// Название напитка
@@ -19,7 +15,6 @@
 		/// Стоимость товара
 		/// </summary>
 		double Cost { get; }
-		int CardId { get; }
 
 		/// <summary>
 		/// Список продуктов

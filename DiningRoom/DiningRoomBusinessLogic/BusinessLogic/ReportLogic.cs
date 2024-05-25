@@ -4,7 +4,7 @@ using DiningRoomContracts.SearchModels;
 using DiningRoomContracts.StorageContracts;
 using DiningRoomContracts.ViewModels;
 
-namespace DiningRoomBusinessLogic.BusinessLogics
+namespace DiningRoomBusinessLogic.BusinessLogic
 {
 	public class ReportLogic : IReportLogic
 	{
@@ -26,9 +26,9 @@ namespace DiningRoomBusinessLogic.BusinessLogics
 		/// <summary>
 		/// Получение отчёта для отправки на почту
 		/// </summary>
-		public List<ReportComponentByDateViewModel> GetReportComponentsByCardDate(UserSearchModel CurrentUser, ReportBindingModel Report)
+		public List<ReportComponentByDateViewModel> GetReportComponentsByCardDate(ReportBindingModel Report)
 		{
-			return _componentStorage.GetComponentsByDate(Report, CurrentUser);
+			return _componentStorage.GetComponentsByDate(Report);
 		}
 
 		public void SaveReportToWordFile(ReportBindingModel Model)

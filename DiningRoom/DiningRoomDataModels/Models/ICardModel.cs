@@ -5,10 +5,6 @@
 	/// </summary>
 	public interface ICardModel : IId
 	{
-		/// <summary>
-		/// Пользователь, который добавил карту
-		/// </summary>
-		int UserId { get; }
 
 		/// <summary>
 		/// Название карты

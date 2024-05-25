@@ -102,18 +102,5 @@ namespace DiningRoomDatabaseImplement.Implements
 			}
 			return null;
 		}
-        public bool ConnectCardDrink(DrinkBindingModel model)
-        {
-            using var context = new DiningRoomDatabase();
-            var Card = context.Cards.FirstOrDefault(x => x.Id == model.Id);
-            var Drink = context.Drinks.FirstOrDefault(x => x.Id == model.CardId);
-            if (Card == null || Drink == null)
-            {
-                return false;
-            }
-            Drink.ConnectDrink(context, model);
-            context.SaveChanges();
-            return true;
-        }
     }
 }

@@ -32,14 +32,14 @@ namespace DiningRoomDatabaseImplement.Implements
 			if (model.DateFrom.HasValue && model.DateTo.HasValue)
 			{
 				return context.Cards
-					.Where(x => (x.UserId == model.UserId) && (x.DateCardCreate >= model.DateFrom && x.DateCardCreate <= model.DateTo))
+					.Where(x => (x.DateCardCreate >= model.DateFrom && x.DateCardCreate <= model.DateTo))
 					.Include(x => x.Drinks)
 					.Select(x => x.GetViewModel)
 					.ToList();
 			}
 			//возвращение просто всех заявок пользователя (замена GetFullList) 
 			return context.Cards
-				.Where(x => x.UserId == model.UserId)
+				.Where(x => x.Id == model.Id)
 				.Include(x => x.Drinks)
 				.Select(x => x.GetViewModel)
 				.ToList();

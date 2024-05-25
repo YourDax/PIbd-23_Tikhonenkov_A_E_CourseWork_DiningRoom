@@ -114,12 +114,12 @@ namespace DiningRoomDatabaseImplement.Implements
                 .ToList();
         }
 
-        public List<ReportComponentByDateViewModel> GetComponentsByDate(ReportBindingModel ReportModel, UserSearchModel UserModel)
+        public List<ReportComponentByDateViewModel> GetComponentsByDate(ReportBindingModel ReportModel)
         {
             using var Context = new DiningRoomDatabase();
 
             return Context.Cards
-                .Where(card => card.UserId == UserModel.Id && card.DateCardCreate >= ReportModel.DateFrom && card.DateCardCreate <= ReportModel.DateTo)
+                .Where(card => card.DateCardCreate >= ReportModel.DateFrom && card.DateCardCreate <= ReportModel.DateTo)
                 .Include(card => card.Drinks)
                     .ThenInclude(d => d.Components)
                         .ThenInclude(dc => dc.Component)

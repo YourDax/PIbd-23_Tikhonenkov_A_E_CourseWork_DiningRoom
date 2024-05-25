@@ -28,8 +28,7 @@ namespace DiningRoomDatabaseImplement.Models
         [Required]
         public DateTime DateCreate { get; set; }
         public virtual Product Product { get; set; }
-		[Required]
-		public int UserId { get; private set; }
+
 
 		public static Order? Create(OrderBindingModel model)
 		{
@@ -42,7 +41,6 @@ namespace DiningRoomDatabaseImplement.Models
 				Id = model.Id,
 				ProductId = model.ProductId,
 				ProductName = model.ProductName,
-				UserId = model.UserId,
 				DateCreate = model.DateCreate,
 				Status = model.Status,
 				Count = model.Count,
@@ -71,7 +69,6 @@ namespace DiningRoomDatabaseImplement.Models
 					Id = Id,
 					ProductId = ProductId,
 					ProductName = context.Products.FirstOrDefault(x => x.Id == ProductId)?.ProductName ?? string.Empty,
-					UserId = UserId,
 					DateCreate = DateCreate,
 					Status = Status,
 					Count = Count,

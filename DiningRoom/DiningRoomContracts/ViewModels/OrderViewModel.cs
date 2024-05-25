@@ -14,7 +14,6 @@ namespace DiningRoomContracts.ViewModels
 		[DisplayName("Номер")]
 		public int Id { get; set; }
 		public int ProductId { get; set; }
-		public int UserId { get; set; }
 		[DisplayName("Дата Создания")]
 		public DateTime DateCreate { get; set; } = DateTime.Now;
         [DisplayName("Блюдо")]

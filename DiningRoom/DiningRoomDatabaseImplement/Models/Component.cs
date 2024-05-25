@@ -1,5 +1,6 @@
 ﻿using DiningRoomContracts.BindingModels;
 using DiningRoomContracts.ViewModels;
+using DiningRoomDataModels.Enums;
 using DiningRoomDataModels.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,12 +12,9 @@ namespace DiningRoomDatabaseImplement.Models
 		public int Id { get; private set; }
 
 		[Required]
-		public int UserId { get; private set; }
-
-		[Required]
 		public string ComponentName { get; private set; } = string.Empty;
         [Required]
-        public string Unit { get; private set; } = string.Empty;
+        public ComponentUnit Unit { get; private set; } = ComponentUnit.Неизвестна;
 
         [Required]
 		public double Cost { get; private set; }
@@ -35,7 +33,6 @@ namespace DiningRoomDatabaseImplement.Models
             return new Component()
 			{
 				Id = Model.Id,
-				UserId = Model.UserId,
 				ComponentName = Model.ComponentName,
 				Cost = Model.Cost,
                 Unit = Model.Unit,
@@ -46,7 +43,6 @@ namespace DiningRoomDatabaseImplement.Models
             return new Component
             {
                 Id = Model.Id,
-                UserId = Model.UserId,
                 ComponentName = Model.ComponentName,
                 Cost = Model.Cost,
                 Unit = Model.Unit,
@@ -66,7 +62,6 @@ namespace DiningRoomDatabaseImplement.Models
 		public ComponentViewModel GetViewModel => new()
 		{
 			Id = Id,
-			UserId = UserId,
 			ComponentName = ComponentName,
 			Cost = Cost,
 			Unit = Unit,

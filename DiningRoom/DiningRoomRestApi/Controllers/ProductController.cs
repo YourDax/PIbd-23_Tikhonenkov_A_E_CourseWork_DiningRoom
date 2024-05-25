@@ -36,22 +36,6 @@ namespace DiningRoomRestApi.Controllers
 			}
 		}
 
-		[HttpGet]
-		public List<ProductViewModel>? GetProducts(int? UserId)
-		{
-			try
-			{
-				return _productLogic.ReadList(new ProductSearchModel
-				{
-					UserId = UserId
-				});
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "Ошибка получения списка блюд пользователя с Id = {Id}", UserId);
-				throw;
-			}
-		}
 
 		[HttpPost]
 		public void CreateProduct(ProductBindingModel Model)

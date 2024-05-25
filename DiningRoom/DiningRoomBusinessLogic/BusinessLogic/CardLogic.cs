@@ -11,7 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiningRoomBusinessLogic.BusinessLogics
+namespace DiningRoomBusinessLogic.BusinessLogic
 {
 	public class CardLogic : ICardLogic
 	{
@@ -25,8 +25,8 @@ namespace DiningRoomBusinessLogic.BusinessLogics
 
 		public List<CardViewModel>? ReadList(CardSearchModel? model)
 		{
-			//model.UserId = -1 для swagger, чтобы можно было считать все заявки всех пользователей
-			var list = (model == null || model.UserId == -1) ? _CardStorage.GetFullList() : _CardStorage.GetFilteredList(model);
+			
+			var list = (model == null) ? _CardStorage.GetFullList() : _CardStorage.GetFilteredList(model);
 			if (list == null)
 			{
 				_logger.LogWarning("ReadList Cards return null list");

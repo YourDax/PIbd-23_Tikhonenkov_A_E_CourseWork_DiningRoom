@@ -39,20 +39,19 @@ namespace DiningRoomRestApi.Controllers
 		}
 
 		/// <summary>
-		/// Получение карт по id пользователя (полный список, кот. будет выводиться)
+		/// Получение карт по id(полный список, кот. будет выводиться)
 		/// </summary>
-		/// <param name="userId"></param>
-		/// <returns></returns>
+		
 		[HttpGet]
-		public List<CardViewModel>? GetCards(int userId)
+		public List<CardViewModel>? GetCards(int Id)
 		{
 			try
 			{
-				return _logic.ReadList(new CardSearchModel { UserId = userId });
+				return _logic.ReadList(new CardSearchModel { Id = Id });
 			}
 			catch (Exception ex)
 			{
-				_logger.LogError(ex, "Ошибка получения списка заказов клиента id={Id}", userId);
+				_logger.LogError(ex, "Ошибка получения списка заказов клиента id={Id}", Id);
 				throw;
 			}
 		}

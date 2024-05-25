@@ -11,8 +11,6 @@ namespace DiningRoomContracts.BindingModels
 	public class CardBindingModel : ICardModel
 	{
 		public int Id { get; set; }
-
-		public int UserId { get; set; }
         public int? DrinkId { get; set; }
         public string CardName { get; set; } = string.Empty;
         public DateTime DateCardCreate { get; set; } = DateTime.Now;
