@@ -57,9 +57,12 @@ namespace DiningRoomView
 				var list = _drinkLogic.ReadList(null);
 				if (list != null)
 				{
-					dataGridView2.DataSource = list;
+                    dataGridView2.DataSource = list;
+                    dataGridView2.Columns["Id"].Visible = false;
+                    dataGridView2.Columns["DrinkComponents"].Visible = false;
+                    dataGridView2.Columns["DrinkName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
-				}
+                }
 				_logger.LogInformation("Загрузка напитков успешна");
 			}
 			catch (Exception ex)
@@ -109,7 +112,7 @@ namespace DiningRoomView
                 if (MessageBox.Show("Удалить запись?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["Id"].Value);
-                    _logger.LogInformation("Удаление продукта");
+                    _logger.LogInformation("Удаление блюда");
                     try
                     {
                         if (!_productLogic.Delete(new ProductBindingModel { Id = id }))
@@ -120,7 +123,7 @@ namespace DiningRoomView
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, "Ошибка удаления продукта");
+                        _logger.LogError(ex, "Ошибка удаления блюда");
                         MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
@@ -128,8 +131,8 @@ namespace DiningRoomView
         }
         private void ButtonAddDrink_Click(object sender, EventArgs e)
         {
-            var service = Program.ServiceProvider?.GetService(typeof(FormProduct));
-            if (service is FormProduct form)
+            var service = Program.ServiceProvider?.GetService(typeof(FormDrink));
+            if (service is FormDrink form)
             {
                 if (form.ShowDialog() == DialogResult.OK)
                 {
@@ -141,8 +144,8 @@ namespace DiningRoomView
         {
             if (dataGridView1.SelectedRows.Count == 1)
             {
-                var service = Program.ServiceProvider?.GetService(typeof(FormProduct));
-                if (service is FormProduct form)
+                var service = Program.ServiceProvider?.GetService(typeof(FormDrink));
+                if (service is FormDrink form)
                 {
                     form.Id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["Id"].Value);
                     if (form.ShowDialog() == DialogResult.OK)
@@ -154,15 +157,15 @@ namespace DiningRoomView
         }
         private void ButtonDelDrink_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedRows.Count == 1)
+            if (dataGridView2.SelectedRows.Count == 1)
             {
                 if (MessageBox.Show("Удалить запись?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["Id"].Value);
-                    _logger.LogInformation("Удаление продукта");
+                    int id = Convert.ToInt32(dataGridView2.SelectedRows[0].Cells["Id"].Value);
+                    _logger.LogInformation("Удаление напитка");
                     try
                     {
-                        if (!_productLogic.Delete(new ProductBindingModel { Id = id }))
+                        if (!_drinkLogic.Delete(new DrinkBindingModel { Id = id }))
                         {
                             throw new Exception("Ошибка при удалении. Дополнительная информация в логах.");
                         }
@@ -170,12 +173,13 @@ namespace DiningRoomView
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, "Ошибка удаления продукта");
+                        _logger.LogError(ex, "Ошибка удаления напитка");
                         MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
         }
+
         //private void ButtonCreateSale_Click(object sender, EventArgs e)
         //{
         //	var service = Program.ServiceProvider?.GetService(typeof(FormCreateSale));

@@ -140,6 +140,7 @@
             button4.TabIndex = 8;
             button4.Text = "Редактировать напиток";
             button4.UseVisualStyleBackColor = true;
+            button4.Click += ButtonUpdDrink_Click;
             // 
             // button2
             // 
@@ -168,6 +169,7 @@
             button6.TabIndex = 11;
             button6.Text = "Создать напиток";
             button6.UseVisualStyleBackColor = true;
+            button6.Click += ButtonAddDrink_Click;
             // 
             // button7
             // 
@@ -177,6 +179,7 @@
             button7.TabIndex = 12;
             button7.Text = "Удалить напиток";
             button7.UseVisualStyleBackColor = true;
+            button7.Click += ButtonDelDrink_Click;
             // 
             // FormMain
             // 
