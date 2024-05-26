@@ -12,6 +12,7 @@ namespace DiningRoomView
         private readonly IComponentLogic _logic;
         private int? _id;
         public int Id { set { _id = value; } }
+        public int UserId { get; set; }
         public FormComponent(ILogger<FormComponent> logger, IComponentLogic logic)
         {
             InitializeComponent(); _logger = logger;
@@ -24,7 +25,7 @@ namespace DiningRoomView
                 try
                 {
                     _logger.LogInformation("Получение компонента");
-                    var view = _logic.ReadElement(new ComponentSearchModel { Id = _id.Value });
+                    var view = _logic.ReadElement(new ComponentSearchModel { Id = _id.Value, UserId = UserId });
                     if (view != null)
                     {
                         textBoxName.Text = view.ComponentName;
@@ -32,7 +33,7 @@ namespace DiningRoomView
                         comboBoxUnit.DisplayMember = "Unit";
                         comboBoxUnit.ValueMember = "Id";
                         comboBoxUnit.DataSource = Enum.GetValues(typeof(ComponentUnit)); ;
-                        comboBoxUnit.SelectedItem = null;
+                        comboBoxUnit.SelectedItem = view.Unit;
                     }
                 }
                 catch (Exception ex)
@@ -62,7 +63,8 @@ namespace DiningRoomView
                     Id = _id ?? 0,
                     ComponentName = textBoxName.Text,
                     Unit = (ComponentUnit)comboBoxUnit.SelectedItem,
-                    Cost = Convert.ToDouble(textBoxCost.Text)
+                    Cost = Convert.ToDouble(textBoxCost.Text),
+                    UserId = UserId
                 };
                 var operationResult = _id.HasValue ? _logic.Update(model) : _logic.Create(model);
                 if (!operationResult)

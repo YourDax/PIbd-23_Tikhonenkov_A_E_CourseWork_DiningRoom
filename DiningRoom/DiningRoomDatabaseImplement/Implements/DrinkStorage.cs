@@ -23,20 +23,16 @@ namespace DiningRoomDatabaseImplement.Implements
 
 		public List<DrinkViewModel> GetFilteredList(DrinkSearchModel model)
 		{
-			if (string.IsNullOrEmpty(model.DrinkName))
-			{
-				return new();
-			}
-			using var context = new DiningRoomDatabase();
-			return context.Drinks
-					.Include(x => x.Card)
-                    .Include(x => x.Components)
-					.ThenInclude(x => x.Component)
-					.Where(x => x.DrinkName.Contains(model.DrinkName))
-					.ToList()
-					.Select(x => x.GetViewModel)
-					.ToList();
-		}
+            using var context = new DiningRoomDatabase();
+            var query = context.Drinks.AsQueryable();
+
+            if (model.UserId.HasValue)
+            {
+                query = query.Where(x => x.UserId == model.UserId.Value);
+            }
+
+            return query.Select(x => x.GetViewModel).ToList();
+        }
 
 		public DrinkViewModel? GetElement(DrinkSearchModel model)
 		{

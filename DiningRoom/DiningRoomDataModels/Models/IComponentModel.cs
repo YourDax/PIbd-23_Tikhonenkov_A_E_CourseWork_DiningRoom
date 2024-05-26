@@ -7,10 +7,14 @@ namespace DiningRoomDataModels.Models
 	/// </summary>
 	public interface IComponentModel : IId
 	{
-		/// <summary>
-		/// Название продукта
-		/// </summary>
-		string ComponentName { get; }
+        /// <summary>
+        /// Пользователь, который добавил 
+        /// </summary>		
+        int UserId { get; }
+        /// <summary>
+        /// Название продукта
+        /// </summary>
+        string ComponentName { get; }
         /// <summary>
         /// Единица измерения
         /// </summary>

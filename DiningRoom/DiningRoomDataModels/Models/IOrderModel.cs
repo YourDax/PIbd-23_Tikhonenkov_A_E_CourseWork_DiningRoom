@@ -9,10 +9,15 @@ namespace DiningRoomDataModels.Models
 {
 	public interface IOrderModel : IId
 	{
-		/// <summary>
-		/// Дата создания заказа
-		/// </summary>
-		DateTime DateCreate { get; }
+        string Name { get; }
+        /// <summary>
+        /// Пользователь, который добавил 
+        /// </summary>		
+        int UserId { get; }
+        /// <summary>
+        /// Дата создания заказа
+        /// </summary>
+        DateTime DateCreate { get; }
         int ProductId { get; }
         /// <summary>
         /// Статус заказа

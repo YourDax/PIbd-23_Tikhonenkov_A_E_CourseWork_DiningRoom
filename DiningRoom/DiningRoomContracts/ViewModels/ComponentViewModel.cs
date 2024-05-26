@@ -7,9 +7,10 @@ namespace DiningRoomContracts.ViewModels
 	public class ComponentViewModel : IComponentModel
 	{
 		public int Id { get; set; }
+        public int UserId { get; set; }
+        public string Login { get; set; } = string.Empty;
 
-
-		[DisplayName("Название продукта")]
+        [DisplayName("Название продукта")]
 		public string ComponentName { get; set; } = string.Empty;
         [DisplayName("Единица измерения")]
         public ComponentUnit Unit { get; set; } = ComponentUnit.Неизвестна;

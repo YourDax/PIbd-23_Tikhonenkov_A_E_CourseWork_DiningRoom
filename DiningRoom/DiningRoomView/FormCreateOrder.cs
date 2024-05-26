@@ -22,6 +22,7 @@ namespace DiningRoomView
         private readonly ILogger _logger;
         private readonly IProductLogic _logicP;
         private readonly IOrderLogic _logicO;
+        public int UserId { get; set; }
 
         public FormCreateOrder(ILogger<FormCreateOrder> logger, IProductLogic logicP, IOrderLogic logicO)
         {
@@ -35,7 +36,7 @@ namespace DiningRoomView
         {
             _logger.LogInformation("Загрузка изделий для заказа");
             // прописать логику
-            List<ProductViewModel> list = _logicP.ReadList(null);
+            List<ProductViewModel> list = _logicP.ReadList(new ProductSearchModel { UserId = UserId });
             if (list != null)
             {
                 comboBoxProduct.DisplayMember = "ProductName";
@@ -73,14 +74,9 @@ namespace DiningRoomView
         }
         private void ButtonSave_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(textBoxCount.Text))
+            if (UserId == 0)
             {
-                MessageBox.Show("Заполните поле Количество", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (comboBoxProduct.SelectedValue == null)
-            {
-                MessageBox.Show("Выберите изделие", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             _logger.LogInformation("Создание заказа");
@@ -92,7 +88,8 @@ namespace DiningRoomView
                     ProductName = comboBoxProduct.Text,
                     Count = Convert.ToInt32(textBoxCount.Text),
                     Sum = Convert.ToDouble(textBoxSum.Text),
-                    Status = OrderStatus.Принят
+                    Status = OrderStatus.Принят,
+                    UserId = UserId
                 });
                 if (!operationResult)
                 {

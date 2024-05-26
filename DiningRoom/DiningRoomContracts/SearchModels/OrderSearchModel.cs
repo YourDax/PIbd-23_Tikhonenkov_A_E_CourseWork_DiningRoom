@@ -12,7 +12,9 @@ namespace DiningRoomContracts.SearchModels
 	{
 		public int? Id { get; set; }
 
-		public DateTime? DateFrom { get; set; }
+		public string Name { get; set; } = string.Empty;
+        public int? UserId { get; set; }
+        public DateTime? DateFrom { get; set; }
 		public DateTime? DateTo { get; set; }
 		public string? ProductName { get; set; }
 

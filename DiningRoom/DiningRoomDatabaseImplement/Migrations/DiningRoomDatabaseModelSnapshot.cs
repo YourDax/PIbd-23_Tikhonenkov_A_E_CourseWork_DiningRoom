@@ -37,7 +37,7 @@ namespace DiningRoomDatabaseImplement.Migrations
                     b.Property<DateTime>("DateCardCreate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -65,7 +65,7 @@ namespace DiningRoomDatabaseImplement.Migrations
                     b.Property<int>("Unit")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -73,36 +73,6 @@ namespace DiningRoomDatabaseImplement.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Components");
-                });
-
-            modelBuilder.Entity("DiningRoomDatabaseImplement.Models.Drink", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CardId")
-                        .HasColumnType("integer");
-
-                    b.Property<double>("Cost")
-                        .HasColumnType("double precision");
-
-                    b.Property<string>("DrinkName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CardId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Drinks");
                 });
 
             modelBuilder.Entity("DiningRoomDatabaseImplement.Models.DrinkComponent", b =>
@@ -145,6 +115,10 @@ namespace DiningRoomDatabaseImplement.Migrations
                     b.Property<DateTime>("DateCreate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("integer");
 
@@ -154,7 +128,7 @@ namespace DiningRoomDatabaseImplement.Migrations
                     b.Property<double>("Sum")
                         .HasColumnType("double precision");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -181,7 +155,7 @@ namespace DiningRoomDatabaseImplement.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -242,33 +216,56 @@ namespace DiningRoomDatabaseImplement.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Drink", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CardId")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("Cost")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("DrinkName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Drinks");
+                });
+
             modelBuilder.Entity("DiningRoomDatabaseImplement.Models.Card", b =>
                 {
-                    b.HasOne("DiningRoomDatabaseImplement.Models.User", null)
+                    b.HasOne("DiningRoomDatabaseImplement.Models.User", "User")
                         .WithMany("Cards")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DiningRoomDatabaseImplement.Models.Component", b =>
                 {
-                    b.HasOne("DiningRoomDatabaseImplement.Models.User", null)
+                    b.HasOne("DiningRoomDatabaseImplement.Models.User", "User")
                         .WithMany("Components")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("DiningRoomDatabaseImplement.Models.Drink", b =>
-                {
-                    b.HasOne("DiningRoomDatabaseImplement.Models.Card", "Card")
-                        .WithMany("Drinks")
-                        .HasForeignKey("CardId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DiningRoomDatabaseImplement.Models.User", null)
-                        .WithMany("Drinks")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Card");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DiningRoomDatabaseImplement.Models.DrinkComponent", b =>
@@ -279,7 +276,7 @@ namespace DiningRoomDatabaseImplement.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DiningRoomDatabaseImplement.Models.Drink", "Drink")
+                    b.HasOne("Drink", "Drink")
                         .WithMany("Components")
                         .HasForeignKey("DrinkId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -298,18 +295,26 @@ namespace DiningRoomDatabaseImplement.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DiningRoomDatabaseImplement.Models.User", null)
+                    b.HasOne("DiningRoomDatabaseImplement.Models.User", "User")
                         .WithMany("Orders")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DiningRoomDatabaseImplement.Models.Product", b =>
                 {
-                    b.HasOne("DiningRoomDatabaseImplement.Models.User", null)
+                    b.HasOne("DiningRoomDatabaseImplement.Models.User", "User")
                         .WithMany("Products")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DiningRoomDatabaseImplement.Models.ProductComponent", b =>
@@ -331,6 +336,23 @@ namespace DiningRoomDatabaseImplement.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("Drink", b =>
+                {
+                    b.HasOne("DiningRoomDatabaseImplement.Models.Card", "Card")
+                        .WithMany("Drinks")
+                        .HasForeignKey("CardId");
+
+                    b.HasOne("DiningRoomDatabaseImplement.Models.User", "User")
+                        .WithMany("Drinks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Card");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("DiningRoomDatabaseImplement.Models.Card", b =>
                 {
                     b.Navigation("Drinks");
@@ -341,11 +363,6 @@ namespace DiningRoomDatabaseImplement.Migrations
                     b.Navigation("DrinkComponents");
 
                     b.Navigation("ProductComponents");
-                });
-
-            modelBuilder.Entity("DiningRoomDatabaseImplement.Models.Drink", b =>
-                {
-                    b.Navigation("Components");
                 });
 
             modelBuilder.Entity("DiningRoomDatabaseImplement.Models.Product", b =>
@@ -366,6 +383,11 @@ namespace DiningRoomDatabaseImplement.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Drink", b =>
+                {
+                    b.Navigation("Components");
                 });
 #pragma warning restore 612, 618
         }

@@ -107,7 +107,7 @@
             Controls.Add(dataGridView);
             Name = "FormCards";
             Text = "Изделия";
-            Load += FormWoods_Load;
+            Load += FormProducts_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();

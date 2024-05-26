@@ -14,18 +14,22 @@ namespace DiningRoomDatabaseImplement.Models
 {
 	public class Order : IOrderModel
 	{
+		[Required]
+		public string Name { get; set; }
         public int Id { get; set; }
-        [Required]
+
         public int ProductId { get; set; }
-        [Required]
+
         public int Count { get; set; }
-        [Required]
+
         public double Sum { get; set; }
         [Required]
         public OrderStatus Status { get; set; }
         [Required]
         public DateTime DateCreate { get; set; }
-        
+        public int UserId { get; set; }
+        public User User { get; set; }
+
         public virtual Product Product { get; set; }
 
 
@@ -38,7 +42,9 @@ namespace DiningRoomDatabaseImplement.Models
 			return new Order()
 			{
 				Id = model.Id,
-				ProductId = model.ProductId,
+				Name = model.Name,
+                UserId = model.UserId,
+                ProductId = model.ProductId,
 				DateCreate = model.DateCreate,
 				Status = model.Status,
 				Count = model.Count,
@@ -53,6 +59,7 @@ namespace DiningRoomDatabaseImplement.Models
 				return;
 			}
 			using var context = new DiningRoomDatabase();
+			Name = model.Name;
 			Status = model.Status;
 			context.SaveChanges();
 		}
@@ -65,6 +72,9 @@ namespace DiningRoomDatabaseImplement.Models
 				return new OrderViewModel
 				{
 					Id = Id,
+					Name = Name,
+					UserId = UserId,
+					Login  = context.Users.FirstOrDefault(x=> x.Id == UserId)?.Login ?? string.Empty,
 					ProductId = ProductId,
 					ProductName = context.Products.FirstOrDefault(x => x.Id == ProductId)?.ProductName ?? string.Empty,
 					DateCreate = DateCreate,

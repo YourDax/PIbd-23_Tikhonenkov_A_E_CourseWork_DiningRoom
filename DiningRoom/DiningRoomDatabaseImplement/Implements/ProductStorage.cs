@@ -24,14 +24,14 @@ namespace DiningRoomDatabaseImplement.Implements
         public List<ProductViewModel> GetFilteredList(ProductSearchModel model)
 		{
             using var context = new DiningRoomDatabase();
+            var query = context.Products.AsQueryable();
 
-            return context.Products
-                .Include(x => x.Order)
-                .Include(x => x.Components)
-                    .ThenInclude(x => x.Component)
-                .Where(x => x.Id == model.Id)
-                .Select(x => x.GetViewModel)
-                .ToList();
+            if (model.UserId.HasValue)
+            {
+                query = query.Where(x => x.UserId == model.UserId.Value);
+            }
+
+            return query.Select(x => x.GetViewModel).ToList();
         }
 
         public ProductViewModel? GetElement(ProductSearchModel Model)

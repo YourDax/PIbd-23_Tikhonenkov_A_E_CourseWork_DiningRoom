@@ -21,6 +21,7 @@ namespace DiningRoomDatabaseImplement.Implements
 
             var element = context.Orders
                 .Include(x => x.Product)
+                .Include(x => x.User)
                 .FirstOrDefault(rec => rec.Id == model.Id);
 
             if (element != null)
@@ -45,39 +46,21 @@ namespace DiningRoomDatabaseImplement.Implements
 
             return context.Orders
                     .Include(x=> x.Product)
+                    .Include(x => x.User)
                     .FirstOrDefault(x => x.Id == model.Id)?.GetViewModel;
         }
 
         public List<OrderViewModel> GetFilteredList(OrderSearchModel model)
         {
             using var context = new DiningRoomDatabase();
-            
-            if (model.DateFrom.HasValue && model.DateTo.HasValue)
+            var query = context.Orders.AsQueryable();
+
+            if (model.UserId.HasValue)
             {
-                return context.Orders
-                    .Where(x =>(x.DateCreate >= model.DateFrom && x.DateCreate <= model.DateTo))
-                    .Include(x => x.Product)
-                    .ToList()
-                    .Select(x => x.GetViewModel)
-                    .ToList();
+                query = query.Where(x => x.UserId == model.UserId.Value);
             }
-            
-            else if (model.Status.HasValue)
-            {
-                return context.Orders
-                    .Where(x => (x.Status == model.Status))
-                    .Include(x => x.Product)
-                    .ToList()
-                    .Select(x => x.GetViewModel)
-                    .ToList();
-            }
-            
-            return context.Orders
-                    .Where(x => x.Id == model.Id)
-                    .Include(x => x.Product)
-                    .ToList()
-                    .Select(x => x.GetViewModel)
-                    .ToList();
+
+            return query.Select(x => x.GetViewModel).ToList();
         }
 
         public List<OrderViewModel> GetFullList()

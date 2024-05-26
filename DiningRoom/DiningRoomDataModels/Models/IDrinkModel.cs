@@ -5,17 +5,21 @@
 	/// </summary>
 	public interface IDrinkModel : IId
 	{
+        /// <summary>
+        /// Пользователь, который добавил 
+        /// </summary>		
+        int UserId { get; }
 
-		/// <summary>
-		/// Название напитка
-		/// </summary>
-		string DrinkName { get; }
+        /// <summary>
+        /// Название напитка
+        /// </summary>
+        string DrinkName { get; }
 
 		/// <summary>
 		/// Стоимость товара
 		/// </summary>
 		double Cost { get; }
-        public int CardId { get; set; }
+        public int? CardId { get; set; }
 
         /// <summary>
         /// Список продуктов

@@ -164,6 +164,7 @@
             button5.TabIndex = 10;
             button5.Text = "Обновить списки";
             button5.UseVisualStyleBackColor = true;
+            button5.Click += ButtonRef_Click;
             // 
             // button6
             // 

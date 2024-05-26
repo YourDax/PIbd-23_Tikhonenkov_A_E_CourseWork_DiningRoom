@@ -23,29 +23,12 @@ namespace DiningRoomView
         private readonly IDrinkLogic _logic;
         private readonly ICardLogic _cardLogic;
         private int? _id;
-        
+        public int UserId { get; set; }
+
         private Dictionary<int, (IComponentModel, int)> _drinkComponents;
         public int Id { get { return Convert.ToInt32(comboBoxCards.SelectedValue); } set { comboBoxCards.SelectedValue = value; _id = value; } }
 
         private readonly List<CardViewModel>? _list;
-        public ICardModel? CardModel
-        {
-            get
-            {
-                if (_list == null)
-                {
-                    return null;
-                }
-                foreach (var elem in _list)
-                {
-                    if (elem.Id == Id)
-                    {
-                        return elem;
-                    }
-                }
-                return null;
-            }
-        }
         public FormDrink(ILogger<FormDrink> logger, IDrinkLogic logic, ICardLogic cardLogic)
         {
             InitializeComponent();
@@ -74,6 +57,7 @@ namespace DiningRoomView
                     {
                         textBoxName.Text = view.DrinkName;
                         textBoxPrice.Text = view.Cost.ToString();
+                        comboBoxCards.SelectedItem = view.CardId;
                         _drinkComponents = view.DrinkComponents ?? new Dictionary<int, (IComponentModel, int)>();
                         LoadData();
                     }
@@ -177,6 +161,11 @@ namespace DiningRoomView
         }
         private void ButtonSave_Click(object sender, EventArgs e)
         {
+            if (UserId == 0)
+            {
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (string.IsNullOrEmpty(textBoxName.Text))
             {
                 MessageBox.Show("Заполните название", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -200,8 +189,9 @@ namespace DiningRoomView
                     Id = _id ?? 0,
                     DrinkName = textBoxName.Text,
                     Cost = Convert.ToDouble(textBoxPrice.Text),
-                    CardId = Convert.ToInt32(comboBoxCards.SelectedValue),
-                    DrinkComponents = _drinkComponents
+                    CardId = comboBoxCards.SelectedValue as int?,
+                    DrinkComponents = _drinkComponents,
+                    UserId = this.UserId // Передаем UserId
                 };
                 var operationResult = _id.HasValue ? _logic.Update(model) : _logic.Create(model);
                 if (!operationResult)

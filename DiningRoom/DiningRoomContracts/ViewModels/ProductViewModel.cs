@@ -6,8 +6,10 @@ namespace DiningRoomContracts.ViewModels
 	public class ProductViewModel : IProductModel
 	{
 		public int Id { get; set; }
+        public int UserId { get; set; }
+        public string Login { get; set; } = string.Empty;
 
-		[DisplayName("Название товара")]
+        [DisplayName("Название товара")]
 		public string ProductName { get; set; } = string.Empty;
 
 		[DisplayName("Стоимость")]

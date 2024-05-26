@@ -25,24 +25,16 @@ namespace DiningRoomDatabaseImplement.Implements
 		}
 
 		public List<CardViewModel> GetFilteredList(CardSearchModel model) {
-			using var context = new DiningRoomDatabase();
+            using var context = new DiningRoomDatabase();
+            var query = context.Cards.AsQueryable();
 
-			//сортировка по дате создания заявки
-			if (model.DateFrom.HasValue && model.DateTo.HasValue)
-			{
-				return context.Cards
-					.Where(x => (x.DateCardCreate >= model.DateFrom && x.DateCardCreate <= model.DateTo))
-					.Include(x => x.Drinks)
-					.Select(x => x.GetViewModel)
-					.ToList();
-			}
-			//возвращение просто всех заявок пользователя (замена GetFullList) 
-			return context.Cards
-				.Where(x => x.Id == model.Id)
-				.Include(x => x.Drinks)
-				.Select(x => x.GetViewModel)
-				.ToList();
-		}
+            if (model.UserId.HasValue)
+            {
+                query = query.Where(x => x.UserId == model.UserId.Value);
+            }
+
+            return query.Select(x => x.GetViewModel).ToList();
+        }
 
 		//Поиск только по id, потому что другие поля не уникальные - нет смысла искать 1 элемент
 		public CardViewModel? GetElement(CardSearchModel model)

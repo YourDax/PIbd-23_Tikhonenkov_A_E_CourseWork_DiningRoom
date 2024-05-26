@@ -10,6 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DiningRoomContracts.BindingModels;
+using DiningRoomBusinessLogic.BusinessLogic;
+using DiningRoomContracts.ViewModels;
+using DiningRoomContracts.SearchModels;
 
 namespace DiningRoomView
 {
@@ -18,88 +21,134 @@ namespace DiningRoomView
 		private readonly ILogger _logger;
 		private readonly IProductLogic _productLogic;
 		private readonly IDrinkLogic _drinkLogic;
-		public FormMain(ILogger<FormMain> logger, IProductLogic productLogic, IDrinkLogic drinkLogic)
-		{
-			InitializeComponent();
-			_logger = logger;
+        private readonly IUserLogic _userLogic;
+        private UserViewModel? _currentUser;
+        public FormMain(ILogger<FormMain> logger, IProductLogic productLogic, IDrinkLogic drinkLogic, IUserLogic userLogic)
+        {
+            InitializeComponent();
+            _logger = logger;
             _productLogic = productLogic;
             _drinkLogic = drinkLogic;
-		}
-		private void FormMain_Load(object sender, EventArgs e)
+            _userLogic = userLogic;
+        }
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+            var loginForm = new FormLogin(_userLogic);
+            if (loginForm.ShowDialog() != DialogResult.OK)
+            {
+                Close();
+                return;
+            }
+            _currentUser = loginForm.LoggedInUser;
+
+            LoadData();
+        }
+        private void LoadData()
 		{
-			LoadData();
-		}
-		private void LoadData()
-		{
-			_logger.LogInformation("Загрузка блюд");
-			try
-			{
-				var list = _productLogic.ReadList(null);
-				if (list != null)
-				{
-					dataGridView1.DataSource = list;
+            if (_currentUser == null)
+            {
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
+                return;
+            }
+
+            _logger.LogInformation("Загрузка блюд");
+            try
+            {
+                var list = _productLogic.ReadList(new ProductSearchModel { UserId = _currentUser.Id });
+                if (list != null)
+                {
+                    dataGridView1.DataSource = list;
                     dataGridView1.Columns["Id"].Visible = false;
+                    dataGridView1.Columns["UserId"].Visible = false;
+                    dataGridView1.Columns["Login"].Visible = false;
                     dataGridView1.Columns["ProductComponents"].Visible = false;
                     dataGridView1.Columns["ProductName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
                 }
-				_logger.LogInformation("Загрузка блюд успешна");
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "Ошибка загрузки блюд");
-				MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
+                _logger.LogInformation("Загрузка блюд успешна");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка загрузки блюд");
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
-			_logger.LogInformation("Загрузка напитков");
-			try
-			{
-				var list = _drinkLogic.ReadList(null);
-				if (list != null)
-				{
+            _logger.LogInformation("Загрузка напитков");
+            try
+            {
+                var list = _drinkLogic.ReadList(new DrinkSearchModel { UserId = _currentUser.Id });
+                if (list != null)
+                {
                     dataGridView2.DataSource = list;
                     dataGridView2.Columns["Id"].Visible = false;
+                    dataGridView2.Columns["UserId"].Visible = false;
+                    dataGridView2.Columns["Login"].Visible = false;
+                    dataGridView2.Columns["CardId"].Visible = false;
                     dataGridView2.Columns["DrinkComponents"].Visible = false;
                     dataGridView2.Columns["DrinkName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
                 }
-				_logger.LogInformation("Загрузка напитков успешна");
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "Ошибка загрузки напитков");
-				MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-		}
+                _logger.LogInformation("Загрузка напитков успешна");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка загрузки напитков");
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 		private void ПродуктыToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var service = Program.ServiceProvider?.GetService(typeof(FormComponents));
+            if (_currentUser == null)
+            {
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            var service = Program.ServiceProvider?.GetService(typeof(FormComponents));
 			if (service is FormComponents form)
 			{
-				form.ShowDialog();
+                form._currentUser = _currentUser;
+                form.ShowDialog();
 			}
 		}
         private void ЗаказыToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (_currentUser == null)
+            {
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             var service = Program.ServiceProvider?.GetService(typeof(FormOrders));
             if (service is FormOrders form)
             {
+                form._currentUser = _currentUser;
                 form.ShowDialog();
             }
         }
         private void КартыToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (_currentUser == null)
+            {
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             var service = Program.ServiceProvider?.GetService(typeof(FormCards));
             if (service is FormCards form)
             {
+                form._currentUser = _currentUser;
                 form.ShowDialog();
             }
         }
         private void ButtonAddProduct_Click(object sender, EventArgs e)
         {
+            if (_currentUser == null)
+            {
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             var service = Program.ServiceProvider?.GetService(typeof(FormProduct));
             if (service is FormProduct form)
             {
+                form.UserId = _currentUser.Id;
                 if (form.ShowDialog() == DialogResult.OK)
                 {
                     LoadData();
@@ -108,11 +157,17 @@ namespace DiningRoomView
         }
         private void ButtonUpdProduct_Click(object sender, EventArgs e)
         {
+            if (_currentUser == null)
+            {
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (dataGridView1.SelectedRows.Count == 1)
             {
                 var service = Program.ServiceProvider?.GetService(typeof(FormProduct));
                 if (service is FormProduct form)
                 {
+                    form.UserId = _currentUser.Id;
                     form.Id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["Id"].Value);
                     if (form.ShowDialog() == DialogResult.OK)
                     {
@@ -147,9 +202,15 @@ namespace DiningRoomView
         }
         private void ButtonAddDrink_Click(object sender, EventArgs e)
         {
+            if (_currentUser == null)
+            {
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             var service = Program.ServiceProvider?.GetService(typeof(FormDrink));
             if (service is FormDrink form)
             {
+                form.UserId = _currentUser.Id;
                 if (form.ShowDialog() == DialogResult.OK)
                 {
                     LoadData();
@@ -160,9 +221,15 @@ namespace DiningRoomView
         {
             if (dataGridView2.SelectedRows.Count == 1)
             {
+                if (_currentUser == null)
+                {
+                    MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 var service = Program.ServiceProvider?.GetService(typeof(FormDrink));
                 if (service is FormDrink form)
                 {
+                    form.UserId = _currentUser.Id;
                     form.Id = Convert.ToInt32(dataGridView2.SelectedRows[0].Cells["Id"].Value);
                     if (form.ShowDialog() == DialogResult.OK)
                     {
@@ -194,6 +261,10 @@ namespace DiningRoomView
                     }
                 }
             }
+        }
+        private void ButtonRef_Click(object sender, EventArgs e)
+        {
+            LoadData();
         }
 
         //private void ButtonCreateSale_Click(object sender, EventArgs e)

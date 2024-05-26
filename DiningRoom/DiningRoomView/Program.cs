@@ -40,12 +40,14 @@ namespace DiningRoomView
             services.AddTransient<IDrinkStorage, DrinkStorage>();
             services.AddTransient<ICardStorage, CardStorage>();
             services.AddTransient<IOrderStorage, OrderStorage>();
+            services.AddTransient<IUserStorage, UserStorage>();
 
             services.AddTransient<IComponentLogic, ComponentLogic>();
             services.AddTransient<IProductLogic, ProductLogic>();
             services.AddTransient<IDrinkLogic, DrinkLogic>();
             services.AddTransient<ICardLogic, CardLogic>();
             services.AddTransient<IOrderLogic, OrderLogic>();
+            services.AddTransient<IUserLogic, UserLogic>();
 
             services.AddTransient<FormMain>();
             services.AddTransient<FormComponent>();
@@ -57,6 +59,8 @@ namespace DiningRoomView
             services.AddTransient<FormCreateOrder>();
             services.AddTransient<FormOrders>();
             services.AddTransient<FormCards>();
+            services.AddTransient<FormRegister>();
+            services.AddTransient<FormLogin>();
 
 
 

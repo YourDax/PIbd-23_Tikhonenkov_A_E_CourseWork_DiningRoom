@@ -10,8 +10,10 @@ namespace DiningRoomDatabaseImplement.Models
 	public class Product : IProductModel
 	{
 		public int Id { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
 
-		[Required]
+        [Required]
 		public string ProductName { get; set; } = string.Empty;
 
         [Required]
@@ -50,6 +52,7 @@ namespace DiningRoomDatabaseImplement.Models
 					Component = Context.Components.First(y => y.Id == x.Key),
 					Count = x.Value.Item2
 				}).ToList(),
+                UserId = Model.UserId,
 			};
 		}
         public void Update(ProductBindingModel model)

@@ -5,11 +5,14 @@
 	/// </summary>
 	public interface IProductModel : IId
 	{
-
-		/// <summary>
-		/// Название блюда
-		/// </summary>
-		string ProductName { get; }
+        /// <summary>
+        /// Пользователь, который добавил 
+        /// </summary>		
+        int UserId { get; }
+        /// <summary>
+        /// Название блюда
+        /// </summary>
+        string ProductName { get; }
 
 		/// <summary>
 		/// Стоимость блюда

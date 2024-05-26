@@ -33,9 +33,9 @@ namespace DiningRoomDatabaseImplement.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
                     CardName = table.Column<string>(type: "text", nullable: false),
-                    DateCardCreate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: true)
+                    DateCardCreate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,7 +44,8 @@ namespace DiningRoomDatabaseImplement.Migrations
                         name: "FK_Cards_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -53,10 +54,10 @@ namespace DiningRoomDatabaseImplement.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
                     ComponentName = table.Column<string>(type: "text", nullable: false),
                     Unit = table.Column<int>(type: "integer", nullable: false),
-                    Cost = table.Column<double>(type: "double precision", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: true)
+                    Cost = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,7 +66,8 @@ namespace DiningRoomDatabaseImplement.Migrations
                         name: "FK_Components_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,9 +76,9 @@ namespace DiningRoomDatabaseImplement.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
                     ProductName = table.Column<string>(type: "text", nullable: false),
-                    Cost = table.Column<double>(type: "double precision", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: true)
+                    Cost = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,7 +87,8 @@ namespace DiningRoomDatabaseImplement.Migrations
                         name: "FK_Products_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -94,10 +97,10 @@ namespace DiningRoomDatabaseImplement.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
                     DrinkName = table.Column<string>(type: "text", nullable: false),
-                    CardId = table.Column<int>(type: "integer", nullable: false),
-                    Cost = table.Column<double>(type: "double precision", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: true)
+                    CardId = table.Column<int>(type: "integer", nullable: true),
+                    Cost = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -106,13 +109,13 @@ namespace DiningRoomDatabaseImplement.Migrations
                         name: "FK_Drinks_Cards_CardId",
                         column: x => x.CardId,
                         principalTable: "Cards",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Drinks_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -121,12 +124,13 @@ namespace DiningRoomDatabaseImplement.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
                     ProductId = table.Column<int>(type: "integer", nullable: false),
                     Count = table.Column<int>(type: "integer", nullable: false),
                     Sum = table.Column<double>(type: "double precision", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     DateCreate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: true)
+                    UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -141,7 +145,8 @@ namespace DiningRoomDatabaseImplement.Migrations
                         name: "FK_Orders_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

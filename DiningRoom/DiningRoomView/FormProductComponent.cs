@@ -1,4 +1,5 @@
 ﻿using DiningRoomContracts.BusinessLogicContracts;
+using DiningRoomContracts.SearchModels;
 using DiningRoomContracts.ViewModels;
 using DiningRoomDataModels.Models;
 using System;

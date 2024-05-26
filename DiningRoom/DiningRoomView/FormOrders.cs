@@ -1,6 +1,8 @@
 ﻿using DiningRoomBusinessLogic.BusinessLogic;
 using DiningRoomContracts.BindingModels;
 using DiningRoomContracts.BusinessLogicContracts;
+using DiningRoomContracts.SearchModels;
+using DiningRoomContracts.ViewModels;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace DiningRoomView
     {
         private readonly ILogger _logger;
         private readonly IOrderLogic _orderLogic;
+        public UserViewModel? _currentUser { get; set; }
         public FormOrders(ILogger<FormMain> logger, IOrderLogic orderLogic)
         {
             InitializeComponent();
@@ -30,11 +33,16 @@ namespace DiningRoomView
         }
         private void LoadData()
         {
+            if (_currentUser == null)
+            {
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             _logger.LogInformation("Загрузка заказов");
             // прописать логику
             try
             {
-                var list = _orderLogic.ReadList(null);
+                var list = _orderLogic.ReadList(new OrderSearchModel { UserId = _currentUser.Id });
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
@@ -50,9 +58,15 @@ namespace DiningRoomView
         }
         private void ButtonCreateOrder_Click(object sender, EventArgs e)
         {
+            if (_currentUser == null)
+            {
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             var service = Program.ServiceProvider?.GetService(typeof(FormCreateOrder));
             if (service is FormCreateOrder form)
             {
+                form.UserId = _currentUser.Id;
                 form.ShowDialog();
                 LoadData();
             }

@@ -13,7 +13,11 @@ namespace DiningRoomContracts.ViewModels
 	{
 		[DisplayName("Номер")]
 		public int Id { get; set; }
-		public int ProductId { get; set; }
+        [DisplayName("Название заказа")]
+        public string Name { get; set; } = string.Empty;
+		public int UserId { get; set; }
+        public string? Login { get; set; } = string.Empty;
+        public int ProductId { get; set; }
 		[DisplayName("Дата Создания")]
 		public DateTime DateCreate { get; set; } = DateTime.Now;
         [DisplayName("Блюдо")]

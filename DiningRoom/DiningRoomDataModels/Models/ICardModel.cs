@@ -5,11 +5,14 @@
 	/// </summary>
 	public interface ICardModel : IId
 	{
-
-		/// <summary>
-		/// Название карты
-		/// </summary>
-		string CardName { get; }
+        /// <summary>
+        /// Пользователь, который добавил 
+        /// </summary>		
+        int UserId { get; }
+        /// <summary>
+        /// Название карты
+        /// </summary>
+        string CardName { get; }
         DateTime DateCardCreate { get; }
     }
 }

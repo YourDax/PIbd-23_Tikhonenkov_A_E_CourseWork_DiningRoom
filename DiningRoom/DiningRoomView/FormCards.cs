@@ -1,6 +1,7 @@
 ﻿using DiningRoomContracts.BindingModels;
 using DiningRoomContracts.BusinessLogicContracts;
 using DiningRoomContracts.SearchModels;
+using DiningRoomContracts.ViewModels;
 using DiningRoomDataModels.Models;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,25 +21,35 @@ namespace DiningRoomView
     {
         private readonly ILogger _logger;
         private readonly ICardLogic _logic;
+        public UserViewModel? _currentUser { get; set; }
         public FormCards(ILogger<FormCards> logger, ICardLogic logic)
         {
             InitializeComponent();
             _logger = logger;
             _logic = logic;
         }
-        private void FormWoods_Load(object sender, EventArgs e)
+        private void FormProducts_Load(object sender, EventArgs e)
         {
             LoadData();
         }
         private void LoadData()
         {
+            if (_currentUser == null)
+            {
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
+                return;
+            }
             try
             {
-                var list = _logic.ReadList(null);
+                var list = _logic.ReadList(new CardSearchModel { UserId = _currentUser.Id });
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
                     dataGridView.Columns["Id"].Visible = false;
+                    dataGridView.Columns["UserId"].Visible = false;
+                    dataGridView.Columns["DrinkCard"].Visible = false;
+                    dataGridView.Columns["Login"].Visible = false;
                     dataGridView.Columns["CardName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
                 }
@@ -52,6 +63,11 @@ namespace DiningRoomView
         }
         private void ButtonAdd_Click(object sender, EventArgs e)
         {
+            if (_currentUser == null)
+            {
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (string.IsNullOrEmpty(textBoxName.Text))
             {
                 MessageBox.Show("Заполните название", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -64,6 +80,7 @@ namespace DiningRoomView
                 {
                     Id = 0,
                     CardName = textBoxName.Text,
+                    UserId = _currentUser.Id,
                 };
                 var operationResult =_logic.Create(model);
                 if (!operationResult)

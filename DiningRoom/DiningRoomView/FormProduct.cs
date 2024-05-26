@@ -1,6 +1,7 @@
 ﻿using DiningRoomContracts.BindingModels;
 using DiningRoomContracts.BusinessLogicContracts;
 using DiningRoomContracts.SearchModels;
+using DiningRoomContracts.ViewModels;
 using DiningRoomDataModels.Models;
 using Microsoft.Extensions.Logging;
 using System;
@@ -22,6 +23,7 @@ namespace DiningRoomView
         private int? _id;
         private Dictionary<int, (IComponentModel, int)> _productComponents;
         public int Id { set { _id = value; } }
+        public int UserId { get; set; }
         public FormProduct(ILogger<FormProduct> logger, IProductLogic logic)
         {
             InitializeComponent();
@@ -144,6 +146,11 @@ namespace DiningRoomView
         }
         private void ButtonSave_Click(object sender, EventArgs e)
         {
+            if (UserId == 0)
+            {
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (string.IsNullOrEmpty(textBoxName.Text))
             {
                 MessageBox.Show("Заполните название", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -167,7 +174,8 @@ namespace DiningRoomView
                     Id = _id ?? 0,
                     ProductName = textBoxName.Text,
                     Cost = Convert.ToDouble(textBoxPrice.Text),
-                    ProductComponents = _productComponents
+                    ProductComponents = _productComponents,
+                    UserId = UserId // Передаем UserId
                 };
                 var operationResult = _id.HasValue ? _logic.Update(model) : _logic.Create(model);
                 if (!operationResult)
@@ -180,7 +188,8 @@ namespace DiningRoomView
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Ошибка сохранения изделия"); MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _logger.LogError(ex, "Ошибка сохранения изделия");
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void ButtonCancel_Click(object sender, EventArgs e)

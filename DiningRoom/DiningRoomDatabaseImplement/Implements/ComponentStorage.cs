@@ -20,13 +20,15 @@ namespace DiningRoomDatabaseImplement.Implements
         //
         public List<ComponentViewModel> GetFilteredList(ComponentSearchModel model)
         {
-            if (string.IsNullOrEmpty(model.ComponentName))
-            {
-                return new();
-            }
             using var context = new DiningRoomDatabase();
-            return context.Components
-                    .Where(x => x.ComponentName.Contains(model.ComponentName))
+            var query = context.Components.AsQueryable();
+
+            if (model.UserId.HasValue)
+            {
+                query = query.Where(x => x.UserId == model.UserId.Value);
+            }
+
+            return query
                     .Select(x => x.GetViewModel)
                     .ToList();
         }

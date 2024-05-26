@@ -6,7 +6,9 @@ namespace DiningRoomContracts.ViewModels
 	public class DrinkViewModel : IDrinkModel
 	{
 		public int Id { get; set; }
-        public int CardId { get; set; }
+        public int UserId { get; set; }
+        public string Login { get; set; } = string.Empty;
+        public int? CardId { get; set; }
         [DisplayName("Алкогольная карта")]
         public string CardName { get; set; } = string.Empty;
 

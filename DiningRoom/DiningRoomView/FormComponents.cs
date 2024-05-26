@@ -1,6 +1,7 @@
 ﻿using DiningRoomContracts.BindingModels;
 using DiningRoomContracts.BusinessLogicContracts;
 using DiningRoomContracts.SearchModels;
+using DiningRoomContracts.ViewModels;
 using DiningRoomDataModels.Models;
 using Microsoft.Extensions.Logging;
 using System;
@@ -19,6 +20,7 @@ namespace DiningRoomView
     {
         private readonly ILogger _logger;
         private readonly IComponentLogic _logic;
+        public UserViewModel? _currentUser { get; set; }
         public FormComponents(ILogger<FormComponents> logger, IComponentLogic logic)
         {
             InitializeComponent();
@@ -31,13 +33,21 @@ namespace DiningRoomView
         }
         private void LoadData()
         {
+            if (_currentUser == null)
+            {
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
+                return;
+            }
             try
             {
-                var list = _logic.ReadList(null);
+                var list = _logic.ReadList((new ComponentSearchModel { UserId = _currentUser.Id }));
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
                     dataGridView.Columns["Id"].Visible = false;
+                    dataGridView.Columns["UserId"].Visible = false;
+                    dataGridView.Columns["Login"].Visible = false;
                     dataGridView.Columns["ComponentName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
                 }
@@ -51,9 +61,15 @@ namespace DiningRoomView
         }
         private void ButtonAdd_Click(object sender, EventArgs e)
         {
+            if (_currentUser == null)
+            {
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             var service = Program.ServiceProvider?.GetService(typeof(FormComponent));
             if (service is FormComponent form)
             {
+                form.UserId = _currentUser.Id;
                 if (form.ShowDialog() == DialogResult.OK)
                 {
                     LoadData();
@@ -62,11 +78,17 @@ namespace DiningRoomView
         }
         private void ButtonUpd_Click(object sender, EventArgs e)
         {
+            if (_currentUser == null)
+            {
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (dataGridView.SelectedRows.Count == 1)
             {
                 var service = Program.ServiceProvider?.GetService(typeof(FormComponent));
                 if (service is FormComponent form)
                 {
+                    form.UserId = _currentUser.Id;
                     form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells["Id"].Value);
                     if (form.ShowDialog() == DialogResult.OK)
                     {

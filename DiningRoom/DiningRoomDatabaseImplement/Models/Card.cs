@@ -16,6 +16,8 @@ namespace DiningRoomDatabaseImplement.Models
 	public class Card : ICardModel
 	{
         public int Id { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
         [Required]
         public string CardName { get; set; } = string.Empty;
         [Required]
@@ -29,6 +31,7 @@ namespace DiningRoomDatabaseImplement.Models
                 Id = model.Id,
                 CardName = model.CardName,
                 DateCardCreate = model.DateCardCreate,
+                UserId = model.UserId,
             };
         }
         public void Update(CardBindingModel model)

@@ -10,8 +10,10 @@ namespace DiningRoomDatabaseImplement.Models
 	public class Component : IComponentModel
 	{
 		public int Id { get; private set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
 
-		[Required]
+        [Required]
 		public string ComponentName { get; private set; } = string.Empty;
         [Required]
         public ComponentUnit Unit { get; private set; } = ComponentUnit.Неизвестна;
@@ -36,6 +38,7 @@ namespace DiningRoomDatabaseImplement.Models
 				ComponentName = Model.ComponentName,
 				Cost = Model.Cost,
                 Unit = Model.Unit,
+                UserId = Model.UserId,
             };
 		}
         public static Component Create(ComponentViewModel Model)
@@ -46,6 +49,7 @@ namespace DiningRoomDatabaseImplement.Models
                 ComponentName = Model.ComponentName,
                 Cost = Model.Cost,
                 Unit = Model.Unit,
+                UserId = Model.UserId,
             };
         }
         public void Update(ComponentBindingModel Model)
@@ -65,6 +69,7 @@ namespace DiningRoomDatabaseImplement.Models
 			ComponentName = ComponentName,
 			Cost = Cost,
 			Unit = Unit,
+            UserId = UserId,
 
 		};
 	}
