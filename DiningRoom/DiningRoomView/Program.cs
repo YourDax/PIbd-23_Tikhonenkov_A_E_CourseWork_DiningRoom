@@ -5,6 +5,8 @@ using DiningRoomDatabaseImplement.Implements;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using DiningRoomBusinessLogic.BusinessLogic;
+using DiningRoomBusinessLogic.OfficePackage.Implements;
+using DiningRoomBusinessLogic.OfficePackage;
 
 
 
@@ -48,6 +50,11 @@ namespace DiningRoomView
             services.AddTransient<ICardLogic, CardLogic>();
             services.AddTransient<IOrderLogic, OrderLogic>();
             services.AddTransient<IUserLogic, UserLogic>();
+            services.AddTransient<IReportLogic, ReportLogic>();
+
+            services.AddTransient<AbstractSaveToExcel, SaveToExcel>();
+            services.AddTransient<AbstractSaveToWord, SaveToWord>();
+            services.AddTransient<AbstractSaveToPdf, SaveToPdf>();
 
             services.AddTransient<FormMain>();
             services.AddTransient<FormComponent>();
@@ -61,7 +68,8 @@ namespace DiningRoomView
             services.AddTransient<FormCards>();
             services.AddTransient<FormRegister>();
             services.AddTransient<FormLogin>();
-
+            services.AddTransient<FormReportProductComponents>();
+            services.AddTransient<FormComponentSelection>();
 
 
         }

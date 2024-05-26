@@ -18,6 +18,6 @@ namespace DiningRoomContracts.BusinessLogicContracts
 		
 		void SaveReportToWordFile(ReportBindingModel Model);
 
-		void SaveReportToExcelFile(ReportBindingModel Model);
+		void SaveReportToExcelFile(ReportBindingModel Model, List<ComponentSearchModel> selectedComponents);
 	}
 }

@@ -92,29 +92,28 @@ namespace DiningRoomDatabaseImplement.Implements
 
             return ExistingComponent.GetViewModel;
         }
-        public List<ReportComponentOrderViewModel> GetComponentsOrders(List<ComponentSearchModel> Models)
+        public List<ReportComponentOrderViewModel> GetComponentsOrders(List<ComponentSearchModel> models)
         {
-            using var Context = new DiningRoomDatabase();
+            using var context = new DiningRoomDatabase();
 
-            return Context.Components
+            return context.Components
                 .Include(x => x.ProductComponents)
                     .ThenInclude(x => x.Product)
                     .ThenInclude(x => x.Order)
-                .Where(x =>
-                    Models.Select(x => x.Id).Contains(x.Id)  // Компонент, указанный пользователем,
-                    && x.ProductComponents.Any(y => y.Product.Order != null))  
-                .ToList()
-                .Select(x => new ReportComponentOrderViewModel
-                {
-                    ComponentId = x.Id,
-                    ComponentName = x.ComponentName,
-                    ComponentCost = x.Cost,
-                    Orders = x.ProductComponents
-                        .Select(y => (y.Count, y.Product.ProductName, y.Product.Cost))
-                        .ToList(),
-                })
+                .Where(x => models.Select(m => m.Id).Contains(x.Id)
+                    && x.ProductComponents.Any(pc => pc.Product.Order.Any()))
+                .SelectMany(x => x.ProductComponents
+                    .SelectMany(pc => pc.Product.Order
+                        .Select(order => new ReportComponentOrderViewModel
+                        {
+                            ComponentName = x.ComponentName,
+                            OrderName = order.Name, // Assuming Order has a property OrderName
+                            ProductCount = order.Count
+                        })))
                 .ToList();
         }
+
+
 
         public List<ReportComponentByDateViewModel> GetComponentsByDate(ReportBindingModel ReportModel)
         {

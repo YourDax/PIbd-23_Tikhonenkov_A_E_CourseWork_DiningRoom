@@ -34,6 +34,10 @@
             продуктыToolStripMenuItem = new ToolStripMenuItem();
             заказыToolStripMenuItem = new ToolStripMenuItem();
             алкогольныеКартыToolStripMenuItem = new ToolStripMenuItem();
+            отчетыToolStripMenuItem = new ToolStripMenuItem();
+            заказыПоПродуктамToolStripMenuItem = new ToolStripMenuItem();
+            wordToolStripMenuItem = new ToolStripMenuItem();
+            excelToolStripMenuItem = new ToolStripMenuItem();
             button1 = new Button();
             label1 = new Label();
             label2 = new Label();
@@ -68,7 +72,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { продуктыToolStripMenuItem, заказыToolStripMenuItem, алкогольныеКартыToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { продуктыToolStripMenuItem, заказыToolStripMenuItem, алкогольныеКартыToolStripMenuItem, отчетыToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(666, 24);
@@ -95,6 +99,33 @@
             алкогольныеКартыToolStripMenuItem.Size = new Size(130, 20);
             алкогольныеКартыToolStripMenuItem.Text = "Алкогольные карты";
             алкогольныеКартыToolStripMenuItem.Click += КартыToolStripMenuItem_Click;
+            // 
+            // отчетыToolStripMenuItem
+            // 
+            отчетыToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { заказыПоПродуктамToolStripMenuItem });
+            отчетыToolStripMenuItem.Name = "отчетыToolStripMenuItem";
+            отчетыToolStripMenuItem.Size = new Size(60, 20);
+            отчетыToolStripMenuItem.Text = "Отчеты";
+            // 
+            // заказыПоПродуктамToolStripMenuItem
+            // 
+            заказыПоПродуктамToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { wordToolStripMenuItem, excelToolStripMenuItem });
+            заказыПоПродуктамToolStripMenuItem.Name = "заказыПоПродуктамToolStripMenuItem";
+            заказыПоПродуктамToolStripMenuItem.Size = new Size(192, 22);
+            заказыПоПродуктамToolStripMenuItem.Text = "Заказы по продуктам";
+            // 
+            // wordToolStripMenuItem
+            // 
+            wordToolStripMenuItem.Name = "wordToolStripMenuItem";
+            wordToolStripMenuItem.Size = new Size(180, 22);
+            wordToolStripMenuItem.Text = "Word";
+            // 
+            // excelToolStripMenuItem
+            // 
+            excelToolStripMenuItem.Name = "excelToolStripMenuItem";
+            excelToolStripMenuItem.Size = new Size(180, 22);
+            excelToolStripMenuItem.Text = "Excel";
+            excelToolStripMenuItem.Click += ОтчетыToolStripMenuItem_Click;
             // 
             // button1
             // 
@@ -232,5 +263,9 @@
         private Button button7;
         private ToolStripMenuItem заказыToolStripMenuItem;
         private ToolStripMenuItem алкогольныеКартыToolStripMenuItem;
+        private ToolStripMenuItem отчетыToolStripMenuItem;
+        private ToolStripMenuItem заказыПоПродуктамToolStripMenuItem;
+        private ToolStripMenuItem wordToolStripMenuItem;
+        private ToolStripMenuItem excelToolStripMenuItem;
     }
 }

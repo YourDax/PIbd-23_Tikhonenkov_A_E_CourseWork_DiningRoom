@@ -123,6 +123,20 @@ namespace DiningRoomView
                 form.ShowDialog();
             }
         }
+        private void ОтчетыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_currentUser == null)
+            {
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            var service = Program.ServiceProvider?.GetService(typeof(FormReportProductComponents));
+            if (service is FormReportProductComponents form)
+            {
+                form._currentUser = _currentUser;
+                form.ShowDialog();
+            }
+        }
         private void КартыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (_currentUser == null)
