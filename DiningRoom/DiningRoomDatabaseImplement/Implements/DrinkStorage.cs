@@ -13,7 +13,8 @@ namespace DiningRoomDatabaseImplement.Implements
 		{
 			using var context = new DiningRoomDatabase();
 			return context.Drinks
-					.Include(x => x.Components)
+                    .Include(x => x.Card)
+                    .Include(x => x.Components)
 					.ThenInclude(x => x.Component)
 					.ToList()
 					.Select(x => x.GetViewModel)
@@ -28,7 +29,8 @@ namespace DiningRoomDatabaseImplement.Implements
 			}
 			using var context = new DiningRoomDatabase();
 			return context.Drinks
-					.Include(x => x.Components)
+					.Include(x => x.Card)
+                    .Include(x => x.Components)
 					.ThenInclude(x => x.Component)
 					.Where(x => x.DrinkName.Contains(model.DrinkName))
 					.ToList()
@@ -44,7 +46,8 @@ namespace DiningRoomDatabaseImplement.Implements
 			}
 			using var context = new DiningRoomDatabase();
 			return context.Drinks
-				.Include(x => x.Components)
+                .Include(x => x.Card)
+                .Include(x => x.Components)
 				.ThenInclude(x => x.Component)
 				.FirstOrDefault(x => (!string.IsNullOrEmpty(model.DrinkName) && x.DrinkName == model.DrinkName) ||
 								(model.Id.HasValue && x.Id == model.Id))

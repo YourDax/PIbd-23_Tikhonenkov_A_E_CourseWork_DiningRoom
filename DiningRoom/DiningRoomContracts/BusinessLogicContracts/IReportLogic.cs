@@ -9,7 +9,7 @@ namespace DiningRoomContracts.BusinessLogicContracts
 		/// <summary>
 		/// Получение отчёта для Word или Excel
 		/// </summary>
-		List<ReportComponentOrderViewModel> GetReportComponentsWithShipments(List<ComponentSearchModel> SelectedComponents);
+		List<ReportComponentOrderViewModel> GetReportComponentsWithOrders(List<ComponentSearchModel> SelectedComponents);
 
 		/// <summary>
 		/// Получение отчёта для отправки на почту

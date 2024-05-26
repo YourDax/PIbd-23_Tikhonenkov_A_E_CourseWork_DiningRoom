@@ -14,11 +14,11 @@ namespace DiningRoomDatabaseImplement.Models
 
 		[Required]
 		public string DrinkName { get; private set; } = string.Empty;
+        public int CardId { get; set; }
 
-		[Required]
+        [Required]
 		public double Cost { get; private set; }
-        [ForeignKey("DrinkId")]
-        public virtual List<Card> Card { get; set; } = new();
+        public virtual Card Card { get; set; }
 
         [ForeignKey("DrinkId")]
 		public virtual List<DrinkComponent> Components { get; set; } = new();
@@ -48,7 +48,8 @@ namespace DiningRoomDatabaseImplement.Models
 			{
 				Id = Model.Id,
 				DrinkName = Model.DrinkName,
-				Cost = Model.Cost,
+                CardId = Model.CardId,
+                Cost = Model.Cost,
 				Components = Model.DrinkComponents.Select(x => new DrinkComponent
 				{
 					Component = Context.Components.First(y => y.Id == x.Key),
@@ -60,6 +61,7 @@ namespace DiningRoomDatabaseImplement.Models
 		{
 			DrinkName = model.DrinkName;
 			Cost = model.Cost;
+			CardId = model.CardId;
 		}
 		public DrinkViewModel GetViewModel
 		{
@@ -72,7 +74,9 @@ namespace DiningRoomDatabaseImplement.Models
 					Id = Id,
 					DrinkName = DrinkName,
 					Cost = Cost,
-					DrinkComponents = DrinkComponents
+                    CardId = CardId,
+                    CardName = context.Cards.FirstOrDefault(x => x.Id == CardId)?.CardName ?? string.Empty,
+                    DrinkComponents = DrinkComponents
 				};
 			}
         }

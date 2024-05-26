@@ -14,7 +14,6 @@ namespace DiningRoomDatabaseImplement.Implements
 {
 	public class CardStorage : ICardStorage
 	{
-		//id пользователя учитывается в GetFilteredList
 		public List<CardViewModel> GetFullList()
 		{
 			using var context = new DiningRoomDatabase();

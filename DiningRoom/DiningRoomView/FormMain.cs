@@ -79,6 +79,22 @@ namespace DiningRoomView
 				form.ShowDialog();
 			}
 		}
+        private void ЗаказыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var service = Program.ServiceProvider?.GetService(typeof(FormOrders));
+            if (service is FormOrders form)
+            {
+                form.ShowDialog();
+            }
+        }
+        private void КартыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var service = Program.ServiceProvider?.GetService(typeof(FormCards));
+            if (service is FormCards form)
+            {
+                form.ShowDialog();
+            }
+        }
         private void ButtonAddProduct_Click(object sender, EventArgs e)
         {
             var service = Program.ServiceProvider?.GetService(typeof(FormProduct));
@@ -142,12 +158,12 @@ namespace DiningRoomView
         }
         private void ButtonUpdDrink_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedRows.Count == 1)
+            if (dataGridView2.SelectedRows.Count == 1)
             {
                 var service = Program.ServiceProvider?.GetService(typeof(FormDrink));
                 if (service is FormDrink form)
                 {
-                    form.Id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["Id"].Value);
+                    form.Id = Convert.ToInt32(dataGridView2.SelectedRows[0].Cells["Id"].Value);
                     if (form.ShowDialog() == DialogResult.OK)
                     {
                         LoadData();

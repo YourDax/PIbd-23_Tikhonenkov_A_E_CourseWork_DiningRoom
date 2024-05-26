@@ -1,9 +1,11 @@
 ﻿using DiningRoomContracts.BindingModels;
 using DiningRoomContracts.BusinessLogicContracts;
 using DiningRoomContracts.SearchModels;
+using DiningRoomContracts.ViewModels;
 using DiningRoomDataModels.Models;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,15 +21,46 @@ namespace DiningRoomView
     {
         private readonly ILogger _logger;
         private readonly IDrinkLogic _logic;
+        private readonly ICardLogic _cardLogic;
         private int? _id;
+        
         private Dictionary<int, (IComponentModel, int)> _drinkComponents;
-        public int Id { set { _id = value; } }
-        public FormDrink(ILogger<FormDrink> logger, IDrinkLogic logic)
+        public int Id { get { return Convert.ToInt32(comboBoxCards.SelectedValue); } set { comboBoxCards.SelectedValue = value; _id = value; } }
+
+        private readonly List<CardViewModel>? _list;
+        public ICardModel? CardModel
+        {
+            get
+            {
+                if (_list == null)
+                {
+                    return null;
+                }
+                foreach (var elem in _list)
+                {
+                    if (elem.Id == Id)
+                    {
+                        return elem;
+                    }
+                }
+                return null;
+            }
+        }
+        public FormDrink(ILogger<FormDrink> logger, IDrinkLogic logic, ICardLogic cardLogic)
         {
             InitializeComponent();
             _logger = logger;
             _logic = logic;
+            _cardLogic = cardLogic;
             _drinkComponents = new Dictionary<int, (IComponentModel, int)>();
+            _list = _cardLogic.ReadList(null);
+            if (_list != null)
+            {
+                comboBoxCards.DisplayMember = "CardName";
+                comboBoxCards.ValueMember = "Id";
+                comboBoxCards.DataSource = _list;
+                comboBoxCards.SelectedItem = null;
+            }
         }
         private void FormDrink_Load(object sender, EventArgs e)
         {
@@ -167,6 +200,7 @@ namespace DiningRoomView
                     Id = _id ?? 0,
                     DrinkName = textBoxName.Text,
                     Cost = Convert.ToDouble(textBoxPrice.Text),
+                    CardId = Convert.ToInt32(comboBoxCards.SelectedValue),
                     DrinkComponents = _drinkComponents
                 };
                 var operationResult = _id.HasValue ? _logic.Update(model) : _logic.Create(model);

@@ -18,8 +18,6 @@ namespace DiningRoomDatabaseImplement.Models
         [Required]
         public int ProductId { get; set; }
         [Required]
-        public string ProductName { get; set; } = string.Empty;
-        [Required]
         public int Count { get; set; }
         [Required]
         public double Sum { get; set; }
@@ -27,6 +25,7 @@ namespace DiningRoomDatabaseImplement.Models
         public OrderStatus Status { get; set; }
         [Required]
         public DateTime DateCreate { get; set; }
+        
         public virtual Product Product { get; set; }
 
 
@@ -40,7 +39,6 @@ namespace DiningRoomDatabaseImplement.Models
 			{
 				Id = model.Id,
 				ProductId = model.ProductId,
-				ProductName = model.ProductName,
 				DateCreate = model.DateCreate,
 				Status = model.Status,
 				Count = model.Count,

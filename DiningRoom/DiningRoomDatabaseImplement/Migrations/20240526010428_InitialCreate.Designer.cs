@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DiningRoomDatabaseImplement.Migrations
 {
     [DbContext(typeof(DiningRoomDatabase))]
-    [Migration("20240525195148_InitialCreate")]
+    [Migration("20240526010428_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -24,21 +24,6 @@ namespace DiningRoomDatabaseImplement.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("CardDrink", b =>
-                {
-                    b.Property<int>("CardId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("DrinkId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("CardId", "DrinkId");
-
-                    b.HasIndex("DrinkId");
-
-                    b.ToTable("CardDrink");
-                });
 
             modelBuilder.Entity("DiningRoomDatabaseImplement.Models.Card", b =>
                 {
@@ -101,6 +86,9 @@ namespace DiningRoomDatabaseImplement.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CardId")
+                        .HasColumnType("integer");
+
                     b.Property<double>("Cost")
                         .HasColumnType("double precision");
 
@@ -112,6 +100,8 @@ namespace DiningRoomDatabaseImplement.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CardId");
 
                     b.HasIndex("UserId");
 
@@ -160,10 +150,6 @@ namespace DiningRoomDatabaseImplement.Migrations
 
                     b.Property<int>("ProductId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("ProductName")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");
@@ -259,21 +245,6 @@ namespace DiningRoomDatabaseImplement.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("CardDrink", b =>
-                {
-                    b.HasOne("DiningRoomDatabaseImplement.Models.Card", null)
-                        .WithMany()
-                        .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DiningRoomDatabaseImplement.Models.Drink", null)
-                        .WithMany()
-                        .HasForeignKey("DrinkId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("DiningRoomDatabaseImplement.Models.Card", b =>
                 {
                     b.HasOne("DiningRoomDatabaseImplement.Models.User", null)
@@ -290,9 +261,17 @@ namespace DiningRoomDatabaseImplement.Migrations
 
             modelBuilder.Entity("DiningRoomDatabaseImplement.Models.Drink", b =>
                 {
+                    b.HasOne("DiningRoomDatabaseImplement.Models.Card", "Card")
+                        .WithMany("Drinks")
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DiningRoomDatabaseImplement.Models.User", null)
                         .WithMany("Drinks")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Card");
                 });
 
             modelBuilder.Entity("DiningRoomDatabaseImplement.Models.DrinkComponent", b =>
@@ -353,6 +332,11 @@ namespace DiningRoomDatabaseImplement.Migrations
                     b.Navigation("Component");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("DiningRoomDatabaseImplement.Models.Card", b =>
+                {
+                    b.Navigation("Drinks");
                 });
 
             modelBuilder.Entity("DiningRoomDatabaseImplement.Models.Component", b =>

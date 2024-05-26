@@ -32,8 +32,8 @@
             dataGridView2 = new DataGridView();
             menuStrip1 = new MenuStrip();
             продуктыToolStripMenuItem = new ToolStripMenuItem();
-            клиентыToolStripMenuItem = new ToolStripMenuItem();
-            поставщикиToolStripMenuItem = new ToolStripMenuItem();
+            заказыToolStripMenuItem = new ToolStripMenuItem();
+            алкогольныеКартыToolStripMenuItem = new ToolStripMenuItem();
             button1 = new Button();
             label1 = new Label();
             label2 = new Label();
@@ -68,7 +68,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { продуктыToolStripMenuItem, клиентыToolStripMenuItem, поставщикиToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { продуктыToolStripMenuItem, заказыToolStripMenuItem, алкогольныеКартыToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(666, 24);
@@ -82,15 +82,19 @@
             продуктыToolStripMenuItem.Text = "Продукты";
             продуктыToolStripMenuItem.Click += ПродуктыToolStripMenuItem_Click;
             // 
-            // клиентыToolStripMenuItem
+            // заказыToolStripMenuItem
             // 
-            клиентыToolStripMenuItem.Name = "клиентыToolStripMenuItem";
-            клиентыToolStripMenuItem.Size = new Size(12, 20);
+            заказыToolStripMenuItem.Name = "заказыToolStripMenuItem";
+            заказыToolStripMenuItem.Size = new Size(58, 20);
+            заказыToolStripMenuItem.Text = "Заказы";
+            заказыToolStripMenuItem.Click += ЗаказыToolStripMenuItem_Click;
             // 
-            // поставщикиToolStripMenuItem
+            // алкогольныеКартыToolStripMenuItem
             // 
-            поставщикиToolStripMenuItem.Name = "поставщикиToolStripMenuItem";
-            поставщикиToolStripMenuItem.Size = new Size(12, 20);
+            алкогольныеКартыToolStripMenuItem.Name = "алкогольныеКартыToolStripMenuItem";
+            алкогольныеКартыToolStripMenuItem.Size = new Size(130, 20);
+            алкогольныеКартыToolStripMenuItem.Text = "Алкогольные карты";
+            алкогольныеКартыToolStripMenuItem.Click += КартыToolStripMenuItem_Click;
             // 
             // button1
             // 
@@ -216,8 +220,6 @@
 		private DataGridView dataGridView2;
 		private MenuStrip menuStrip1;
 		private ToolStripMenuItem продуктыToolStripMenuItem;
-		private ToolStripMenuItem клиентыToolStripMenuItem;
-		private ToolStripMenuItem поставщикиToolStripMenuItem;
 		private Button button1;
 		private Label label1;
 		private Label label2;
@@ -227,5 +229,7 @@
         private Button button5;
         private Button button6;
         private Button button7;
+        private ToolStripMenuItem заказыToolStripMenuItem;
+        private ToolStripMenuItem алкогольныеКартыToolStripMenuItem;
     }
 }

@@ -37,12 +37,14 @@
             ID = new DataGridViewTextBoxColumn();
             ComponentName = new DataGridViewTextBoxColumn();
             Count = new DataGridViewTextBoxColumn();
+            ButtonSave = new Button();
+            ButtonCancel = new Button();
             ButtonRef = new Button();
             ButtonDel = new Button();
             ButtonUpd = new Button();
             ButtonAdd = new Button();
-            ButtonSave = new Button();
-            ButtonCancel = new Button();
+            comboBoxCards = new ComboBox();
+            label1 = new Label();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
@@ -67,14 +69,14 @@
             // 
             // textBoxName
             // 
-            textBoxName.Location = new Point(94, 6);
+            textBoxName.Location = new Point(133, 6);
             textBoxName.Name = "textBoxName";
             textBoxName.Size = new Size(247, 23);
             textBoxName.TabIndex = 2;
             // 
             // textBoxPrice
             // 
-            textBoxPrice.Location = new Point(94, 38);
+            textBoxPrice.Location = new Point(133, 38);
             textBoxPrice.Name = "textBoxPrice";
             textBoxPrice.Size = new Size(100, 23);
             textBoxPrice.TabIndex = 3;
@@ -82,13 +84,15 @@
             // groupBox1
             // 
             groupBox1.Controls.Add(dataGridView);
+            groupBox1.Controls.Add(ButtonSave);
+            groupBox1.Controls.Add(ButtonCancel);
             groupBox1.Controls.Add(ButtonRef);
             groupBox1.Controls.Add(ButtonDel);
             groupBox1.Controls.Add(ButtonUpd);
             groupBox1.Controls.Add(ButtonAdd);
-            groupBox1.Location = new Point(12, 67);
+            groupBox1.Location = new Point(12, 122);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(510, 338);
+            groupBox1.Size = new Size(510, 389);
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
             groupBox1.Text = "Компонент";
@@ -98,7 +102,7 @@
             dataGridView.BackgroundColor = SystemColors.ButtonHighlight;
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView.Columns.AddRange(new DataGridViewColumn[] { ID, ComponentName, Count });
-            dataGridView.Location = new Point(0, 21);
+            dataGridView.Location = new Point(6, 35);
             dataGridView.Name = "dataGridView";
             dataGridView.RowTemplate.Height = 25;
             dataGridView.Size = new Size(394, 311);
@@ -122,49 +126,9 @@
             Count.HeaderText = "Количество";
             Count.Name = "Count";
             // 
-            // ButtonRef
-            // 
-            ButtonRef.Location = new Point(400, 169);
-            ButtonRef.Name = "ButtonRef";
-            ButtonRef.Size = new Size(106, 28);
-            ButtonRef.TabIndex = 4;
-            ButtonRef.Text = "Обновить";
-            ButtonRef.UseVisualStyleBackColor = true;
-            ButtonRef.Click += ButtonRef_Click;
-            // 
-            // ButtonDel
-            // 
-            ButtonDel.Location = new Point(400, 135);
-            ButtonDel.Name = "ButtonDel";
-            ButtonDel.Size = new Size(106, 28);
-            ButtonDel.TabIndex = 3;
-            ButtonDel.Text = "Удалить";
-            ButtonDel.UseVisualStyleBackColor = true;
-            ButtonDel.Click += ButtonDel_Click;
-            // 
-            // ButtonUpd
-            // 
-            ButtonUpd.Location = new Point(400, 101);
-            ButtonUpd.Name = "ButtonUpd";
-            ButtonUpd.Size = new Size(106, 28);
-            ButtonUpd.TabIndex = 2;
-            ButtonUpd.Text = "Изменить";
-            ButtonUpd.UseVisualStyleBackColor = true;
-            ButtonUpd.Click += ButtonUpd_Click;
-            // 
-            // ButtonAdd
-            // 
-            ButtonAdd.Location = new Point(400, 67);
-            ButtonAdd.Name = "ButtonAdd";
-            ButtonAdd.Size = new Size(106, 28);
-            ButtonAdd.TabIndex = 1;
-            ButtonAdd.Text = "Добавить";
-            ButtonAdd.UseVisualStyleBackColor = true;
-            ButtonAdd.Click += ButtonAdd_Click;
-            // 
             // ButtonSave
             // 
-            ButtonSave.Location = new Point(354, 415);
+            ButtonSave.Location = new Point(354, 352);
             ButtonSave.Name = "ButtonSave";
             ButtonSave.Size = new Size(75, 23);
             ButtonSave.TabIndex = 5;
@@ -174,7 +138,7 @@
             // 
             // ButtonCancel
             // 
-            ButtonCancel.Location = new Point(435, 415);
+            ButtonCancel.Location = new Point(435, 352);
             ButtonCancel.Name = "ButtonCancel";
             ButtonCancel.Size = new Size(75, 23);
             ButtonCancel.TabIndex = 6;
@@ -182,13 +146,71 @@
             ButtonCancel.UseVisualStyleBackColor = true;
             ButtonCancel.Click += ButtonCancel_Click;
             // 
+            // ButtonRef
+            // 
+            ButtonRef.Location = new Point(404, 137);
+            ButtonRef.Name = "ButtonRef";
+            ButtonRef.Size = new Size(106, 28);
+            ButtonRef.TabIndex = 4;
+            ButtonRef.Text = "Обновить";
+            ButtonRef.UseVisualStyleBackColor = true;
+            ButtonRef.Click += ButtonRef_Click;
+            // 
+            // ButtonDel
+            // 
+            ButtonDel.Location = new Point(404, 103);
+            ButtonDel.Name = "ButtonDel";
+            ButtonDel.Size = new Size(106, 28);
+            ButtonDel.TabIndex = 3;
+            ButtonDel.Text = "Удалить";
+            ButtonDel.UseVisualStyleBackColor = true;
+            ButtonDel.Click += ButtonDel_Click;
+            // 
+            // ButtonUpd
+            // 
+            ButtonUpd.Location = new Point(404, 69);
+            ButtonUpd.Name = "ButtonUpd";
+            ButtonUpd.Size = new Size(106, 28);
+            ButtonUpd.TabIndex = 2;
+            ButtonUpd.Text = "Изменить";
+            ButtonUpd.UseVisualStyleBackColor = true;
+            ButtonUpd.Click += ButtonUpd_Click;
+            // 
+            // ButtonAdd
+            // 
+            ButtonAdd.Location = new Point(404, 35);
+            ButtonAdd.Name = "ButtonAdd";
+            ButtonAdd.Size = new Size(106, 28);
+            ButtonAdd.TabIndex = 1;
+            ButtonAdd.Text = "Добавить";
+            ButtonAdd.UseVisualStyleBackColor = true;
+            ButtonAdd.Click += ButtonAdd_Click;
+            // 
+            // comboBoxCards
+            // 
+            comboBoxCards.BackColor = SystemColors.Window;
+            comboBoxCards.FormattingEnabled = true;
+            comboBoxCards.Location = new Point(133, 75);
+            comboBoxCards.Name = "comboBoxCards";
+            comboBoxCards.Size = new Size(247, 23);
+            comboBoxCards.TabIndex = 7;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(12, 78);
+            label1.Name = "label1";
+            label1.Size = new Size(115, 15);
+            label1.TabIndex = 8;
+            label1.Text = "Алкогольная карта:";
+            // 
             // FormDrink
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(536, 450);
-            Controls.Add(ButtonCancel);
-            Controls.Add(ButtonSave);
+            ClientSize = new Size(536, 505);
+            Controls.Add(label1);
+            Controls.Add(comboBoxCards);
             Controls.Add(groupBox1);
             Controls.Add(textBoxPrice);
             Controls.Add(textBoxName);
@@ -220,5 +242,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn ComponentName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Count;
+        private ComboBox comboBoxCards;
+        private Label label1;
     }
 }

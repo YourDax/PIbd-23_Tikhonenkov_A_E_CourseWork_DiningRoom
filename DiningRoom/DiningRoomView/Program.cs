@@ -54,6 +54,9 @@ namespace DiningRoomView
             services.AddTransient<FormProductComponent>();
             services.AddTransient<FormDrink>();
             services.AddTransient<FormDrinkComponent>();
+            services.AddTransient<FormCreateOrder>();
+            services.AddTransient<FormOrders>();
+            services.AddTransient<FormCards>();
 
 
 

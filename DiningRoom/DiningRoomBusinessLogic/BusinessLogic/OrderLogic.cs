@@ -113,34 +113,40 @@ namespace DiningRoomBusinessLogic.BusinessLogic
 			return true;
 		}
 
-		
-		private bool ChangeStatus(OrderBindingModel model, OrderStatus newStatus)
-		{
-			CheckModel(model, false);
-			var order = _orderStorage.GetElement(new OrderSearchModel { Id = model.Id });
-			if (order == null)
-			{
-				throw new ArgumentNullException(nameof(order));
-			}
-			if (newStatus - model.Status == 1)
-			{
-				model.Status = newStatus;
-	
-				if (_orderStorage.Update(model) == null)
-				{
-					_logger.LogWarning("Update order operation failed");
-					return false;
-				}
-				return true;
-			}
-			if (order.Status + 1 != newStatus)
-			{
-				_logger.LogWarning("Change status operation failed. Incorrect new status: {newStatus}. Current status: {currStatus}", newStatus, order.Status);
-				return false;
-			}
-			_logger.LogWarning("Changing status operation faled: current:{Status}: required:{newStatus}.", model.Status, newStatus);
-			throw new ArgumentException($"Невозможно присвоить статус {newStatus} заказу с текущим статусом {model.Status}");
-		}
+        public bool ChangeStatus(OrderBindingModel model, OrderStatus newStatus)
+        {
+            var vmodel = _orderStorage.GetElement(new() { Id = model.Id });
+
+            if (vmodel == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if ((int)vmodel.Status + 1 != (int)newStatus)
+            {
+                throw new InvalidOperationException($"Попытка перевести заказ не в следующий статус: " +
+                    $"Текущий статус: {vmodel.Status} \n" +
+                    $"Планируемый статус: {newStatus} \n" +
+                    $"Доступный статус: {(OrderStatus)((int)vmodel.Status + 1)}");
+            }
+
+            model.Status = newStatus;
+            model.DateCreate = vmodel.DateCreate;
+
+            model.ProductId = vmodel.ProductId;
+            model.Sum = vmodel.Sum;
+            model.Count = vmodel.Count;
+
+            var result = _orderStorage.Update(model);
+
+            if (result == null)
+            {
+                _logger.LogWarning("Update operation failed");
+
+                return false;
+            }
+            return true;
+        }
 
 		//Перевод заказа в состояние выполнения
 		public bool TakeOrderInWork(OrderBindingModel model)

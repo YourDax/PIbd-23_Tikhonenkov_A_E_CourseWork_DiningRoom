@@ -69,26 +69,6 @@ namespace DiningRoomDatabaseImplement.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Drinks",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    DrinkName = table.Column<string>(type: "text", nullable: false),
-                    Cost = table.Column<double>(type: "double precision", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Drinks", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Drinks_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -109,54 +89,30 @@ namespace DiningRoomDatabaseImplement.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CardDrink",
+                name: "Drinks",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    DrinkName = table.Column<string>(type: "text", nullable: false),
                     CardId = table.Column<int>(type: "integer", nullable: false),
-                    DrinkId = table.Column<int>(type: "integer", nullable: false)
+                    Cost = table.Column<double>(type: "double precision", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CardDrink", x => new { x.CardId, x.DrinkId });
+                    table.PrimaryKey("PK_Drinks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CardDrink_Cards_CardId",
+                        name: "FK_Drinks_Cards_CardId",
                         column: x => x.CardId,
                         principalTable: "Cards",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CardDrink_Drinks_DrinkId",
-                        column: x => x.DrinkId,
-                        principalTable: "Drinks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DrinkComponents",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    DrinkId = table.Column<int>(type: "integer", nullable: false),
-                    ComponentId = table.Column<int>(type: "integer", nullable: false),
-                    Count = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DrinkComponents", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DrinkComponents_Components_ComponentId",
-                        column: x => x.ComponentId,
-                        principalTable: "Components",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DrinkComponents_Drinks_DrinkId",
-                        column: x => x.DrinkId,
-                        principalTable: "Drinks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Drinks_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -166,7 +122,6 @@ namespace DiningRoomDatabaseImplement.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ProductId = table.Column<int>(type: "integer", nullable: false),
-                    ProductName = table.Column<string>(type: "text", nullable: false),
                     Count = table.Column<int>(type: "integer", nullable: false),
                     Sum = table.Column<double>(type: "double precision", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
@@ -216,10 +171,32 @@ namespace DiningRoomDatabaseImplement.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_CardDrink_DrinkId",
-                table: "CardDrink",
-                column: "DrinkId");
+            migrationBuilder.CreateTable(
+                name: "DrinkComponents",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    DrinkId = table.Column<int>(type: "integer", nullable: false),
+                    ComponentId = table.Column<int>(type: "integer", nullable: false),
+                    Count = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DrinkComponents", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DrinkComponents_Components_ComponentId",
+                        column: x => x.ComponentId,
+                        principalTable: "Components",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DrinkComponents_Drinks_DrinkId",
+                        column: x => x.DrinkId,
+                        principalTable: "Drinks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cards_UserId",
@@ -240,6 +217,11 @@ namespace DiningRoomDatabaseImplement.Migrations
                 name: "IX_DrinkComponents_DrinkId",
                 table: "DrinkComponents",
                 column: "DrinkId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Drinks_CardId",
+                table: "Drinks",
+                column: "CardId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Drinks_UserId",
@@ -276,9 +258,6 @@ namespace DiningRoomDatabaseImplement.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CardDrink");
-
-            migrationBuilder.DropTable(
                 name: "DrinkComponents");
 
             migrationBuilder.DropTable(
@@ -288,9 +267,6 @@ namespace DiningRoomDatabaseImplement.Migrations
                 name: "ProductComponents");
 
             migrationBuilder.DropTable(
-                name: "Cards");
-
-            migrationBuilder.DropTable(
                 name: "Drinks");
 
             migrationBuilder.DropTable(
@@ -298,6 +274,9 @@ namespace DiningRoomDatabaseImplement.Migrations
 
             migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Cards");
 
             migrationBuilder.DropTable(
                 name: "Users");

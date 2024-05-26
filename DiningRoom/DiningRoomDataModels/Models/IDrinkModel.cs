@@ -15,10 +15,11 @@
 		/// Стоимость товара
 		/// </summary>
 		double Cost { get; }
+        public int CardId { get; set; }
 
-		/// <summary>
-		/// Список продуктов
-		/// </summary>
-		Dictionary<int, (IComponentModel, int)> DrinkComponents { get; }
+        /// <summary>
+        /// Список продуктов
+        /// </summary>
+        Dictionary<int, (IComponentModel, int)> DrinkComponents { get; }
 	}
 }

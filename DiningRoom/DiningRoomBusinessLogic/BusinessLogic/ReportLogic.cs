@@ -15,17 +15,11 @@ namespace DiningRoomBusinessLogic.BusinessLogic
 			_componentStorage = ComponentStorage;
 		}
 
-		/// <summary>
-		/// Получение отчёта для Word или Excel
-		/// </summary>
-		public List<ReportComponentOrderViewModel> GetReportComponentsWithShipments(List<ComponentSearchModel> SelectedComponents)
+		public List<ReportComponentOrderViewModel> GetReportComponentsWithOrders(List<ComponentSearchModel> SelectedComponents)
 		{
 			return _componentStorage.GetComponentsOrders(SelectedComponents);
 		}
 
-		/// <summary>
-		/// Получение отчёта для отправки на почту
-		/// </summary>
 		public List<ReportComponentByDateViewModel> GetReportComponentsByCardDate(ReportBindingModel Report)
 		{
 			return _componentStorage.GetComponentsByDate(Report);
