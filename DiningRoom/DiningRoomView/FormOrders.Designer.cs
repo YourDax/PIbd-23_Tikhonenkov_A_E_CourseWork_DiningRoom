@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             dataGridView = new DataGridView();
-            ButtonCreateOrder = new Button();
+            ButtonAdd = new Button();
+            ButtonUpd = new Button();
+            ButtonDel = new Button();
             ButtonRef = new Button();
-            ButtonIssuedOrder = new Button();
-            ButtonOrderReady = new Button();
-            ButtonTakeOrderInWork = new Button();
+            textBoxName = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -41,87 +41,85 @@
             // 
             dataGridView.BackgroundColor = SystemColors.ButtonHighlight;
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView.EnableHeadersVisualStyles = false;
-            dataGridView.Location = new Point(12, 12);
-            dataGridView.MultiSelect = false;
+            dataGridView.Location = new Point(0, 0);
             dataGridView.Name = "dataGridView";
-            dataGridView.Size = new Size(600, 371);
-            dataGridView.TabIndex = 1;
+            dataGridView.RowTemplate.Height = 25;
+            dataGridView.Size = new Size(433, 448);
+            dataGridView.TabIndex = 0;
             // 
-            // ButtonCreateOrder
+            // ButtonAdd
             // 
-            ButtonCreateOrder.Location = new Point(618, 12);
-            ButtonCreateOrder.Name = "ButtonCreateOrder";
-            ButtonCreateOrder.Size = new Size(122, 23);
-            ButtonCreateOrder.TabIndex = 2;
-            ButtonCreateOrder.Text = "Создать заказ";
-            ButtonCreateOrder.UseVisualStyleBackColor = true;
-            ButtonCreateOrder.Click += ButtonCreateOrder_Click;
+            ButtonAdd.Location = new Point(439, 116);
+            ButtonAdd.Name = "ButtonAdd";
+            ButtonAdd.Size = new Size(225, 23);
+            ButtonAdd.TabIndex = 1;
+            ButtonAdd.Text = "Добавить";
+            ButtonAdd.UseVisualStyleBackColor = true;
+            ButtonAdd.Click += ButtonAdd_Click;
+            // 
+            // ButtonUpd
+            // 
+            ButtonUpd.Location = new Point(439, 145);
+            ButtonUpd.Name = "ButtonUpd";
+            ButtonUpd.Size = new Size(225, 23);
+            ButtonUpd.TabIndex = 2;
+            ButtonUpd.Text = "Изменить";
+            ButtonUpd.UseVisualStyleBackColor = true;
+            ButtonUpd.Click += ButtonCreateOrder_Click;
+            // 
+            // ButtonDel
+            // 
+            ButtonDel.Location = new Point(439, 174);
+            ButtonDel.Name = "ButtonDel";
+            ButtonDel.Size = new Size(225, 23);
+            ButtonDel.TabIndex = 3;
+            ButtonDel.Text = "Удалить";
+            ButtonDel.UseVisualStyleBackColor = true;
+            ButtonDel.Click += ButtonDel_Click;
             // 
             // ButtonRef
             // 
-            ButtonRef.Location = new Point(618, 147);
+            ButtonRef.Location = new Point(439, 203);
             ButtonRef.Name = "ButtonRef";
-            ButtonRef.Size = new Size(122, 23);
-            ButtonRef.TabIndex = 6;
-            ButtonRef.Text = "Обновить список";
+            ButtonRef.Size = new Size(225, 23);
+            ButtonRef.TabIndex = 4;
+            ButtonRef.Text = "Обновить";
             ButtonRef.UseVisualStyleBackColor = true;
             ButtonRef.Click += ButtonRef_Click;
             // 
-            // ButtonIssuedOrder
+            // textBoxName
             // 
-            ButtonIssuedOrder.Location = new Point(618, 118);
-            ButtonIssuedOrder.Name = "ButtonIssuedOrder";
-            ButtonIssuedOrder.Size = new Size(122, 23);
-            ButtonIssuedOrder.TabIndex = 5;
-            ButtonIssuedOrder.Text = "Заказ выдан";
-            ButtonIssuedOrder.UseVisualStyleBackColor = true;
-            ButtonIssuedOrder.Click += ButtonIssuedOrder_Click;
+            textBoxName.Location = new Point(439, 30);
+            textBoxName.Name = "textBoxName";
+            textBoxName.Size = new Size(225, 23);
+            textBoxName.TabIndex = 5;
             // 
-            // ButtonOrderReady
-            // 
-            ButtonOrderReady.Location = new Point(618, 89);
-            ButtonOrderReady.Name = "ButtonOrderReady";
-            ButtonOrderReady.Size = new Size(122, 23);
-            ButtonOrderReady.TabIndex = 4;
-            ButtonOrderReady.Text = "Заказ готов";
-            ButtonOrderReady.UseVisualStyleBackColor = true;
-            ButtonOrderReady.Click += ButtonOrderReady_Click;
-            // 
-            // ButtonTakeOrderInWork
-            // 
-            ButtonTakeOrderInWork.Location = new Point(618, 41);
-            ButtonTakeOrderInWork.Name = "ButtonTakeOrderInWork";
-            ButtonTakeOrderInWork.Size = new Size(122, 42);
-            ButtonTakeOrderInWork.TabIndex = 3;
-            ButtonTakeOrderInWork.Text = "Отдать на выполнение";
-            ButtonTakeOrderInWork.UseVisualStyleBackColor = true;
-            ButtonTakeOrderInWork.Click += ButtonTakeOrderInWork_Click;
-            // 
-            // FormOrders
+            // FormCards
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(752, 391);
+            ClientSize = new Size(668, 450);
+            Controls.Add(textBoxName);
             Controls.Add(ButtonRef);
-            Controls.Add(ButtonIssuedOrder);
-            Controls.Add(ButtonOrderReady);
-            Controls.Add(ButtonTakeOrderInWork);
-            Controls.Add(ButtonCreateOrder);
+            Controls.Add(ButtonDel);
+            Controls.Add(ButtonUpd);
+            Controls.Add(ButtonAdd);
             Controls.Add(dataGridView);
-            Name = "FormOrders";
-            Text = "Заказы";
-            Load += FormMain_Load;
+            Name = "FormCards";
+            Text = "Изделия";
+            Load += FormProducts_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
         private System.Windows.Forms.DataGridView dataGridView;
-        private System.Windows.Forms.Button ButtonCreateOrder;
+        private System.Windows.Forms.Button ButtonAdd;
+        private System.Windows.Forms.Button ButtonUpd;
+        private System.Windows.Forms.Button ButtonDel;
         private System.Windows.Forms.Button ButtonRef;
-        private Button ButtonIssuedOrder;
-        private Button ButtonOrderReady;
-        private Button ButtonTakeOrderInWork;
+        private TextBox textBoxName;
     }
 }

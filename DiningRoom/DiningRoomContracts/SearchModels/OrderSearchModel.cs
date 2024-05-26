@@ -11,6 +11,7 @@ namespace DiningRoomContracts.SearchModels
 	public class OrderSearchModel
 	{
 		public int? Id { get; set; }
+		public int? ProductId { get; set; }
 
 		public string Name { get; set; } = string.Empty;
         public int? UserId { get; set; }

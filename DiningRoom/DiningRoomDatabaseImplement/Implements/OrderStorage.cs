@@ -84,10 +84,6 @@ namespace DiningRoomDatabaseImplement.Implements
             }
 
             using var context = new DiningRoomDatabase();
-            if (newOrder == null)
-            {
-                return null;
-            }
             context.Orders.Add(newOrder);
             context.SaveChanges();
             return newOrder.GetViewModel;
@@ -106,5 +102,6 @@ namespace DiningRoomDatabaseImplement.Implements
             context.SaveChanges();
             return order.GetViewModel;
         }
+
     }
 }

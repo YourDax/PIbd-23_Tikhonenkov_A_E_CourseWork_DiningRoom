@@ -1,8 +1,8 @@
-﻿using DiningRoomBusinessLogic.BusinessLogic;
-using DiningRoomContracts.BindingModels;
+﻿using DiningRoomContracts.BindingModels;
 using DiningRoomContracts.BusinessLogicContracts;
 using DiningRoomContracts.SearchModels;
 using DiningRoomContracts.ViewModels;
+using DiningRoomDataModels.Models;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -13,21 +13,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.DataFormats;
 
 namespace DiningRoomView
 {
     public partial class FormOrders : Form
     {
         private readonly ILogger _logger;
-        private readonly IOrderLogic _orderLogic;
+        private readonly IOrderLogic _logic;
         public UserViewModel? _currentUser { get; set; }
-        public FormOrders(ILogger<FormMain> logger, IOrderLogic orderLogic)
+        public FormOrders(ILogger<FormOrders> logger, IOrderLogic logic)
         {
             InitializeComponent();
             _logger = logger;
-            _orderLogic = orderLogic;
+            _logic = logic;
         }
-        private void FormMain_Load(object sender, EventArgs e)
+        private void FormProducts_Load(object sender, EventArgs e)
         {
             LoadData();
         }
@@ -36,104 +37,101 @@ namespace DiningRoomView
             if (_currentUser == null)
             {
                 MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
                 return;
             }
-            _logger.LogInformation("Загрузка заказов");
-            // прописать логику
             try
             {
-                var list = _orderLogic.ReadList(new OrderSearchModel { UserId = _currentUser.Id });
+                var list = _logic.ReadList(new OrderSearchModel { UserId = _currentUser.Id });
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
+                    dataGridView.Columns["Id"].Visible = false;
+                    dataGridView.Columns["UserId"].Visible = false;
                     dataGridView.Columns["ProductId"].Visible = false;
+                    dataGridView.Columns["Login"].Visible = false;
+
                 }
-                _logger.LogInformation("Загрузка продуктов");
+                _logger.LogInformation("Загрузка карт");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Ошибка загрузки продуктов");
+                _logger.LogError(ex, "Ошибка загрузки карт");
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void ButtonCreateOrder_Click(object sender, EventArgs e)
+        private void ButtonAdd_Click(object sender, EventArgs e)
         {
             if (_currentUser == null)
             {
                 MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var service = Program.ServiceProvider?.GetService(typeof(FormCreateOrder));
-            if (service is FormCreateOrder form)
+            if (string.IsNullOrEmpty(textBoxName.Text))
             {
-                form.UserId = _currentUser.Id;
-                form.ShowDialog();
+                MessageBox.Show("Заполните название", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            _logger.LogInformation("Сохранение карты");
+            try
+            {
+                var model = new OrderBindingModel
+                {
+                    Id = 0,
+                    Name = textBoxName.Text,
+                    UserId = _currentUser.Id,
+                };
+                var operationResult =_logic.Create(model);
+                if (!operationResult)
+                {
+                    throw new Exception("Ошибка при сохранении. Дополнительная информация в логах.");
+                }
+                MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadData();
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка сохранения карты");
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }                
         }
-        private void ButtonTakeOrderInWork_Click(object sender, EventArgs e)
+        private void ButtonCreateOrder_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
-                int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells["Id"].Value);
-                _logger.LogInformation("Заказ №{id}. Меняется статус на 'В работе'", id);
-                try
+                var service = Program.ServiceProvider?.GetService(typeof(FormCreateOrder));
+                if (service is FormCreateOrder form)
                 {
-                    var operationResult = _orderLogic.TakeOrderInWork(new OrderBindingModel { Id = id });
-                    if (!operationResult)
+                    int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
+                    form.Id = id;
+                    if (form.ShowDialog() == DialogResult.OK)
                     {
-                        throw new Exception("Ошибка при сохранении. Дополнительная информация в логах.");
+                        LoadData();
                     }
-                    LoadData();
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Ошибка передачи заказа в работу");
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
-        private void ButtonOrderReady_Click(object sender, EventArgs e)
+        private void ButtonDel_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
-                int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells["Id"].Value);
-                _logger.LogInformation("Заказ №{id}. Меняется статус на 'Готов'", id);
-                try
+                if (MessageBox.Show("Удалить запись?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    var operationResult = _orderLogic.FinishOrder(new OrderBindingModel { Id = id });
-                    if (!operationResult)
+                    int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells["Id"].Value);
+                    _logger.LogInformation("Удаление карты");
+                    try
                     {
-                        throw new Exception("Ошибка при сохранении. Дополнительная информация в логах.");
+                        if (!_logic.Delete(new OrderBindingModel { Id = id }))
+                        {
+                            throw new Exception("Ошибка при удалении. Дополнительная информация в логах.");
+                        }
+                        LoadData();
                     }
-                    LoadData();
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Ошибка отметки о готовности заказа"); MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-        private void ButtonIssuedOrder_Click(object sender, EventArgs e)
-        {
-            if (dataGridView.SelectedRows.Count == 1)
-            {
-                int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells["Id"].Value);
-                _logger.LogInformation("Заказ №{id}. Меняется статус на 'Выдан'", id);
-                try
-                {
-                    var operationResult = _orderLogic.DeliveryOrder(new OrderBindingModel { Id = id });
-                    if (!operationResult)
+                    catch (Exception ex)
                     {
-                        throw new Exception("Ошибка при сохранении. Дополнительная информация в логах.");
+                        _logger.LogError(ex, "Ошибка удаления продукта");
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    _logger.LogInformation("Заказ №{id} выдан", id);
-                    LoadData();
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Ошибка отметки о выдачи заказа");
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

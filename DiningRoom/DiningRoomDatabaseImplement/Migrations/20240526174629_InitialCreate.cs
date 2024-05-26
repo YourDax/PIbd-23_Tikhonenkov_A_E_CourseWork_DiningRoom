@@ -125,7 +125,7 @@ namespace DiningRoomDatabaseImplement.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    ProductId = table.Column<int>(type: "integer", nullable: false),
+                    ProductId = table.Column<int>(type: "integer", nullable: true),
                     Count = table.Column<int>(type: "integer", nullable: false),
                     Sum = table.Column<double>(type: "double precision", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
@@ -139,8 +139,7 @@ namespace DiningRoomDatabaseImplement.Migrations
                         name: "FK_Orders_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Orders_Users_UserId",
                         column: x => x.UserId,

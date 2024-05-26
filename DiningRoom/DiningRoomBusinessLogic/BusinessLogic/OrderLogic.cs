@@ -61,10 +61,6 @@ namespace DiningRoomBusinessLogic.BusinessLogic
 			{
 				throw new ArgumentNullException(nameof(model));
 			}
-			if (!withParams)
-			{
-				return;
-			}
 			if (model.DateCreate > DateTime.Now)
 			{
 				throw new ArgumentException($"Дата создания заказа {model.DateCreate} не может быть в будущем");

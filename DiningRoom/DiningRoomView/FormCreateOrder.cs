@@ -22,6 +22,7 @@ namespace DiningRoomView
         private readonly ILogger _logger;
         private readonly IProductLogic _logicP;
         private readonly IOrderLogic _logicO;
+        public int Id { get ;  set ;  }
         public int UserId { get; set; }
 
         public FormCreateOrder(ILogger<FormCreateOrder> logger, IProductLogic logicP, IOrderLogic logicO)
@@ -36,7 +37,7 @@ namespace DiningRoomView
         {
             _logger.LogInformation("Загрузка изделий для заказа");
             // прописать логику
-            List<ProductViewModel> list = _logicP.ReadList(new ProductSearchModel { UserId = UserId });
+            List<ProductViewModel> list = _logicP.ReadList(null);
             if (list != null)
             {
                 comboBoxProduct.DisplayMember = "ProductName";
@@ -74,36 +75,42 @@ namespace DiningRoomView
         }
         private void ButtonSave_Click(object sender, EventArgs e)
         {
-            if (UserId == 0)
+            if (string.IsNullOrEmpty(textBoxCount.Text))
             {
-                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Заполните поле Количество", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            _logger.LogInformation("Создание заказа");
+            if (comboBoxProduct.SelectedValue == null)
+            {
+                MessageBox.Show("Выберите компонент", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             try
             {
-                var operationResult = _logicO.Create(new OrderBindingModel
+                var model = new OrderBindingModel
                 {
-                    ProductId = Convert.ToInt32(comboBoxProduct.SelectedValue),
-                    ProductName = comboBoxProduct.Text,
-                    Count = Convert.ToInt32(textBoxCount.Text),
-                    Sum = Convert.ToDouble(textBoxSum.Text),
+                    Id = Id,
                     Status = OrderStatus.Принят,
-                    UserId = UserId
-                });
+                    ProductId = comboBoxProduct.SelectedValue as int?,
+                    Count = Convert.ToInt32(textBoxCount.Text),
+                    Sum = Convert.ToDouble(textBoxSum.Text)
+
+                };
+                var operationResult = _logicO.Update(model);
                 if (!operationResult)
                 {
-                    throw new Exception("Ошибка при создании заказа. Дополнительная информация в логах.");
+                    throw new Exception("Ошибка при сохранении. Дополнительная информация в логах.");
                 }
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                DialogResult = DialogResult.OK;
-                Close();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Ошибка создания заказа");
+                _logger.LogError(ex, "Ошибка сохранения карты");
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+                
+            DialogResult = DialogResult.OK;
+            Close();
         }
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
