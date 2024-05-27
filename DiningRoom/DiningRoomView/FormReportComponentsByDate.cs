@@ -173,10 +173,11 @@ namespace DiningRoomView
             }
         }
 
-        public void CreateDoc(PdfInfo info, MemoryStream stream)
+        public void CreateDoc(PdfInfo info, Stream stream)
         {
             Document document = new Document();
             PdfWriter writer = PdfWriter.GetInstance(document, stream);
+            writer.CloseStream = false;
             document.Open();
 
             document.Add(new Paragraph(info.Title, FontFactory.GetFont("Arial", "16", Font.Bold)));
@@ -219,10 +220,10 @@ namespace DiningRoomView
         }
         private void SendEmailWithPdf(MemoryStream pdfStream, string userEmail)
         {
-            pdfStream.Position = 0; // Сбросить позицию потока на начало
+            pdfStream.Position = 0;
 
             MailMessage mail = new MailMessage();
-            SmtpClient smtpClient = new SmtpClient("smtp.example.com"); // Замените на SMTP-сервер вашего почтового провайдера
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com"); // Используем SMTP-сервер Gmail
 
             mail.From = new MailAddress("user@example.com"); // Ваш email
             mail.To.Add(userEmail);
@@ -233,7 +234,7 @@ namespace DiningRoomView
             Attachment attachment = new Attachment(pdfStream, "Report.pdf", "application/pdf");
             mail.Attachments.Add(attachment);
 
-            smtpClient.Port = 587; // Обычно 587 или 25 для SMTP
+            smtpClient.Port = 587; // Порт SMTP-сервера Gmail
             smtpClient.Credentials = new NetworkCredential("user@example.com", "***REMOVED***"); // Ваш email и пароль
             smtpClient.EnableSsl = true;
 
