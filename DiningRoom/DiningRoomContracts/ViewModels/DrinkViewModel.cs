@@ -12,7 +12,7 @@ namespace DiningRoomContracts.ViewModels
         [DisplayName("Алкогольная карта")]
         public string CardName { get; set; } = string.Empty;
 
-        [DisplayName("Название товара")]
+        [DisplayName("Название напитка")]
 		public string DrinkName { get; set; } = string.Empty;
 
 		[DisplayName("Стоимость")]

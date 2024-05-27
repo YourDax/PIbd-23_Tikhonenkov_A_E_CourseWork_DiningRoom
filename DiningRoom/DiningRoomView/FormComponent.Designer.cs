@@ -122,7 +122,7 @@
             Controls.Add(ButtonCancel);
             Controls.Add(ButtonSave);
             Name = "FormComponent";
-            Text = "Компонент";
+            Text = "Продукт";
             Load += FormComponent_Load;
             ResumeLayout(false);
             PerformLayout();

@@ -9,7 +9,7 @@ namespace DiningRoomContracts.ViewModels
         public int UserId { get; set; }
         public string Login { get; set; } = string.Empty;
 
-        [DisplayName("Название товара")]
+        [DisplayName("Название блюда")]
 		public string ProductName { get; set; } = string.Empty;
 
 		[DisplayName("Стоимость")]

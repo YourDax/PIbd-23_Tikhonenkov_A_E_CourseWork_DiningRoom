@@ -106,7 +106,7 @@
             Controls.Add(ButtonAdd);
             Controls.Add(dataGridView);
             Name = "FormCards";
-            Text = "Изделия";
+            Text = "Алкогольные карты";
             Load += FormProducts_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             ResumeLayout(false);

@@ -326,24 +326,5 @@ namespace DiningRoomView
         {
             LoadData();
         }
-
-        //private void ButtonCreateSale_Click(object sender, EventArgs e)
-        //{
-        //	var service = Program.ServiceProvider?.GetService(typeof(FormCreateSale));
-        //	if (service is FormCreateSale form)
-        //	{
-        //		form.ShowDialog();
-        //		LoadData();
-        //	}
-        //}
-        //private void ButtonCreateSupply_Click(object sender, EventArgs e)
-        //{
-        //	var service = Program.ServiceProvider?.GetService(typeof(FormCreateSupply));
-        //	if (service is FormCreateSupply form)
-        //	{
-        //		form.ShowDialog();
-        //		LoadData();
-        //	}
-        //}
     }
 }

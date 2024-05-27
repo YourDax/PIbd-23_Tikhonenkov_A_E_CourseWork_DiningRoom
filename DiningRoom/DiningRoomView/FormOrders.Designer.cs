@@ -34,6 +34,7 @@
             ButtonDel = new Button();
             ButtonRef = new Button();
             textBoxName = new TextBox();
+            labelLogin = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -63,7 +64,7 @@
             ButtonUpd.Name = "ButtonUpd";
             ButtonUpd.Size = new Size(225, 23);
             ButtonUpd.TabIndex = 2;
-            ButtonUpd.Text = "Изменить";
+            ButtonUpd.Text = "Связать с блюдом";
             ButtonUpd.UseVisualStyleBackColor = true;
             ButtonUpd.Click += ButtonCreateOrder_Click;
             // 
@@ -94,19 +95,29 @@
             textBoxName.Size = new Size(225, 23);
             textBoxName.TabIndex = 5;
             // 
-            // FormCards
+            // labelLogin
+            // 
+            labelLogin.AutoSize = true;
+            labelLogin.Location = new Point(448, 12);
+            labelLogin.Name = "labelLogin";
+            labelLogin.Size = new Size(99, 15);
+            labelLogin.TabIndex = 21;
+            labelLogin.Text = "Название заказа:";
+            // 
+            // FormOrders
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(668, 450);
+            Controls.Add(labelLogin);
             Controls.Add(textBoxName);
             Controls.Add(ButtonRef);
             Controls.Add(ButtonDel);
             Controls.Add(ButtonUpd);
             Controls.Add(ButtonAdd);
             Controls.Add(dataGridView);
-            Name = "FormCards";
-            Text = "Изделия";
+            Name = "FormOrders";
+            Text = "Заказы";
             Load += FormProducts_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             ResumeLayout(false);
@@ -121,5 +132,6 @@
         private System.Windows.Forms.Button ButtonDel;
         private System.Windows.Forms.Button ButtonRef;
         private TextBox textBoxName;
+        private Label labelLogin;
     }
 }

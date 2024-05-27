@@ -62,7 +62,7 @@
             Controls.Add(btnOK);
             Margin = new Padding(4, 3, 4, 3);
             Name = "FormComponentSelection";
-            Text = "Select Products";
+            Text = "Выбрать продукты";
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             ResumeLayout(false);
         }

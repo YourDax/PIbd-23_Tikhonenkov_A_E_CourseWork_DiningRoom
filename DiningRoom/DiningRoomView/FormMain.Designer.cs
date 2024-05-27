@@ -245,7 +245,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "FormMain";
-            Text = "FormMain";
+            Text = "Столовая \"Рога и Копыта\"";
             Load += FormMain_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();

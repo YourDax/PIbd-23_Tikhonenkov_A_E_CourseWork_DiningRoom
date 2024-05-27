@@ -41,9 +41,9 @@
             labelComponent.AutoSize = true;
             labelComponent.Location = new Point(12, 9);
             labelComponent.Name = "labelComponent";
-            labelComponent.Size = new Size(72, 15);
+            labelComponent.Size = new Size(56, 15);
             labelComponent.TabIndex = 0;
-            labelComponent.Text = "Компонент:";
+            labelComponent.Text = "Продукт:";
             // 
             // labelCount
             // 
@@ -90,7 +90,7 @@
             buttonSave.UseVisualStyleBackColor = true;
             buttonSave.Click += buttonSave_Click;
             // 
-            // FormProductComponent
+            // FormDrinkComponent
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -101,8 +101,8 @@
             Controls.Add(textBoxCount);
             Controls.Add(labelCount);
             Controls.Add(labelComponent);
-            Name = "FormProductComponent";
-            Text = "Компонент";
+            Name = "FormDrinkComponent";
+            Text = "Продукт";
             ResumeLayout(false);
             PerformLayout();
         }

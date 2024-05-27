@@ -128,19 +128,23 @@ namespace DiningRoomDatabaseImplement.Implements
                                 .ThenInclude(pc => pc.Product)
                 .ToList()
                 .SelectMany(card => card.Drinks
-            .SelectMany(d => d.Components.SelectMany(dc => dc.Component.ProductComponents.Select(pc => new ReportComponentByDateViewModel
-            {
-                DateCardCreate = card.DateCardCreate,
-                ComponentId = pc.ComponentId,
-                ComponentName = dc.Component.ComponentName,
-                ComponentCost = dc.Component.Cost,
-                ProductId = pc.ProductId,
-                ProductName = pc.Product.ProductName,
-                ProductPrice = pc.Product.Cost,
-                CardId = card.Id,
-                CardName = card.CardName,
-            }))))
-            .ToList();
+                    .SelectMany(d => d.Components))
+                .SelectMany(dc => dc.Component.ProductComponents
+                    .Select(pc => new ReportComponentByDateViewModel
+                    {
+                        DateCardCreate = dc.Drink.Card.DateCardCreate,
+                        ComponentId = dc.ComponentId,
+                        ComponentName = dc.Component.ComponentName,
+                        ComponentCost = dc.Component.Cost,
+                        ProductId = pc.ProductId,
+                        ProductName = pc.Product.ProductName,
+                        ProductPrice = pc.Product.Cost,
+                        CardId = dc.Drink.CardId,
+                        CardName = dc.Drink.Card.CardName,
+                    }))
+                .ToList();
         }
+
+
     }
 }

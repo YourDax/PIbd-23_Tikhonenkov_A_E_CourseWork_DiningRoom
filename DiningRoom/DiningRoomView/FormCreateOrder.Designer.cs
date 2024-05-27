@@ -43,9 +43,9 @@
             labelProduct.AutoSize = true;
             labelProduct.Location = new Point(12, 8);
             labelProduct.Name = "labelProduct";
-            labelProduct.Size = new Size(53, 15);
+            labelProduct.Size = new Size(44, 15);
             labelProduct.TabIndex = 0;
-            labelProduct.Text = "Изделие";
+            labelProduct.Text = "Блюдо";
             // 
             // labelCount
             // 

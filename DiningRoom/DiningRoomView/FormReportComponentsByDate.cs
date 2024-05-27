@@ -2,22 +2,8 @@
 using DiningRoomContracts.BindingModels;
 using DiningRoomContracts.BusinessLogicContracts;
 using Microsoft.Extensions.Logging;
-using Microsoft.Reporting.WinForms;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net.Mail;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
-using System.Net;
-using System.Net.Mail;
-using System.Windows.Forms;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
@@ -58,21 +44,35 @@ namespace DiningRoomView
 
                 foreach (var group in groupedData)
                 {
-                    // Добавляем строку с именем компонента и его стоимостью
+                    // Добавляем строку с именем продукта и его стоимостью
                     displayData.Add(new GroupedComponentViewModel
                     {
                         ComponentName = group.Key,
                         ComponentCost = group.First().ComponentCost
                     });
 
-                    // Добавляем строки с названием карты и блюда
+                    // Добавляем только уникальные названия блюд и карт
+                    var uniqueProducts = new HashSet<string>();
+                    var uniqueCards = new HashSet<string>();
+
                     foreach (var item in group)
                     {
-                        displayData.Add(new GroupedComponentViewModel
+                        // Проверяем, есть ли название блюда и оно уникально
+                        if (!string.IsNullOrEmpty(item.ProductName) && uniqueProducts.Add(item.ProductName))
                         {
-                            CardName = item.CardName,
-                            ProductName = item.ProductName
-                        });
+                            displayData.Add(new GroupedComponentViewModel
+                            {
+                                ProductName = item.ProductName
+                            });
+                        }
+                        // Проверяем, есть ли название карты и оно уникально
+                        if (!string.IsNullOrEmpty(item.CardName) && uniqueCards.Add(item.CardName))
+                        {
+                            displayData.Add(new GroupedComponentViewModel
+                            {
+                                CardName = item.CardName
+                            });
+                        }
                     }
                 }
 
@@ -83,8 +83,8 @@ namespace DiningRoomView
                 dataGridView.DataSource = displayData;
 
                 // Форматирование столбцов
-                dataGridView.Columns["ComponentName"].HeaderText = "Название компонента";
-                dataGridView.Columns["ComponentCost"].HeaderText = "Стоимость компонента";
+                dataGridView.Columns["ComponentName"].HeaderText = "Название продукта";
+                dataGridView.Columns["ComponentCost"].HeaderText = "Стоимость продукта";
                 dataGridView.Columns["CardName"].HeaderText = "Название карты";
                 dataGridView.Columns["ProductName"].HeaderText = "Название блюда";
 
@@ -103,6 +103,8 @@ namespace DiningRoomView
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
 
 
 

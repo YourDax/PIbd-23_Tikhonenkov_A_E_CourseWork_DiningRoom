@@ -97,7 +97,7 @@
             Controls.Add(ButtonAdd);
             Controls.Add(dataGridView);
             Name = "FormComponents";
-            Text = "Компоненты";
+            Text = "Продукты";
             Load += FormComponents_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             ResumeLayout(false);

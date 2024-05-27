@@ -41,9 +41,9 @@
             labelComponent.AutoSize = true;
             labelComponent.Location = new Point(12, 9);
             labelComponent.Name = "labelComponent";
-            labelComponent.Size = new Size(72, 15);
+            labelComponent.Size = new Size(56, 15);
             labelComponent.TabIndex = 0;
-            labelComponent.Text = "Компонент:";
+            labelComponent.Text = "Продукт:";
             labelComponent.Click += labelComponent_Click;
             // 
             // labelCount
@@ -103,7 +103,7 @@
             Controls.Add(labelCount);
             Controls.Add(labelComponent);
             Name = "FormProductComponent";
-            Text = "Компонент";
+            Text = "Продукт";
             ResumeLayout(false);
             PerformLayout();
         }

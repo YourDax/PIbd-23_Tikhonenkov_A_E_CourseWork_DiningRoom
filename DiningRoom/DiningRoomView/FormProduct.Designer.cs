@@ -34,15 +34,15 @@
             textBoxPrice = new TextBox();
             groupBox1 = new GroupBox();
             dataGridView = new DataGridView();
-            ID = new DataGridViewTextBoxColumn();
-            ComponentName = new DataGridViewTextBoxColumn();
-            Count = new DataGridViewTextBoxColumn();
             ButtonRef = new Button();
             ButtonDel = new Button();
             ButtonUpd = new Button();
             ButtonAdd = new Button();
             ButtonSave = new Button();
             ButtonCancel = new Button();
+            ID = new DataGridViewTextBoxColumn();
+            ComponentName = new DataGridViewTextBoxColumn();
+            Count = new DataGridViewTextBoxColumn();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
@@ -91,7 +91,7 @@
             groupBox1.Size = new Size(510, 338);
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
-            groupBox1.Text = "Компонент";
+            groupBox1.Text = "Продукты";
             // 
             // dataGridView
             // 
@@ -103,24 +103,6 @@
             dataGridView.RowTemplate.Height = 25;
             dataGridView.Size = new Size(394, 311);
             dataGridView.TabIndex = 5;
-            // 
-            // ID
-            // 
-            ID.HeaderText = "Id";
-            ID.Name = "ID";
-            ID.Visible = false;
-            ID.Width = 250;
-            // 
-            // ComponentName
-            // 
-            ComponentName.HeaderText = "Компоненте";
-            ComponentName.Name = "ComponentName";
-            ComponentName.Width = 250;
-            // 
-            // Count
-            // 
-            Count.HeaderText = "Количество";
-            Count.Name = "Count";
             // 
             // ButtonRef
             // 
@@ -182,6 +164,24 @@
             ButtonCancel.UseVisualStyleBackColor = true;
             ButtonCancel.Click += ButtonCancel_Click;
             // 
+            // ID
+            // 
+            ID.HeaderText = "Id";
+            ID.Name = "ID";
+            ID.Visible = false;
+            ID.Width = 250;
+            // 
+            // ComponentName
+            // 
+            ComponentName.HeaderText = "Продукты";
+            ComponentName.Name = "ComponentName";
+            ComponentName.Width = 250;
+            // 
+            // Count
+            // 
+            Count.HeaderText = "Количество";
+            Count.Name = "Count";
+            // 
             // FormProduct
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -195,7 +195,7 @@
             Controls.Add(labelPrice);
             Controls.Add(labelName);
             Name = "FormProduct";
-            Text = "Создание изделия";
+            Text = "Создание блюда";
             Load += FormProduct_Load;
             groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
@@ -217,8 +217,8 @@
         private System.Windows.Forms.Button ButtonAdd;
         private System.Windows.Forms.Button ButtonSave;
         private System.Windows.Forms.Button ButtonCancel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComponentName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Count;
+        private DataGridViewTextBoxColumn ID;
+        private DataGridViewTextBoxColumn ComponentName;
+        private DataGridViewTextBoxColumn Count;
     }
 }

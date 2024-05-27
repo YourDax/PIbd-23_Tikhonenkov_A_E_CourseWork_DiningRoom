@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             dataGridView = new DataGridView();
-            buttonSaveToExcel = new Button();
             ColumnComponent = new DataGridViewTextBoxColumn();
             ColumnProduct = new DataGridViewTextBoxColumn();
             ColumnCount = new DataGridViewTextBoxColumn();
+            buttonSaveToExcel = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -56,17 +56,6 @@
             dataGridView.Size = new Size(616, 510);
             dataGridView.TabIndex = 0;
             // 
-            // buttonSaveToExcel
-            // 
-            buttonSaveToExcel.Location = new Point(14, 14);
-            buttonSaveToExcel.Margin = new Padding(4, 3, 4, 3);
-            buttonSaveToExcel.Name = "buttonSaveToExcel";
-            buttonSaveToExcel.Size = new Size(186, 27);
-            buttonSaveToExcel.TabIndex = 1;
-            buttonSaveToExcel.Text = "Сохранить в Excel";
-            buttonSaveToExcel.UseVisualStyleBackColor = true;
-            buttonSaveToExcel.Click += ButtonSaveToExcel_Click;
-            // 
             // ColumnComponent
             // 
             ColumnComponent.HeaderText = "Продукт";
@@ -87,6 +76,17 @@
             ColumnCount.Name = "ColumnCount";
             ColumnCount.ReadOnly = true;
             // 
+            // buttonSaveToExcel
+            // 
+            buttonSaveToExcel.Location = new Point(14, 14);
+            buttonSaveToExcel.Margin = new Padding(4, 3, 4, 3);
+            buttonSaveToExcel.Name = "buttonSaveToExcel";
+            buttonSaveToExcel.Size = new Size(186, 27);
+            buttonSaveToExcel.TabIndex = 1;
+            buttonSaveToExcel.Text = "Сохранить в Excel";
+            buttonSaveToExcel.UseVisualStyleBackColor = true;
+            buttonSaveToExcel.Click += ButtonSaveToExcel_Click;
+            // 
             // FormReportProductComponents
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -96,7 +96,7 @@
             Controls.Add(dataGridView);
             Margin = new Padding(4, 3, 4, 3);
             Name = "FormReportProductComponents";
-            Text = "Компоненты по изделиям";
+            Text = "Заказы по продуктам";
             Load += FormReportProductComponents_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             ResumeLayout(false);

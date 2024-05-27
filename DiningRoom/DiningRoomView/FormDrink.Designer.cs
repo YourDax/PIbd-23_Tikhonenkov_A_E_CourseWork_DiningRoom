@@ -34,9 +34,6 @@
             textBoxPrice = new TextBox();
             groupBox1 = new GroupBox();
             dataGridView = new DataGridView();
-            ID = new DataGridViewTextBoxColumn();
-            ComponentName = new DataGridViewTextBoxColumn();
-            Count = new DataGridViewTextBoxColumn();
             ButtonSave = new Button();
             ButtonCancel = new Button();
             ButtonRef = new Button();
@@ -45,6 +42,9 @@
             ButtonAdd = new Button();
             comboBoxCards = new ComboBox();
             label1 = new Label();
+            ID = new DataGridViewTextBoxColumn();
+            ComponentName = new DataGridViewTextBoxColumn();
+            Count = new DataGridViewTextBoxColumn();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
@@ -95,7 +95,7 @@
             groupBox1.Size = new Size(510, 389);
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
-            groupBox1.Text = "Компонент";
+            groupBox1.Text = "Продукты";
             // 
             // dataGridView
             // 
@@ -107,24 +107,6 @@
             dataGridView.RowTemplate.Height = 25;
             dataGridView.Size = new Size(394, 311);
             dataGridView.TabIndex = 5;
-            // 
-            // ID
-            // 
-            ID.HeaderText = "Id";
-            ID.Name = "ID";
-            ID.Visible = false;
-            ID.Width = 250;
-            // 
-            // ComponentName
-            // 
-            ComponentName.HeaderText = "Компоненте";
-            ComponentName.Name = "ComponentName";
-            ComponentName.Width = 250;
-            // 
-            // Count
-            // 
-            Count.HeaderText = "Количество";
-            Count.Name = "Count";
             // 
             // ButtonSave
             // 
@@ -204,6 +186,24 @@
             label1.TabIndex = 8;
             label1.Text = "Алкогольная карта:";
             // 
+            // ID
+            // 
+            ID.HeaderText = "Id";
+            ID.Name = "ID";
+            ID.Visible = false;
+            ID.Width = 250;
+            // 
+            // ComponentName
+            // 
+            ComponentName.HeaderText = "Продукты";
+            ComponentName.Name = "ComponentName";
+            ComponentName.Width = 250;
+            // 
+            // Count
+            // 
+            Count.HeaderText = "Количество";
+            Count.Name = "Count";
+            // 
             // FormDrink
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -217,7 +217,7 @@
             Controls.Add(labelPrice);
             Controls.Add(labelName);
             Name = "FormDrink";
-            Text = "Создание изделия";
+            Text = "Создание напитка";
             Load += FormDrink_Load;
             groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
@@ -239,10 +239,10 @@
         private System.Windows.Forms.Button ButtonAdd;
         private System.Windows.Forms.Button ButtonSave;
         private System.Windows.Forms.Button ButtonCancel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComponentName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Count;
         private ComboBox comboBoxCards;
         private Label label1;
+        private DataGridViewTextBoxColumn ID;
+        private DataGridViewTextBoxColumn ComponentName;
+        private DataGridViewTextBoxColumn Count;
     }
 }

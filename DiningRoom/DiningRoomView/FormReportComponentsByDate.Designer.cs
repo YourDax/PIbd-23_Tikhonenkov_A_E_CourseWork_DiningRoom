@@ -58,12 +58,12 @@
             // buttonToPdf
             // 
             buttonToPdf.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            buttonToPdf.Location = new Point(878, 8);
+            buttonToPdf.Location = new Point(790, 8);
             buttonToPdf.Margin = new Padding(4, 3, 4, 3);
             buttonToPdf.Name = "buttonToPdf";
-            buttonToPdf.Size = new Size(139, 27);
+            buttonToPdf.Size = new Size(227, 27);
             buttonToPdf.TabIndex = 5;
-            buttonToPdf.Text = "В Pdf";
+            buttonToPdf.Text = "Отправить отчет на почту";
             buttonToPdf.UseVisualStyleBackColor = true;
             buttonToPdf.Click += buttonGenerateAndSendPdf_Click;
             // 
@@ -134,7 +134,7 @@
             Margin = new Padding(4, 3, 4, 3);
             Name = "FormReportComponentsByDate";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Заказы";
+            Text = "Созданные продукты за период";
             panel.ResumeLayout(false);
             panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
