@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DiningRoomDatabaseImplement.Migrations
 {
     [DbContext(typeof(DiningRoomDatabase))]
-    [Migration("20240526174629_InitialCreate")]
+    [Migration("20240527031110_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -64,6 +64,9 @@ namespace DiningRoomDatabaseImplement.Migrations
 
                     b.Property<double>("Cost")
                         .HasColumnType("double precision");
+
+                    b.Property<DateTime>("DateComponentCreate")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("Unit")
                         .HasColumnType("integer");

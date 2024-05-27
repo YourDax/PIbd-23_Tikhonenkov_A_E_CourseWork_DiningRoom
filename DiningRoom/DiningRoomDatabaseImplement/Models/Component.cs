@@ -17,6 +17,8 @@ namespace DiningRoomDatabaseImplement.Models
 		public string ComponentName { get; private set; } = string.Empty;
         [Required]
         public ComponentUnit Unit { get; private set; } = ComponentUnit.Неизвестна;
+        [Required]
+        public DateTime DateComponentCreate { get; set; }
 
         [Required]
 		public double Cost { get; private set; }
@@ -36,6 +38,7 @@ namespace DiningRoomDatabaseImplement.Models
 			{
 				Id = Model.Id,
 				ComponentName = Model.ComponentName,
+                DateComponentCreate = Model.DateComponentCreate,
 				Cost = Model.Cost,
                 Unit = Model.Unit,
                 UserId = Model.UserId,
@@ -47,6 +50,7 @@ namespace DiningRoomDatabaseImplement.Models
             {
                 Id = Model.Id,
                 ComponentName = Model.ComponentName,
+                DateComponentCreate = Model.DateComponentCreate,
                 Cost = Model.Cost,
                 Unit = Model.Unit,
                 UserId = Model.UserId,
@@ -67,6 +71,7 @@ namespace DiningRoomDatabaseImplement.Models
 		{
 			Id = Id,
 			ComponentName = ComponentName,
+            DateComponentCreate = DateComponentCreate,
 			Cost = Cost,
 			Unit = Unit,
             UserId = UserId,

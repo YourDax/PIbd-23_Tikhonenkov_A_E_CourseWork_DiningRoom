@@ -17,5 +17,6 @@ namespace DiningRoomContracts.ViewModels
         
         [DisplayName("Стоимость")]
 		public double Cost { get; set; }
-	}
+        public DateTime DateComponentCreate { get; set; }
+    }
 }

@@ -25,5 +25,7 @@ namespace DiningRoomDataModels.Models
 		/// </summary>
 		double Cost { get; }
 
-	}
+        DateTime DateComponentCreate { get; }
+
+    }
 }

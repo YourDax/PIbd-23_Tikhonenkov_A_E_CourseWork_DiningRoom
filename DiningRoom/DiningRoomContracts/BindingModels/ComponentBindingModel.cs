@@ -11,5 +11,6 @@ namespace DiningRoomContracts.BindingModels
         public string ComponentName { get; set; } = string.Empty;
 		public ComponentUnit Unit {  get; set; } = ComponentUnit.Неизвестна;
 		public double Cost { get; set; }
-	}
+        public DateTime DateComponentCreate { get; set; } = DateTime.Now;
+    }
 }

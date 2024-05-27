@@ -62,6 +62,9 @@ namespace DiningRoomDatabaseImplement.Migrations
                     b.Property<double>("Cost")
                         .HasColumnType("double precision");
 
+                    b.Property<DateTime>("DateComponentCreate")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<int>("Unit")
                         .HasColumnType("integer");
 
