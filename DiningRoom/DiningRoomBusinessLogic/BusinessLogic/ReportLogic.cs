@@ -37,10 +37,26 @@ namespace DiningRoomBusinessLogic.BusinessLogic
 		{
 			return _componentStorage.GetComponentsByDate(Report);
 		}
-
-		public void SaveReportToWordFile(ReportBindingModel Model)
+        public void SaveComponentsToPdfFile(ReportBindingModel model)
         {
-			throw new NotImplementedException();
+            _saveToPdf.CreateDoc(new PdfInfo
+            {
+                FileName = model.FileName,
+                Title = "Список заказов",
+                DateFrom = model.DateFrom!.Value,
+                DateTo = model.DateTo!.Value,
+                Components = GetReportComponentsByCardDate(model)
+            });
+        }
+
+        public void SaveReportToWordFile(ReportBindingModel Model, List<ComponentSearchModel> selectedComponents)
+        {
+            _saveToWord.CreateDoc(new WordInfo
+            {
+                FileName = Model.FileName,
+                Title = "Список изделий",
+                ProductComponents = GetReportComponentsWithOrders(selectedComponents)
+            });
         }
 
 		public void SaveReportToExcelFile(ReportBindingModel Model, List<ComponentSearchModel> selectedComponents)

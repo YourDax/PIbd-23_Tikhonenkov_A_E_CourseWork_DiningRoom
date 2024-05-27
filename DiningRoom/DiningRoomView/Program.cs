@@ -70,6 +70,7 @@ namespace DiningRoomView
             services.AddTransient<FormLogin>();
             services.AddTransient<FormReportProductComponents>();
             services.AddTransient<FormComponentSelection>();
+            services.AddTransient<FormReportComponentsByDate>();
 
 
         }

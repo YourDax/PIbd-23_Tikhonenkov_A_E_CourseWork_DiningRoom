@@ -20,16 +20,21 @@ namespace DiningRoomView
 	{
 		private readonly ILogger _logger;
 		private readonly IProductLogic _productLogic;
-		private readonly IDrinkLogic _drinkLogic;
+        private readonly IComponentLogic _logicC;
+        private readonly IDrinkLogic _drinkLogic;
         private readonly IUserLogic _userLogic;
+        private readonly IReportLogic _reportLogic;
         private UserViewModel? _currentUser;
-        public FormMain(ILogger<FormMain> logger, IProductLogic productLogic, IDrinkLogic drinkLogic, IUserLogic userLogic)
+        public List<ComponentSearchModel> SelectedComp;
+        public FormMain(ILogger<FormMain> logger, IProductLogic productLogic, IDrinkLogic drinkLogic, IUserLogic userLogic, IReportLogic reportLogic, IComponentLogic logicC)
         {
             InitializeComponent();
             _logger = logger;
             _productLogic = productLogic;
             _drinkLogic = drinkLogic;
             _userLogic = userLogic;
+            _reportLogic = reportLogic;
+            _logicC = logicC;
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -134,6 +139,47 @@ namespace DiningRoomView
             if (service is FormReportProductComponents form)
             {
                 form._currentUser = _currentUser;
+                form.ShowDialog();
+            }
+        }
+        private void отчетWordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+
+                    using (var formProductSelection = new FormComponentSelection(_logicC, _currentUser))
+                    {
+
+                        if (formProductSelection.ShowDialog() == DialogResult.OK)
+                        {
+                            var selectedProducts = formProductSelection.SelectedProducts;
+                            SelectedComp = selectedProducts;
+                            if (selectedProducts != null && selectedProducts.Any())
+                            {
+                                var reportData = _reportLogic.GetReportComponentsWithOrders(selectedProducts);
+                            }
+                        }
+                    }
+
+                    _logger.LogInformation("Загрузка списка компонентов по заказам");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ошибка загрузки списка изделий по компонентам");
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                _reportLogic.SaveReportToWordFile(new ReportBindingModel { FileName = dialog.FileName },SelectedComp);
+                MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private void списокПродуктовPDFToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var service = Program.ServiceProvider?.GetService(typeof(FormReportComponentsByDate));
+            if (service is FormReportComponentsByDate form)
+            {
                 form.ShowDialog();
             }
         }

@@ -9,6 +9,7 @@ namespace DiningRoomBusinessLogic.OfficePackage
         {
             CreateWord(info);
 
+            // Добавляем заголовок
             CreateParagraph(new WordParagraph
             {
                 Texts = new List<(string, WordTextProperties)> { (info.Title, new WordTextProperties { Bold = true, Size = "24", }) },
@@ -19,23 +20,60 @@ namespace DiningRoomBusinessLogic.OfficePackage
                 }
             });
 
-            foreach (var product in info.Products)
+            // Группируем компоненты по имени компонента
+            var groupedComponents = info.ProductComponents
+                .GroupBy(item => item.ComponentName)
+                .ToList();
+
+            // Перебираем группы компонентов и добавляем их в документ
+            foreach (var group in groupedComponents)
             {
+                // Добавляем строку с названием компонента
                 CreateParagraph(new WordParagraph
                 {
-                    Texts = new List<(string, WordTextProperties)> {
-                        (product.ProductName + ": ", new WordTextProperties { Size = "24", Bold = true }),
-                        (Convert.ToInt32(product.Cost).ToString(), new WordTextProperties { Size = "24", })},
+                    Texts = new List<(string, WordTextProperties)> { ("Продукт - " + group.Key + ":", new WordTextProperties { Size = "24", Bold = true }) },
                     TextProperties = new WordTextProperties
                     {
                         Size = "24",
                         JustificationType = WordJustificationType.Both
                     }
                 });
+
+                // Перебираем продукты внутри группы компонентов
+                foreach (var product in group)
+                {
+                    // Добавляем информацию о продукте
+                    CreateParagraph(new WordParagraph
+                    {
+                        Texts = new List<(string, WordTextProperties)> {
+                    ("Количество блюд в заказе - "+Convert.ToInt32(product.ProductCount).ToString() + "     ", new WordTextProperties { Size = "24" }),
+                    ("Название заказа - "+product.OrderName, new WordTextProperties { Size = "24"})
+                },
+                        TextProperties = new WordTextProperties
+                        {
+                            Size = "24",
+                            JustificationType = WordJustificationType.Both
+                        }
+                    });
+                }
+                // Добавляем пустые абзацы для создания отступа
+                for (int i = 0; i < 2; i++)
+                {
+                    CreateParagraph(new WordParagraph
+                    {
+                        Texts = new List<(string, WordTextProperties)> { ("", new WordTextProperties { Size = "24" }) },
+                        TextProperties = new WordTextProperties
+                        {
+                            Size = "24",
+                            JustificationType = WordJustificationType.Both
+                        }
+                    });
+                }
             }
 
             SaveWord(info);
         }
+
 
         /// <summary>
 		/// Создание doc-файла

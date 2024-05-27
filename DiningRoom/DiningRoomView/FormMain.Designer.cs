@@ -38,6 +38,7 @@
             заказыПоПродуктамToolStripMenuItem = new ToolStripMenuItem();
             wordToolStripMenuItem = new ToolStripMenuItem();
             excelToolStripMenuItem = new ToolStripMenuItem();
+            продуктыПоБлюдамИКартамToolStripMenuItem = new ToolStripMenuItem();
             button1 = new Button();
             label1 = new Label();
             label2 = new Label();
@@ -102,7 +103,7 @@
             // 
             // отчетыToolStripMenuItem
             // 
-            отчетыToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { заказыПоПродуктамToolStripMenuItem });
+            отчетыToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { заказыПоПродуктамToolStripMenuItem, продуктыПоБлюдамИКартамToolStripMenuItem });
             отчетыToolStripMenuItem.Name = "отчетыToolStripMenuItem";
             отчетыToolStripMenuItem.Size = new Size(60, 20);
             отчетыToolStripMenuItem.Text = "Отчеты";
@@ -111,21 +112,29 @@
             // 
             заказыПоПродуктамToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { wordToolStripMenuItem, excelToolStripMenuItem });
             заказыПоПродуктамToolStripMenuItem.Name = "заказыПоПродуктамToolStripMenuItem";
-            заказыПоПродуктамToolStripMenuItem.Size = new Size(192, 22);
+            заказыПоПродуктамToolStripMenuItem.Size = new Size(246, 22);
             заказыПоПродуктамToolStripMenuItem.Text = "Заказы по продуктам";
             // 
             // wordToolStripMenuItem
             // 
             wordToolStripMenuItem.Name = "wordToolStripMenuItem";
-            wordToolStripMenuItem.Size = new Size(180, 22);
+            wordToolStripMenuItem.Size = new Size(103, 22);
             wordToolStripMenuItem.Text = "Word";
+            wordToolStripMenuItem.Click += отчетWordToolStripMenuItem_Click;
             // 
             // excelToolStripMenuItem
             // 
             excelToolStripMenuItem.Name = "excelToolStripMenuItem";
-            excelToolStripMenuItem.Size = new Size(180, 22);
+            excelToolStripMenuItem.Size = new Size(103, 22);
             excelToolStripMenuItem.Text = "Excel";
             excelToolStripMenuItem.Click += ОтчетыToolStripMenuItem_Click;
+            // 
+            // продуктыПоБлюдамИКартамToolStripMenuItem
+            // 
+            продуктыПоБлюдамИКартамToolStripMenuItem.Name = "продуктыПоБлюдамИКартамToolStripMenuItem";
+            продуктыПоБлюдамИКартамToolStripMenuItem.Size = new Size(246, 22);
+            продуктыПоБлюдамИКартамToolStripMenuItem.Text = "Продукты по блюдам и картам";
+            продуктыПоБлюдамИКартамToolStripMenuItem.Click += списокПродуктовPDFToolStripMenuItem_Click;
             // 
             // button1
             // 
@@ -267,5 +276,6 @@
         private ToolStripMenuItem заказыПоПродуктамToolStripMenuItem;
         private ToolStripMenuItem wordToolStripMenuItem;
         private ToolStripMenuItem excelToolStripMenuItem;
+        private ToolStripMenuItem продуктыПоБлюдамИКартамToolStripMenuItem;
     }
 }

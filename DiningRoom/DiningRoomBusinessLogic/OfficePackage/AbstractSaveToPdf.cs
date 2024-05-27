@@ -11,28 +11,51 @@ namespace DiningRoomBusinessLogic.OfficePackage
             CreateParagraph(new PdfParagraph { Text = info.Title, Style = "NormalTitle", ParagraphAlignment = PdfParagraphAlignmentType.Center });
             CreateParagraph(new PdfParagraph { Text = $"с {info.DateFrom.ToShortDateString()} по {info.DateTo.ToShortDateString()}", Style = "Normal", ParagraphAlignment = PdfParagraphAlignmentType.Center });
 
-            CreateTable(new List<string> { "2cm", "3cm", "6cm", "6cm", "3cm" });
+            // Устанавливаем размеры колонок таблицы
+            CreateTable(new List<string> { "3cm", "2cm", "6cm", "6cm" });
 
-            CreateRow(new PdfRowParameters
-            {
-                Texts = new List<string> { "Номер", "Дата заказа", "Изделие", "Статус", "Сумма" },
-                Style = "NormalTitle",
-                ParagraphAlignment = PdfParagraphAlignmentType.Center
-            });
+            // Группировка данных по ComponentName
+            var groupedData = info.Components.GroupBy(c => c.ComponentName);
 
-            foreach (var order in info.Orders)
+            foreach (var group in groupedData)
             {
                 CreateRow(new PdfRowParameters
                 {
-                    Texts = new List<string> { order.Id.ToString(), order.DateCreate.ToShortDateString(), order.ProductName, order.Status.ToString(), order.Sum.ToString() },
-                    Style = "Normal",
+                    Texts = new List<string> { "Продукт", "Цена", "", "" }, // assuming currency format
+                    Style = "NormalTitle",
                     ParagraphAlignment = PdfParagraphAlignmentType.Left
                 });
+                // Добавление строки с именем компонента и его стоимостью
+                CreateRow(new PdfRowParameters
+                {
+                    Texts = new List<string> { group.Key, group.First().ComponentCost.ToString("C"),"","" }, // assuming currency format
+                    Style = "NormalTitle",
+                    ParagraphAlignment = PdfParagraphAlignmentType.Left
+                });
+
+                // Добавление заголовка для элементов компонента
+                CreateRow(new PdfRowParameters
+                {
+                    Texts = new List<string> { "","","Карта", "Блюдо" },
+                    Style = "NormalTitle",
+                    ParagraphAlignment = PdfParagraphAlignmentType.Center
+                });
+
+                // Добавление строк с элементами компонента
+                foreach (var item in group)
+                {
+                    CreateRow(new PdfRowParameters
+                    {
+                        Texts = new List<string> { "", "",item.CardName, item.ProductName },
+                        Style = "Normal",
+                        ParagraphAlignment = PdfParagraphAlignmentType.Left
+                    });
+                }
             }
-            CreateParagraph(new PdfParagraph { Text = $"Итого: {info.Orders.Sum(x => x.Sum)}\t", Style = "Normal", ParagraphAlignment = PdfParagraphAlignmentType.Right });
 
             SavePdf(info);
         }
+
 
         /// <summary>
 		/// Создание doc-файла

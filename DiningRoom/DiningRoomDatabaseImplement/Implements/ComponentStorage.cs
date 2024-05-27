@@ -130,6 +130,7 @@ namespace DiningRoomDatabaseImplement.Implements
                 .SelectMany(card => card.Drinks
             .SelectMany(d => d.Components.SelectMany(dc => dc.Component.ProductComponents.Select(pc => new ReportComponentByDateViewModel
             {
+                DateCardCreate = card.DateCardCreate,
                 ComponentId = pc.ComponentId,
                 ComponentName = dc.Component.ComponentName,
                 ComponentCost = dc.Component.Cost,

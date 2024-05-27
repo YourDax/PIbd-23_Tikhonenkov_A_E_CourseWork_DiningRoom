@@ -8,6 +8,6 @@ namespace DiningRoomBusinessLogic.OfficePackage.HelperModels
 
         public string Title { get; set; } = string.Empty;
 
-        public List<ProductViewModel> Products { get; set; } = new();
+        public List<ReportComponentOrderViewModel> ProductComponents { get; set; } = new();
     }
 }
