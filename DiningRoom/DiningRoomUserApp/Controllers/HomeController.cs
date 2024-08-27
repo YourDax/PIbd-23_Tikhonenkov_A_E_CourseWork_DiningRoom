@@ -228,6 +228,29 @@ namespace DiningRoomUserApp.Controllers
             Response.Redirect("Products");
         }
 
+        public IActionResult DeleteProduct()
+        {
+            if (APIClient.User == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            ViewBag.Products = APIClient.GetRequest<List<ProductViewModel>>($"api/main/getproductlist?userId={APIClient.User.Id}");
+            return View();
+        }
+        [HttpPost]
+        public void DeleteProduct(int product)
+        {
+            if (APIClient.User == null)
+            {
+                throw new Exception("Необходима авторизация");
+            }
+            APIClient.PostRequest("api/main/deleteproduct", new ProductBindingModel
+            {
+                Id = product
+            });
+            Response.Redirect("Products");
+        }
+
         [HttpGet]
         public IActionResult Privacy()
         {
