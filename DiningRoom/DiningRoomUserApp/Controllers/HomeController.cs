@@ -519,7 +519,7 @@ namespace DiningRoomUserApp.Controllers
             }
 
             // Генерация HTML таблицы
-            string table = "<h2 class=\"text-custom-color-1\">Отчет по компонентам</h2>";
+            string table = "<h2 class=\"text-custom-color-1\">Отчет по продуктам</h2>";
             table += "<div class=\"table-responsive\">";
             table += "<table class=\"table table-striped table-bordered table-hover\">";
             table += "<thead class=\"table-dark\">";
@@ -527,7 +527,7 @@ namespace DiningRoomUserApp.Controllers
             table += "<th scope=\"col\">Продукт</th>";
             table += "<th scope=\"col\">Блюдо</th>";
             table += "<th scope=\"col\">Алкогольная Карта</th>";
-            table += "<th scope=\"col\">Стоимость компонента</th>";
+            table += "<th scope=\"col\">Стоимость продукта</th>";
             table += "</tr>";
             table += "</thead>";
             table += "<tbody>";

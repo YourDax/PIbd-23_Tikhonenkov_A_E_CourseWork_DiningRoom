@@ -37,7 +37,7 @@ namespace DiningRoomBusinessLogic.OfficePackage
                 // Добавление заголовка для элементов компонента
                 CreateRow(new PdfRowParameters
                 {
-                    Texts = new List<string> { "","","Карта", "Блюдо" },
+                    Texts = new List<string> { "","","Алк. карта", "Блюдо" },
                     Style = "NormalTitle",
                     ParagraphAlignment = PdfParagraphAlignmentType.Center
                 });
@@ -45,16 +45,20 @@ namespace DiningRoomBusinessLogic.OfficePackage
                 // Добавление строк с элементами компонента
                 foreach (var item in group)
                 {
-                    CreateRow(new PdfRowParameters
+                    if(!string.IsNullOrEmpty(item.CardName) || !string.IsNullOrEmpty(item.ProductName))
                     {
-                        Texts = new List<string>
+                        CreateRow(new PdfRowParameters
                         {
-                            string.IsNullOrEmpty(item.CardName) ? "N/A" : item.CardName,
-                            string.IsNullOrEmpty(item.ProductName) ? "N/A" : item.ProductName
+                            Texts = new List<string>
+                        {
+                            "","",
+                            string.IsNullOrEmpty(item.CardName) ? "" : item.CardName,
+                            string.IsNullOrEmpty(item.ProductName) ? "" : item.ProductName
                         },
-                        Style = "Normal",
-                        ParagraphAlignment = PdfParagraphAlignmentType.Left
-                    });
+                            Style = "Normal",
+                            ParagraphAlignment = PdfParagraphAlignmentType.Left
+                        });
+                    }
                 }
             }
 
