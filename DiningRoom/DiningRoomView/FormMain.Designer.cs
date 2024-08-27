@@ -117,10 +117,10 @@
             // 
             // wordToolStripMenuItem
             // 
-            wordToolStripMenuItem.Name = "wordToolStripMenuItem";
-            wordToolStripMenuItem.Size = new Size(103, 22);
-            wordToolStripMenuItem.Text = "Word";
-            wordToolStripMenuItem.Click += отчетWordToolStripMenuItem_Click;
+            //wordToolStripMenuItem.Name = "wordToolStripMenuItem";
+            //wordToolStripMenuItem.Size = new Size(103, 22);
+            //wordToolStripMenuItem.Text = "Word";
+            //wordToolStripMenuItem.Click += отчетWordToolStripMenuItem_Click;
             // 
             // excelToolStripMenuItem
             // 

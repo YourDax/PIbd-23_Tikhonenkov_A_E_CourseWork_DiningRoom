@@ -46,7 +46,11 @@ namespace DiningRoomBusinessLogic.OfficePackage
                 {
                     CreateRow(new PdfRowParameters
                     {
-                        Texts = new List<string> { "", "",item.CardName, item.ProductName },
+                        Texts = new List<string>
+                        {
+                            string.IsNullOrEmpty(item.CardName) ? "N/A" : item.CardName,
+                            string.IsNullOrEmpty(item.ProductName) ? "N/A" : item.ProductName
+                        },
                         Style = "Normal",
                         ParagraphAlignment = PdfParagraphAlignmentType.Left
                     });

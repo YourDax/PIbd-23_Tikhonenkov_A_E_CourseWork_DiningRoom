@@ -32,7 +32,7 @@
             ColumnComponent = new DataGridViewTextBoxColumn();
             ColumnProduct = new DataGridViewTextBoxColumn();
             ColumnCount = new DataGridViewTextBoxColumn();
-            buttonSaveToExcel = new Button();
+            //buttonSaveToExcel = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -78,21 +78,21 @@
             // 
             // buttonSaveToExcel
             // 
-            buttonSaveToExcel.Location = new Point(14, 14);
-            buttonSaveToExcel.Margin = new Padding(4, 3, 4, 3);
-            buttonSaveToExcel.Name = "buttonSaveToExcel";
-            buttonSaveToExcel.Size = new Size(186, 27);
-            buttonSaveToExcel.TabIndex = 1;
-            buttonSaveToExcel.Text = "Сохранить в Excel";
-            buttonSaveToExcel.UseVisualStyleBackColor = true;
-            buttonSaveToExcel.Click += ButtonSaveToExcel_Click;
+            //buttonSaveToExcel.Location = new Point(14, 14);
+            //buttonSaveToExcel.Margin = new Padding(4, 3, 4, 3);
+            //buttonSaveToExcel.Name = "buttonSaveToExcel";
+            //buttonSaveToExcel.Size = new Size(186, 27);
+            //buttonSaveToExcel.TabIndex = 1;
+            //buttonSaveToExcel.Text = "Сохранить в Excel";
+            //buttonSaveToExcel.UseVisualStyleBackColor = true;
+            //buttonSaveToExcel.Click += ButtonSaveToExcel_Click;
             // 
             // FormReportProductComponents
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(616, 557);
-            Controls.Add(buttonSaveToExcel);
+            //Controls.Add(buttonSaveToExcel);
             Controls.Add(dataGridView);
             Margin = new Padding(4, 3, 4, 3);
             Name = "FormReportProductComponents";

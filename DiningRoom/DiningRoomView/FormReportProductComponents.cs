@@ -95,27 +95,27 @@ namespace DiningRoomView
 
 
 
-        private void ButtonSaveToExcel_Click(object sender, EventArgs e)
-        {
-            using var dialog = new SaveFileDialog { Filter = "xlsx|*.xlsx" };
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
+        //private void ButtonSaveToExcel_Click(object sender, EventArgs e)
+        //{
+        //    using var dialog = new SaveFileDialog { Filter = "xlsx|*.xlsx" };
+        //    if (dialog.ShowDialog() == DialogResult.OK)
+        //    {
+        //        try
+        //        {
 
-                    _logic.SaveReportToExcelFile(new ReportBindingModel
-                    {
-                        FileName = dialog.FileName
-                    },SelectedComp);
-                    _logger.LogInformation("Сохранение списка изделий по компонентам");
-                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Ошибка сохранения списка изделий по компонентам");
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
+        //            _logic.SaveReportToExcelFile(new ReportBindingModel
+        //            {
+        //                FileName = dialog.FileName
+        //            },SelectedComp);
+        //            _logger.LogInformation("Сохранение списка изделий по компонентам");
+        //            MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            _logger.LogError(ex, "Ошибка сохранения списка изделий по компонентам");
+        //            MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        }
+        //    }
+        //}
     }
 }

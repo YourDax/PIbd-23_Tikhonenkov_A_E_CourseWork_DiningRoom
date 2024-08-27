@@ -12,6 +12,7 @@ namespace DiningRoomContracts.BindingModels
 		public string FileName { get; set; } = string.Empty;
 		public DateTime? DateFrom { get; set; }
 		public DateTime? DateTo { get; set; }
+		public string? Email { get; set; }
         public List<ComponentSearchModel>? selectedComponents {  get; set; }
 
     }

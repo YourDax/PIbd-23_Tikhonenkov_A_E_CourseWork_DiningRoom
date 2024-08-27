@@ -117,29 +117,64 @@ namespace DiningRoomDatabaseImplement.Implements
 
         public List<ReportComponentByDateViewModel> GetComponentsByDate(ReportBindingModel ReportModel)
         {
+            //using var Context = new DiningRoomDatabase();
+
+            //return Context.Cards
+            //    .Where(card => card.DateCardCreate >= ReportModel.DateFrom && card.DateCardCreate <= ReportModel.DateTo)
+            //    .Include(card => card.Drinks)
+            //        .ThenInclude(d => d.Components)
+            //            .ThenInclude(dc => dc.Component)
+            //                .ThenInclude(c => c.ProductComponents)
+            //                    .ThenInclude(pc => pc.Product)
+            //    .ToList()
+            //    .SelectMany(card => card.Drinks
+            //.SelectMany(d => d.Components.SelectMany(dc => dc.Component.ProductComponents.Select(pc => new ReportComponentByDateViewModel
+            //{
+
+            //    ComponentId = pc.ComponentId,
+            //    ComponentName = dc.Component.ComponentName,
+            //    ComponentCost = dc.Component.Cost,
+            //    ProductId = pc.ProductId,
+            //    ProductName = pc.Product.ProductName,
+            //    ProductPrice = pc.Product.Cost,
+            //    CardId = card.Id,
+            //    CardName = card.CardName,
+            //}))))
+            //.ToList();
             using var Context = new DiningRoomDatabase();
-
-            return Context.Cards
-                .Where(card => card.DateCardCreate >= ReportModel.DateFrom && card.DateCardCreate <= ReportModel.DateTo)
-                .Include(card => card.Drinks)
-                    .ThenInclude(d => d.Components)
-                        .ThenInclude(dc => dc.Component)
-                            .ThenInclude(c => c.ProductComponents)
-                                .ThenInclude(pc => pc.Product)
-                .ToList()
-                .SelectMany(card => card.Drinks
-            .SelectMany(d => d.Components.SelectMany(dc => dc.Component.ProductComponents.Select(pc => new ReportComponentByDateViewModel
+            return Context.Components
+            .Where(comp => comp.DateComponentCreate >= ReportModel.DateFrom && comp.DateComponentCreate <= ReportModel.DateTo)
+            .Include(comp => comp.DrinkComponents)
+                .ThenInclude(dc => dc.Drink)
+                    .ThenInclude(dr => dr.Card) // Включаем связь с Card для Drink
+            .Include(comp => comp.ProductComponents)
+                .ThenInclude(pc => pc.Product)
+            .SelectMany(comp => comp.DrinkComponents.Select(dc => new ReportComponentByDateViewModel
             {
-
-                ComponentId = pc.ComponentId,
-                ComponentName = dc.Component.ComponentName,
-                ComponentCost = dc.Component.Cost,
-                ProductId = pc.ProductId,
-                ProductName = pc.Product.ProductName,
-                ProductPrice = pc.Product.Cost,
-                CardId = card.Id,
-                CardName = card.CardName,
-            }))))
+                ComponentId = comp.Id,
+                ComponentName = comp.ComponentName,
+                ComponentCost = comp.Cost,
+                ProductId = 0, // Устанавливаем null для ProductId, так как в этом контексте у нас Drink
+                ProductName = null, // Аналогично для ProductName
+                ProductPrice = 0, // Аналогично для ProductPrice
+                CardId = dc.Drink.CardId,
+                CardName = dc.Drink.Card.CardName,
+            }))
+            .Union(
+                Context.Components
+                .Where(comp => comp.DateComponentCreate >= ReportModel.DateFrom && comp.DateComponentCreate <= ReportModel.DateTo)
+                .SelectMany(comp => comp.ProductComponents.Select(pc => new ReportComponentByDateViewModel
+                {
+                    ComponentId = comp.Id,
+                    ComponentName = comp.ComponentName,
+                    ComponentCost = comp.Cost,
+                    ProductId = pc.Product.Id,
+                    ProductName = pc.Product.ProductName,
+                    ProductPrice = pc.Product.Cost,
+                    CardId = 0, // Устанавливаем null для CardId, так как Product не связан с Card
+                    CardName = null, // Устанавливаем null для CardName
+                }))
+            )
             .ToList();
         }
     }

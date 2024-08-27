@@ -15,8 +15,8 @@
 		public double ProductPrice { get; set; }
 
 		public int? CardId { get; set; }
-		public string CardName { get; set; }
+		public string? CardName { get; set; }
 
-        public DateTime DateCardCreate { get; set; } = DateTime.Now;
+        public DateTime DateComponentCreate { get; set; } = DateTime.Now;
     }
 }

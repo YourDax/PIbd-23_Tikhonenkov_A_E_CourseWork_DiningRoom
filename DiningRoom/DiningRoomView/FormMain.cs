@@ -142,39 +142,39 @@ namespace DiningRoomView
                 form.ShowDialog();
             }
         }
-        private void отчетWordToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
+        //private void отчетWordToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
+        //    if (dialog.ShowDialog() == DialogResult.OK)
+        //    {
+        //        try
+        //        {
 
-                    using (var formProductSelection = new FormComponentSelection(_logicC, _currentUser))
-                    {
+        //            using (var formProductSelection = new FormComponentSelection(_logicC, _currentUser))
+        //            {
 
-                        if (formProductSelection.ShowDialog() == DialogResult.OK)
-                        {
-                            var selectedProducts = formProductSelection.SelectedProducts;
-                            SelectedComp = selectedProducts;
-                            if (selectedProducts != null && selectedProducts.Any())
-                            {
-                                var reportData = _reportLogic.GetReportComponentsWithOrders(selectedProducts);
-                            }
-                        }
-                    }
+        //                if (formProductSelection.ShowDialog() == DialogResult.OK)
+        //                {
+        //                    var selectedProducts = formProductSelection.SelectedProducts;
+        //                    SelectedComp = selectedProducts;
+        //                    if (selectedProducts != null && selectedProducts.Any())
+        //                    {
+        //                        var reportData = _reportLogic.GetReportComponentsWithOrders(selectedProducts);
+        //                    }
+        //                }
+        //            }
 
-                    _logger.LogInformation("Загрузка списка компонентов по заказам");
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Ошибка загрузки списка изделий по компонентам");
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                _reportLogic.SaveReportToWordFile(new ReportBindingModel { FileName = dialog.FileName },SelectedComp);
-                MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
+        //            _logger.LogInformation("Загрузка списка компонентов по заказам");
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            _logger.LogError(ex, "Ошибка загрузки списка изделий по компонентам");
+        //            MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        }
+        //        _reportLogic.SaveReportToWordFile(new ReportBindingModel { FileName = dialog.FileName },SelectedComp);
+        //        MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    }
+        //}
         private void списокПродуктовPDFToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var service = Program.ServiceProvider?.GetService(typeof(FormReportComponentsByDate));

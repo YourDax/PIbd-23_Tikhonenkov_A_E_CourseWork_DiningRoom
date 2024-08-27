@@ -33,7 +33,7 @@ namespace DiningRoomBusinessLogic.BusinessLogic
 			return _componentStorage.GetComponentsOrders(SelectedComponents);
 		}
 
-		public List<ReportComponentByDateViewModel> GetReportComponentsByCardDate(ReportBindingModel Report)
+		public List<ReportComponentByDateViewModel> GetReportComponentsByDate(ReportBindingModel Report)
 		{
 			return _componentStorage.GetComponentsByDate(Report);
 		}
@@ -42,10 +42,10 @@ namespace DiningRoomBusinessLogic.BusinessLogic
             _saveToPdf.CreateDoc(new PdfInfo
             {
                 FileName = model.FileName,
-                Title = "Список заказов",
+                Title = "Список продуктов",
                 DateFrom = model.DateFrom!.Value,
                 DateTo = model.DateTo!.Value,
-                Components = GetReportComponentsByCardDate(model)
+                Components = GetReportComponentsByDate(model)
             });
         }
 
@@ -54,7 +54,7 @@ namespace DiningRoomBusinessLogic.BusinessLogic
             _saveToWord.CreateDoc(new WordInfo
             {
                 FileName = Model.FileName,
-                Title = "Список изделий",
+                Title = "Список заказов",
                 ProductComponents = GetReportComponentsWithOrders(Model.selectedComponents)
             });
         }
@@ -64,7 +64,7 @@ namespace DiningRoomBusinessLogic.BusinessLogic
             _saveToExcel.CreateReport(new ExcelInfo
             {
                 FileName = Model.FileName,
-                Title = "Список изделий",
+                Title = "Список заказов",
                 ProductComponents = GetReportComponentsWithOrders(Model.selectedComponents)
             });
         }

@@ -5,6 +5,7 @@ using DiningRoomBusinessLogic.OfficePackage.Implements;
 using DiningRoomContracts.BusinessLogicContracts;
 using DiningRoomContracts.StorageContracts;
 using DiningRoomDatabaseImplement.Implements;
+using DiningRoomBusinessLogic.MailWorker;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,7 +14,12 @@ builder.Services.AddTransient<IProductStorage, ProductStorage>();
 builder.Services.AddTransient<IProductLogic, ProductLogic>();
 builder.Services.AddTransient<IComponentStorage, ComponentStorage>();
 builder.Services.AddTransient<IComponentLogic, ComponentLogic>();
-//builder.Services.AddTransient<AbstractSaveToPdfUser, SaveToPdfUser>();
+builder.Services.AddTransient<IReportLogic, ReportLogic>();
+builder.Services.AddTransient<AbstractSaveToPdf, SaveToPdf>();
+builder.Services.AddTransient<AbstractSaveToExcel, SaveToExcel>();
+builder.Services.AddTransient<AbstractSaveToWord, SaveToWord>();
+builder.Services.AddSingleton<AbstractMailWorker, MailKitWorker>();
+
 var app = builder.Build();
 APIClient.Connect(builder.Configuration);
 // Configure the HTTP request pipeline.

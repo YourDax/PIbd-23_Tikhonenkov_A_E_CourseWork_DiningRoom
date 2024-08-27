@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "AddComponentsToFile";
+}
+<head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+</head>
+
+<div class="text-center">
+    <h2 class="u-text u-text-custom-color-1 u-text-default u-text-1"> Отчет (pdf)</h2>
+</div>
+<form method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="dateFrom" class="form-label text-custom-color-1">Начало периода:</label>
+                <input type="datetime-local" id="dateFrom" name="dateFrom" class="form-control" placeholder="Выберите дату начала периода">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="dateTo" class="form-label text-custom-color-1">Окончание периода:</label>
+                <input type="datetime-local" id="dateTo" name="dateTo" class="form-control" placeholder="Выберите дату окончания периода">
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="buttons-action-with-files">
+        <div class="button">
+            <button type ="submit" class="button-action">На почту</button>
+        </div>
+        <div class="button">
+            <button type="button" id="demonstrate" class="button-action">Показать</button>
+        </div>
+    </div>
+    <div id="report"></div>
+</form>
+
+@section Scripts {
+    <script>
+        function check() {
+            var dateFrom = $('#dateFrom').val();
+            var dateTo = $('#dateTo').val();
+            if (dateFrom && dateTo) {
+                $.ajax({
+                    method: "GET",
+                    url: "/Home/GetComponentsReport",
+                    data: { dateFrom: dateFrom, dateTo: dateTo },
+                    success: function (result) {
+                        if (result != null) {
+                            $('#report').html(result);
+                        }
+                    }
+                });
+            };
+        }
+        check();
+        $('#demonstrate').on('click', (e) => check());
+    </script>
+}

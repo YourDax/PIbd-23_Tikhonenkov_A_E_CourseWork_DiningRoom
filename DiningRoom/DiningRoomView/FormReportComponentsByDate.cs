@@ -32,7 +32,7 @@ namespace DiningRoomView
             }
             try
             {
-                var dataSource = _logic.GetReportComponentsByCardDate(new ReportBindingModel
+                var dataSource = _logic.GetReportComponentsByDate(new ReportBindingModel
                 {
                     DateFrom = DateTime.SpecifyKind(dateTimePickerFrom.Value, DateTimeKind.Utc),
                     DateTo = DateTime.SpecifyKind(dateTimePickerTo.Value, DateTimeKind.Utc)
@@ -148,7 +148,7 @@ namespace DiningRoomView
                     Title = "Отчет",
                     DateFrom = dateTimePickerFrom.Value,
                     DateTo = dateTimePickerTo.Value,
-                    Components = _logic.GetReportComponentsByCardDate(new ReportBindingModel
+                    Components = _logic.GetReportComponentsByDate(new ReportBindingModel
                     {
                         DateFrom = DateTime.SpecifyKind(dateTimePickerFrom.Value, DateTimeKind.Utc),
                         DateTo = DateTime.SpecifyKind(dateTimePickerTo.Value, DateTimeKind.Utc)

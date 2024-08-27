@@ -16,16 +16,20 @@ using System.Numerics;
 using DiningRoomDataModels.Enums;
 using System.Reflection;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using DiningRoomBusinessLogic.MailWorker;
 
 namespace DiningRoomUserApp.Controllers
 {
     public class HomeController : Controller
     {
-
+        private readonly IReportLogic _logic;
         private readonly IComponentLogic _component;
-        public HomeController(IComponentLogic component)
+        private readonly AbstractMailWorker _mailWorker;
+        public HomeController(IComponentLogic component, IReportLogic logic, AbstractMailWorker mailWorker)
         {
             _component = component;
+            _logic=logic;
+            _mailWorker=mailWorker;
         }
 
         public IActionResult Index()
@@ -454,6 +458,121 @@ namespace DiningRoomUserApp.Controllers
             }
             return new PhysicalFileResult("C:\\exelfile.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         }
+        [HttpGet]
+        public string GetComponentsReport(DateTime dateFrom, DateTime dateTo)
+        {
+            if (APIClient.User == null)
+            {
+                throw new Exception("Вы как сюда попали? Сюда вход только авторизованным");
+            }
+
+            List<GroupedComponentViewModel> displayData;
+            try
+            {
+                var dataSource = _logic.GetReportComponentsByDate(new ReportBindingModel
+                {
+                    DateFrom = DateTime.SpecifyKind(dateFrom, DateTimeKind.Utc),
+                    DateTo = DateTime.SpecifyKind(dateTo, DateTimeKind.Utc)
+                });
+
+                // Группировка данных по ComponentName и преобразование в нужный формат
+                displayData = new List<GroupedComponentViewModel>();
+                var groupedData = dataSource.GroupBy(c => c.ComponentName);
+
+                foreach (var group in groupedData)
+                {
+                    // Добавляем строку с именем продукта и его стоимостью
+                    displayData.Add(new GroupedComponentViewModel
+                    {
+                        ComponentName = group.Key,
+                        ComponentCost = group.First().ComponentCost
+                    });
+
+                    // Добавляем только уникальные названия блюд и карт
+                    var uniqueProducts = new HashSet<string>();
+                    var uniqueCards = new HashSet<string>();
+
+                    foreach (var item in group)
+                    {
+                        // Проверяем, есть ли название блюда и оно уникально
+                        if (!string.IsNullOrEmpty(item.ProductName) && uniqueProducts.Add(item.ProductName))
+                        {
+                            displayData.Add(new GroupedComponentViewModel
+                            {
+                                ProductName = item.ProductName
+                            });
+                        }
+                        // Проверяем, есть ли название карты и оно уникально
+                        if (!string.IsNullOrEmpty(item.CardName) && uniqueCards.Add(item.CardName))
+                        {
+                            displayData.Add(new GroupedComponentViewModel
+                            {
+                                CardName = item.CardName
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            // Генерация HTML таблицы
+            string table = "<h2 class=\"text-custom-color-1\">Отчет по компонентам</h2>";
+            table += "<div class=\"table-responsive\">";
+            table += "<table class=\"table table-striped table-bordered table-hover\">";
+            table += "<thead class=\"table-dark\">";
+            table += "<tr>";
+            table += "<th scope=\"col\">Продукт</th>";
+            table += "<th scope=\"col\">Блюдо</th>";
+            table += "<th scope=\"col\">Алкогольная Карта</th>";
+            table += "<th scope=\"col\">Стоимость компонента</th>";
+            table += "</tr>";
+            table += "</thead>";
+            table += "<tbody>";
+
+            foreach (var item in displayData)
+            {
+                table += "<tr>";
+                table += $"<td>{item.ComponentName}</td>";
+                table += $"<td>{item.ProductName}</td>";
+                table += $"<td>{item.CardName}</td>";
+                table += $"<td>{item.ComponentCost}</td>";
+                table += "</tr>";
+            }
+
+            table += "</tbody>";
+            table += "</table>";
+            table += "</div>";
+
+            return table;
+        }
+
+        public IActionResult AddComponentsToFile()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public void AddComponentsToFile(DateTime dateFrom, DateTime dateTo)
+        {
+            if (APIClient.User == null)
+            {
+                throw new Exception("Вы как суда попали? Суда вход только авторизованным");
+            }
+            APIClient.PostRequest("api/main/SendComponentsByDateReportToEmail", new ReportBindingModel
+            {
+                FileName = "C:\\Dax\\reportpdf.pdf",
+                DateFrom = dateFrom,
+                DateTo = dateTo,
+                Email = APIClient.User.Email,
+
+            });
+            Response.Redirect("AddComponentsToFile");
+
+        }
+        
 
         [HttpGet]
         public IActionResult Privacy()

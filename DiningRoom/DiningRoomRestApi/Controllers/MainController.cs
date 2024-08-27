@@ -442,5 +442,59 @@ namespace DiningRoomRestApi.Controllers
                 throw;
             }
         }
+        [HttpGet]
+        public List<ReportComponentByDateViewModel> GetComponentByDateReport(string dateFrom, string dateTo, int userId)
+        {
+            try
+            {
+                DateTime DateFrom = DateTime.Parse(dateFrom);
+                DateTime DateTo = DateTime.Parse(dateTo);
+                ReportBindingModel model = new();
+                model.DateFrom = DateFrom;
+                model.DateTo = DateTo;
+                return _report.GetReportComponentsByDate(model);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        [HttpPost]
+        public void SendComponentsByDateReportToEmail(ReportBindingModel model)
+        {
+            try
+            {
+                _report.SaveComponentsToPdfFile(model);
+                _mailWorker.MailSendAsync(new MailSendInfoBindingModel
+                {
+                    MailAddress = model.Email!,
+                    Subject = "Отчет по продуктам",
+                    Text = "Курсовая работа"
+                });
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        //[HttpPost]
+        //public void SendRoomsConferencesReportToEmail(ReportRoomsConferenceBindingModel model)
+        //{
+        //    try
+        //    {
+        //        _reportAdministrator.SaveDinnersToPdfFile(model);
+        //        _mailWorker.MailSendAsync(new MailSendInfoBindingModel
+        //        {
+        //            MailAddress = model.Email!,
+        //            Subject = "Отчет по обедам",
+        //            Text = "Курсовая работа"
+        //        });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
+        //}
     }
 }
