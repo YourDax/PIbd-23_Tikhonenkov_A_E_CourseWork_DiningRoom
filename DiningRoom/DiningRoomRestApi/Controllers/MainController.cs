@@ -46,13 +46,13 @@ namespace DiningRoomRestApi.Controllers
 		}
 
 		[HttpGet]
-		public List<OrderViewModel>? GetOrderList(int Id)
+		public List<OrderViewModel>? GetOrderList(int UserId)
 		{
 			try
 			{
 				return _order.ReadList(new OrderSearchModel
 				{
-					Id = Id,
+					UserId = UserId,
 				});
 			}
 			catch (Exception ex)
@@ -397,5 +397,21 @@ namespace DiningRoomRestApi.Controllers
 				throw;
 			}
 		}
-	}
+        [HttpGet]
+        public ProductViewModel GetProductById(int productId)
+        {
+            try
+            {
+                var elem = _product.ReadElement(new ProductSearchModel { Id = productId });
+                if (elem == null)
+                    return null;
+                return elem;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения по id={Id}", productId);
+                throw;
+            }
+        }
+    }
 }

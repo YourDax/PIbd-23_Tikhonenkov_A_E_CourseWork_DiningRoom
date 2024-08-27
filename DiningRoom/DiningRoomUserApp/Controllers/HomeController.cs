@@ -15,6 +15,7 @@ using System.Globalization;
 using System.Numerics;
 using DiningRoomDataModels.Enums;
 using System.Reflection;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace DiningRoomUserApp.Controllers
 {
@@ -356,6 +357,101 @@ namespace DiningRoomUserApp.Controllers
                 Id = drink
             });
             Response.Redirect("Drinks");
+        }
+        [HttpGet]
+        public IActionResult AddProductToOrder()
+        {
+
+            if (APIClient.User == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            ViewBag.Orders = APIClient.GetRequest<List<OrderViewModel>>($"api/main/getorderlist?UserId={APIClient.User.Id}");
+            ViewBag.Products = APIClient.GetRequest<List<ProductViewModel>>($"api/main/getproductlist?UserId={APIClient.User.Id}");
+            return View();
+        }
+        [HttpPost]
+        public void AddProductToOrder(int product, int order)
+        {
+            if (APIClient.User == null)
+            {
+                throw new Exception("Вы как сюда попали? Сюда вход только авторизованным");
+            }
+            APIClient.PostRequest("api/main/updateorder", new OrderBindingModel
+            {
+                Id = order,
+                ProductId = product,
+                Status = OrderStatus.Принят,
+            });
+            Response.Redirect("Products");
+        }
+
+        [HttpGet]
+        public IActionResult ComponentOrderReport()
+        {
+            if (APIClient.User == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            ViewBag.Components = APIClient.GetRequest<List<ComponentViewModel>>($"api/main/getcomponentlist?userid={APIClient.User.Id}");
+            return View();
+        }
+
+        //[HttpPost]
+        //public void ComponentOrderReport(List<int> components, string type)
+        //{
+        //    if (APIClient.User == null)
+        //    {
+        //        throw new Exception("Вы как суда попали? Суда вход только авторизованным");
+        //    }
+
+        //    if (components.Count <= 0)
+        //    {
+        //        throw new Exception("Количество должно быть больше 0");
+        //    }
+
+        //    if (string.IsNullOrEmpty(type))
+        //    {
+        //        throw new Exception("Неверный тип отчета");
+        //    }
+
+        //    if (type == "docx")
+        //    {
+        //        APIClient.PostRequest("api/reportadministrator/createmealplanlistwordfile", new ReportComponentsBindingModel
+        //        {
+        //            Dinners = dinners,
+        //            FileName = "C:\\wordfile.docx"
+        //        });
+        //        Response.Redirect("GetWordFile");
+        //    }
+        //    else
+        //    {
+        //        APIClient.PostRequest("api/reportadministrator/createmealplanlistexcelfile", new ReportComponentsBindingModel
+        //        {
+        //            Dinners = dinners,
+        //            FileName = "C:\\exelfile.xlsx"
+        //        });
+        //        Response.Redirect("GetExcelFile");
+        //    }
+        //}
+
+        [HttpGet]
+        public IActionResult GetWordFile()
+        {
+            if (APIClient.User == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            return new PhysicalFileResult("C:\\wordfile.docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        }
+
+        public IActionResult GetExcelFile()
+        {
+            if (APIClient.User == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            return new PhysicalFileResult("C:\\exelfile.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         }
 
         [HttpGet]

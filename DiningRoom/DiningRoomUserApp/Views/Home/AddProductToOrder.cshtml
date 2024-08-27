@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "AddProductToOrder";
+}
+<head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+</head>
+
+<div class="text-center">
+    <h2 class="u-text u-text-custom-color-1 u-text-default u-text-1">Привязка блюда к заказу</h2>
+</div>
+<form method="post">
+	<div class="spisok">
+		<label class="u-label u-text-custom-color-1 u-label-1">Название блюда: </label>
+		<select id="product" name="product" class="form-control" asp-items="@(new SelectList(@ViewBag.Products, "Id", "ProductName"))"></select>
+	</div>
+	<div class="spisok">
+		<label class="u-label u-text-custom-color-1 u-label-1">Номер заказа: </label>
+		<select id="order" name="order" class="form-control" asp-items="@(new SelectList(@ViewBag.Orders, "Id", "Name"))"></select>
+	</div>
+	<div class="button">
+		<button class="button-action">Добавить привязку</button>
+	</div>
+</form>

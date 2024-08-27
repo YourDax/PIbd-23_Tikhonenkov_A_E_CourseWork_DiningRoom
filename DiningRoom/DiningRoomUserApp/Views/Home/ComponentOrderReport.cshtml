@@ -1,0 +1,39 @@
+﻿@using DiningRoomContracts.ViewModels
+@{
+    ViewData["Title"] = "ComponentOrderReport";
+}
+<head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+</head>
+<div class="text-center">
+    <h2 class="u-text u-text-custom-color-1 u-text-default u-text-1">Отчет (word/excel)</h2>
+</div>
+<form method="post">
+    <div class="file-format">
+        <label class="form-label">Формат файла:</label>
+        <div class="radio-buttons">
+            <input class="form-check-input" type="radio" name="type" value="docx" id="docx">
+            <label class="label-word" for="docx">Word-файл</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="type" value="xlsx" id="xlsx" checked>
+            <label class="label-exel" for="xlsx">Excel-файл</label>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-4">Продукты:</div>
+        <div class="col-8">
+            <select name="components" class="form-control" multiple size="5" id="components">
+                @foreach (var service in ViewBag.Components)
+                {
+                    <option value="@service.Id">@service.ComponentName</option>
+                }
+            </select>
+        </div>
+    </div>
+    <br>
+    <div class="buttons-create-file">
+        <button type ="submit" class="button-action">Создать</button>
+    </div>
+</form>
