@@ -1,0 +1,65 @@
+﻿﻿@using DiningRoomContracts.ViewModels
+
+@model List<ComponentViewModel>
+@{
+    ViewData["Title"] = "Components";
+}
+<head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+</head>
+
+<div class="text-center">
+    <h2 class="u-text u-text-custom-color-1 u-text-default u-text-1"> Список продуктов</h2>
+</div>
+<form method="post">
+    <div class="main">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Номер
+                    </th>
+                    <th>
+                        Название
+                    </th>
+                    <th>
+                        Цена
+                    </th>
+                    <th>
+                        Ед.изм.
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr style="height: 75px">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ComponentName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cost)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Unit)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="buttons-action-with-component">
+            <div class="button">
+                <a asp-area="" asp-controller="Home" asp-action="CreateComponent" class="button-action" style="width: 130px">Добавить</a>
+            </div>
+            <div class="button">
+                <a asp-area="" asp-controller="Home" asp-action="UpdateComponent" class="button-action" style="width: 130px">Изменить</a>
+            </div>
+            <div class="button">
+                <a asp-area="" asp-controller="Home" asp-action="DeleteComponent" class="button-action" style="width: 130px">Удалить</a>
+            </div>
+        </div>
+    </div>
+</form>

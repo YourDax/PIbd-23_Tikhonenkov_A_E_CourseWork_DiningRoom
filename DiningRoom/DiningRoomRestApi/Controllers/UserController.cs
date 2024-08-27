@@ -2,7 +2,6 @@
 using DiningRoomContracts.BusinessLogicContracts;
 using DiningRoomContracts.SearchModels;
 using DiningRoomContracts.ViewModels;
-using DiningRoomDataModels.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiningRoomRestApi.Controllers
@@ -13,31 +12,37 @@ namespace DiningRoomRestApi.Controllers
 	{
 		private readonly ILogger _logger;
 		private readonly IUserLogic _logic;
-
 		public UserController(IUserLogic logic, ILogger<UserController> logger)
 		{
-			_logic = logic;
 			_logger = logger;
+			_logic = logic;
 		}
-
-
 		[HttpGet]
 		public UserViewModel? Login(string login, string password)
 		{
 			try
 			{
-				return _logic.ReadElement(new UserSearchModel
+                if (login.Contains("@"))
+                {
+                    return _logic.ReadElement(new UserSearchModel
+                    {
+                        Email = login,
+                        Password = password
+                    });
+                }
+                return _logic.ReadElement(new UserSearchModel
 				{
-					Login = login,
-					Password = password,
+                    Login = login,
+                    Password = password
 				});
 			}
 			catch (Exception ex)
 			{
-				_logger.LogError(ex, "Ошибка входа в систему");
+				_logger.LogError(ex, "Login error");
 				throw;
 			}
 		}
+
 		[HttpPost]
 		public void Register(UserBindingModel model)
 		{
@@ -47,7 +52,7 @@ namespace DiningRoomRestApi.Controllers
 			}
 			catch (Exception ex)
 			{
-				_logger.LogError(ex, "Ошибка регистрации");
+				_logger.LogError(ex, "Registration error");
 				throw;
 			}
 		}
@@ -61,7 +66,7 @@ namespace DiningRoomRestApi.Controllers
 			}
 			catch (Exception ex)
 			{
-				_logger.LogError(ex, "Ошибка обновления данных");
+				_logger.LogError(ex, "Update data error");
 				throw;
 			}
 		}

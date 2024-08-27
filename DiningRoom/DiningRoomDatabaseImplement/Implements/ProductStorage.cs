@@ -76,15 +76,20 @@ namespace DiningRoomDatabaseImplement.Implements
 			using var transaction = context.Database.BeginTransaction();
 			try
 			{
-				var Product = context.Products.FirstOrDefault(rec => rec.Id == model.Id);
+				var Product = context.Products
+                    .Include(x => x.Components)
+                    .ThenInclude(x => x.Component)
+                    .FirstOrDefault(rec => rec.Id == model.Id);
 				if (Product == null)
 				{
 					return null;
 				}
-				Product.Update(model);
-				context.SaveChanges();
-				Product.UpdateComponents(context, model);
-				transaction.Commit();
+				
+                Product.UpdateComponents(context, model);
+                context.SaveChanges();
+                Product.Update(model);
+                context.SaveChanges();
+                transaction.Commit();
 				return Product.GetViewModel;
 			}
 			catch

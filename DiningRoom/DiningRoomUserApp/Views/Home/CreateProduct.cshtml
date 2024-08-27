@@ -1,0 +1,28 @@
+﻿@using DiningRoomContracts.ViewModels
+
+@model ComponentViewModel
+@{
+    ViewData["Title"] = "CreateProduct";
+}
+<head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+</head>
+<div class="text-center">
+    <h2 class="u-text u-text-custom-color-1 u-text-default u-text-1"> Добавить блюдо</h2>
+</div>
+<form method="post">
+    <input name="productName" style="margin-bottom: 20px" type="text" placeholder="Введите название блюда" class="form-control" />
+    <input name="productPrice" style="margin-bottom: 20px" type="number" placeholder="Введите стоимость блюда" class="form-control" step="1" />
+    <div class="spisok">
+        <label class="u-label u-text-custom-color-1 u-label-1">Продукты: </label>
+        <div>
+            @Html.ListBox("components", (MultiSelectList)ViewBag.Components, new { @class = "form-control", size = "10" })
+        </div>
+    </div>
+    <div class="button">
+        <button class="button-action" type="submit">Сохранить</button>
+    </div>
+    <div class="button">
+        <a asp-area="" asp-controller="Home" asp-action="Products" class="button-action">Назад</a>
+    </div>
+</form>

@@ -1,0 +1,78 @@
+﻿.main {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main_wrapper {
+    width: 430px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.main_block {
+    margin-top: 35px;
+}
+
+.main_fields {
+    margin-top: 18px;
+}
+
+input {
+    height: 53px;
+    width: 100%;
+    font-size: 20px;
+    line-height: 16px;
+    border: 1px solid #000000;
+    border-radius: 30px;
+    padding-left: 31px;
+}
+
+.main_field_one {
+    margin-bottom: 17px;
+    width: 100%;
+}
+
+.class_login {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 84px;
+}
+
+.button_login {
+    background-color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 216px;
+    height: 39px;
+    border-radius: 30px;
+    border: 1px solid #000000;
+    font-size: 20px;
+    line-height: 39px;
+    transition: 0.2s ease;
+    cursor: pointer;
+}
+
+    .button_login:hover {
+        background: #E3E3E3;
+    }
+
+.down_word {
+    width: 100%;
+    margin-top: 23px;
+    font-size: 15px;
+}
+
+.word_registr {
+    text-decoration: none;
+    color: #18BDF1;
+    transition: color 0.2s ease;
+}
+
+    .word_registr:hover {
+        color: #91F0FD;
+    }

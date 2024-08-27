@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiningRoomDatabaseImplement
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiningRoomBusinessLogic", "DiningRoomBusinessLogic\DiningRoomBusinessLogic.csproj", "{89A8AB71-ADD4-405D-AE0B-03ACB1A1BF24}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiningRoomRestApi", "DiningRoomRestApi\DiningRoomRestApi.csproj", "{B81DDA1C-49FC-480F-AEED-37049C57993E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiningRoomUserApp", "DiningRoomUserApp\DiningRoomUserApp.csproj", "{B33F6026-6F6D-4337-887F-4D326D8FA511}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{89A8AB71-ADD4-405D-AE0B-03ACB1A1BF24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89A8AB71-ADD4-405D-AE0B-03ACB1A1BF24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89A8AB71-ADD4-405D-AE0B-03ACB1A1BF24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B81DDA1C-49FC-480F-AEED-37049C57993E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B81DDA1C-49FC-480F-AEED-37049C57993E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B81DDA1C-49FC-480F-AEED-37049C57993E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B81DDA1C-49FC-480F-AEED-37049C57993E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B33F6026-6F6D-4337-887F-4D326D8FA511}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B33F6026-6F6D-4337-887F-4D326D8FA511}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B33F6026-6F6D-4337-887F-4D326D8FA511}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B33F6026-6F6D-4337-887F-4D326D8FA511}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,70 @@
+﻿﻿@using DiningRoomContracts.ViewModels;
+@{
+    ViewData["Title"] = "UpdateProduct";
+}
+<head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+</head>
+<div class="text-center">
+    <h2 class="u-text u-text-custom-color-1 u-text-default u-text-1"> Обновить блюдо</h2>
+</div>
+<form method="post">
+    <div class="spisok">
+        <label class="u-label u-text-custom-color-1 u-label-1">Блюда: </label>
+        <select id="product" name="product" class="form-control" asp-items="@(new SelectList(@ViewBag.Products, "Id", "ProductName"))"></select>
+    </div>
+    <div class="form-group">
+        <input name="productName" style="margin-bottom: 20px" type="text" placeholder="Введите новое название блюда" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input name="productPrice" style="margin-bottom: 20px" type="number" placeholder="Введите новую стоимость блюда" class="form-control" step="1" />
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-4">Продукты:</div>
+        <div class="col-8">
+            <select name="components" class="form-control" multiple size="5" id="components">
+                @foreach (var component in ViewBag.Components)
+                {
+                    <option value="@component.Id" data-name="@component.Id">@component.ComponentName</option>
+                }
+            </select>
+        </div>
+    </div>
+    <br>
+    <div class="button">
+        <button class="button-action">Сохранить</button>
+    </div>
+    <div class="button">
+        <a asp-area="" asp-controller="Home" asp-action="Rooms" class="button-action">Назад</a>
+    </div>
+
+</form>
+@section Scripts
+{
+    <script>
+        function check() {
+            var room = $('#room').val();
+            $("#dinners option:selected").removeAttr("selected");
+            if (room) {
+                $.ajax({
+                    method: "GET",
+                    url: "/Home/GetRoom",
+                    data: { roomId: room },
+                    success: function (result) {
+                        $('#roomNumber').val(result.roomNumber);
+                        $('#roomPrice').val(result.RoomPrice);
+                        $('#dateCreate').val(result.DateCreate);
+                        $.map(result.item2, function (n) {
+                            $(`option[data-name=${n.item2}]`).attr("selected", "selected")
+                        });
+                    }
+                });
+            };
+        }
+        check();
+        $('#room').on('change', function () {
+            check();
+        });
+    </script>
+}

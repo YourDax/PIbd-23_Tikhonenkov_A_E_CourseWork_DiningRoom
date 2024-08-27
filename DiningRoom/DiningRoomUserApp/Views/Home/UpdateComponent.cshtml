@@ -1,0 +1,37 @@
+﻿﻿@using DiningRoomContracts.ViewModels;
+@{
+    ViewData["Title"] = "UpdateComponent";
+}
+<head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+</head>
+<div class="text-center">
+    <h2 class="u-text u-text-custom-color-1 u-text-default u-text-1"> Обновить продукт</h2>
+</div>
+<form method="post">
+    <div class="spisok">
+        <label class="u-label u-text-custom-color-1 u-label-1">Продукты: </label>
+        <select id="component" name="component" class="form-control" asp-items="@(new SelectList(@ViewBag.Components, "Id", "ComponentName"))"></select>
+    </div>
+    <div class="form-group">
+        <input name="componentName" style="margin-bottom: 20px" type="text" placeholder="Введите новое название продукта" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input name="componentPrice" style="margin-bottom: 20px" type="number" placeholder="Введите новую стоимость продукта" class="form-control" step="1" />
+    </div>
+    <br>
+    <div class="spisok">
+        <label class="u-label u-text-custom-color-1 u-label-1">Единицы измерения: </label>
+        <div>
+            @Html.DropDownList("unit", (SelectList)ViewBag.ComponentUnits, new { @class = "form-control" })
+        </div>
+    </div>
+    <br>
+    <div class="button">
+        <button class="button-action">Сохранить</button>
+    </div>
+    <div class="button">
+        <a asp-area="" asp-controller="Home" asp-action="Components" class="button-action">Назад</a>
+    </div>
+
+</form>

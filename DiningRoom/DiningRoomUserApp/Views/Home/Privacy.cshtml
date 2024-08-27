@@ -1,0 +1,43 @@
+﻿@using DiningRoomContracts.ViewModels
+
+@model UserViewModel
+
+@{
+	ViewData["Title"] = "Privacy";
+}
+<head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+</head>
+<style>
+    input {
+        margin-bottom: 20px;
+        max-width: 400px;
+    }
+
+    .pole{
+        
+        display:flex;
+        justify-content:center;
+    }
+</style>
+<div class="text-center">
+	<h2 class="display-4">Личные данные</h2>
+</div>
+<form method="post">
+    <label class="u-label u-text-custom-color-1 u-label-1" style="display:flex;justify-content:center">Логин </label>
+	<div class="pole">
+        <input type="text" name="login" class="form-control" value="@Model.Login" />
+    </div>
+    <label class="u-label u-text-custom-color-1 u-label-1" style="display:flex;justify-content:center">Почта </label>
+    <div class="pole">
+        <input type="email" name="email" class="form-control" value="@Model.Email" />
+    </div>
+    <label class="u-label u-text-custom-color-1 u-label-1" style="display:flex;justify-content:center">Пароль </label>
+    <div class="pole">
+        <input type="password" name="password" class="form-control" value="@Model.Password" />
+    </div>
+
+    <div class="button" style="display:flex;justify-content:center">
+        <button class="button-action" type="submit">Сохранить</button>
+	</div>
+</form>

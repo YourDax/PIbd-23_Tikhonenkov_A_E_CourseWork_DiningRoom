@@ -1,0 +1,29 @@
+﻿@using DiningRoomContracts.ViewModels
+
+@model DiningRoomUserApp.Models.ComponentUnitViewModel
+@{
+    ViewData["Title"] = "CreateComponent";
+}
+<head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+</head>
+<div class="text-center">
+    <h2 class="u-text u-text-custom-color-1 u-text-default u-text-1"> Добавить продукт</h2>
+</div>
+<form method="post">
+    <input name="componentName" style="margin-bottom: 20px" type="text" placeholder="Введите название продукта" class="form-control" />
+    <input name="componentPrice" style="margin-bottom: 20px" type="number" placeholder="Введите стоимость продукта" class="form-control" step="1" />
+    <div class="spisok">
+        <label class="u-label u-text-custom-color-1 u-label-1">Единицы измерения: </label>
+        <div>
+            @Html.DropDownList("unit", (SelectList)ViewBag.ComponentUnits, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="button">
+        <button class="button-action" type="submit">Сохранить</button>
+    </div>
+    <div class="button">
+        <a asp-area="" asp-controller="Home" asp-action="Components" class="button-action">Назад</a>
+    </div>
+</form>

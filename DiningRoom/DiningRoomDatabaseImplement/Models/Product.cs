@@ -69,20 +69,20 @@ namespace DiningRoomDatabaseImplement.Models
         };
         public void UpdateComponents(DiningRoomDatabase context, ProductBindingModel model)
         {
+            // Получаем список текущих записей ProductComponents для продукта
             var productComponents = context.ProductComponents.Where(rec => rec.ProductId == model.Id).ToList();
+
+            // Удаляем все текущие записи
             if (productComponents != null && productComponents.Count > 0)
-            { // удалили те, которых нет в модели
-                context.ProductComponents.RemoveRange(productComponents.Where(rec => !model.ProductComponents.ContainsKey(rec.ComponentId)));
-                context.SaveChanges();
-                // обновили количество у существующих записей
-                foreach (var updateComponent in productComponents)
-                {
-                    updateComponent.Count = model.ProductComponents[updateComponent.ComponentId].Item2;
-                    model.ProductComponents.Remove(updateComponent.ComponentId);
-                }
+            {
+                context.ProductComponents.RemoveRange(productComponents);
                 context.SaveChanges();
             }
-            var product = context.Products.First(x => x.Id == Id);
+
+            // Получаем продукт по его Id
+            var product = context.Products.First(x => x.Id == model.Id);
+
+            // Добавляем новые записи ProductComponents из модели
             foreach (var pc in model.ProductComponents)
             {
                 context.ProductComponents.Add(new ProductComponent
@@ -91,9 +91,14 @@ namespace DiningRoomDatabaseImplement.Models
                     Component = context.Components.First(x => x.Id == pc.Key),
                     Count = pc.Value.Item2
                 });
-                context.SaveChanges();
             }
+
+            // Сохраняем изменения
+            context.SaveChanges();
+
+            // Сбрасываем кэш связанных компонентов, если требуется
             _productComponents = null;
         }
+
     }
 }

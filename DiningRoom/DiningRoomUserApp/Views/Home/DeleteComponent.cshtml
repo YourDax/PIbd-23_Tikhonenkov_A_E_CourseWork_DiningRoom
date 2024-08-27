@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "DeleteComponent";
+}
+<head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+</head>
+
+<div class="text-center">
+    <h2 class="u-text u-text-custom-color-1 u-text-default u-text-1"> Удалить продукт</h2>
+</div>
+<form method="post">
+    <div class="spisok">
+        <label class="u-label u-text-custom-color-1 u-label-1">Продукт: </label>
+        <select id="component" name="component" class="form-control" asp-items="@(new SelectList(@ViewBag.Components, "Id", "ComponentName"))"></select>
+    </div>
+    <div class="button">
+        <button type="submit" class="button-action">Удалить</button>
+    </div>
+    <div class="button">
+        <a asp-area="" asp-controller="Home" asp-action="Components" class="button-action">Назад</a>
+    </div>
+</form>

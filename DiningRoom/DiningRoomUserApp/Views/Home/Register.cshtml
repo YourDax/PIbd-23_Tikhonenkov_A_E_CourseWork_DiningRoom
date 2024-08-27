@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Register";
+}
+<head>
+    <link rel="stylesheet" href="~/css/register.css" asp-append-version="true" />
+</head>
+
+<div class="text-center">
+    <h2 class="u-text u-text-custom-color-1 u-text-default u-text-1">Регистрация в приложении</h2>
+</div>
+<form method="post">
+    <div class="main">
+        <div class="main_wrapper">
+            <div class="main_block">
+                <div class="main_fields">
+                    <div class="up_word">
+                        <p class="main_text">
+                            Введите все данные указанные ниже<br> 
+                            для регистрации
+                        </p>
+                    </div>
+                    <div class="main_field">
+                        <input type="text" placeholder="Логин" name="login">
+                    </div>
+                    <div class="main_field">
+                        <input type="email" placeholder="Эл. почта" name="email">
+                    </div>
+                    <div class="main_field">
+                        <input type="password" placeholder="Пароль" name="password">
+                    </div>
+                </div>
+                <div class="class_login">
+                    <button class="button_login" type="submit">
+                        Регистрация
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
