@@ -1,4 +1,5 @@
-﻿using DiningRoomContracts.BindingModels;
+﻿using DiningRoomBusinessLogic.MailWorker;
+using DiningRoomContracts.BindingModels;
 using DiningRoomContracts.BusinessLogicContracts;
 using DiningRoomContracts.SearchModels;
 using DiningRoomContracts.ViewModels;
@@ -19,7 +20,9 @@ namespace DiningRoomRestApi.Controllers
 		private readonly IProductLogic _product;
 		private readonly IComponentLogic _component;
 		private readonly IDrinkLogic _drink;
-		public MainController(ILogger<MainController> logger, ICardLogic card, IOrderLogic order, IProductLogic product, IComponentLogic component, IDrinkLogic drink)
+        private readonly IReportLogic _report;
+        private readonly AbstractMailWorker _mailWorker;
+        public MainController(ILogger<MainController> logger, ICardLogic card, IOrderLogic order, IProductLogic product, IComponentLogic component, IDrinkLogic drink, IReportLogic report, AbstractMailWorker mailWorker)
 		{
 			_logger = logger;
 			_card = card;
@@ -27,7 +30,9 @@ namespace DiningRoomRestApi.Controllers
 			_product = product;
 			_component = component;
 			_drink = drink;
-		}
+            _report = report;
+            _mailWorker = mailWorker;
+        }
 		[HttpGet]
 		public List<CardViewModel>? GetCardList(int Id)
 		{
@@ -410,6 +415,30 @@ namespace DiningRoomRestApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Ошибка получения по id={Id}", productId);
+                throw;
+            }
+        }
+        [HttpPost]
+        public void CreateComponentsWordFile(ReportBindingModel model)
+        {
+            try
+            {
+                _report.SaveReportToWordFile(model);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        [HttpPost]
+        public void CreateComponentsExcelFile(ReportBindingModel model)
+        {
+            try
+            {
+                _report.SaveReportToExcelFile(model);
+            }
+            catch (Exception ex)
+            {
                 throw;
             }
         }

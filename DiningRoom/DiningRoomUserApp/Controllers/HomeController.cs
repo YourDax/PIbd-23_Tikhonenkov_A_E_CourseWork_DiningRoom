@@ -397,43 +397,44 @@ namespace DiningRoomUserApp.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public void ComponentOrderReport(List<int> components, string type)
-        //{
-        //    if (APIClient.User == null)
-        //    {
-        //        throw new Exception("Вы как суда попали? Суда вход только авторизованным");
-        //    }
+        [HttpPost]
+        public void ComponentOrderReport(List<int> components, string type)
+        {
+            if (APIClient.User == null)
+            {
+                throw new Exception("Вы как суда попали? Суда вход только авторизованным");
+            }
 
-        //    if (components.Count <= 0)
-        //    {
-        //        throw new Exception("Количество должно быть больше 0");
-        //    }
+            if (components.Count <= 0)
+            {
+                throw new Exception("Количество должно быть больше 0");
+            }
 
-        //    if (string.IsNullOrEmpty(type))
-        //    {
-        //        throw new Exception("Неверный тип отчета");
-        //    }
+            if (string.IsNullOrEmpty(type))
+            {
+                throw new Exception("Неверный тип отчета");
+            }
+            List<ComponentSearchModel> selComp = components.Select(id => new ComponentSearchModel { Id = id }).ToList();
 
-        //    if (type == "docx")
-        //    {
-        //        APIClient.PostRequest("api/reportadministrator/createmealplanlistwordfile", new ReportComponentsBindingModel
-        //        {
-        //            Dinners = dinners,
-        //            FileName = "C:\\wordfile.docx"
-        //        });
-        //        Response.Redirect("GetWordFile");
-        //    }
-        //    else
-        //    {
-        //        APIClient.PostRequest("api/reportadministrator/createmealplanlistexcelfile", new ReportComponentsBindingModel
-        //        {
-        //            Dinners = dinners,
-        //            FileName = "C:\\exelfile.xlsx"
-        //        });
-        //        Response.Redirect("GetExcelFile");
-        //    }
-        //}
+            if (type == "docx")
+            {
+                APIClient.PostRequest("api/main/createcomponentswordfile", (new ReportBindingModel
+                {
+                    FileName = "C:\\wordfile.docx",
+                    selectedComponents = selComp
+                }));
+                Response.Redirect("GetWordFile");
+            }
+            else
+            {
+                APIClient.PostRequest("api/main/createcomponentsexcelfile", (new ReportBindingModel
+                {
+                    FileName = "C:\\exelfile.xlsx",
+                    selectedComponents = selComp
+                }));
+                Response.Redirect("GetExcelFile");
+            }
+        }
 
         [HttpGet]
         public IActionResult GetWordFile()

@@ -49,23 +49,23 @@ namespace DiningRoomBusinessLogic.BusinessLogic
             });
         }
 
-        public void SaveReportToWordFile(ReportBindingModel Model, List<ComponentSearchModel> selectedComponents)
+        public void SaveReportToWordFile(ReportBindingModel Model)
         {
             _saveToWord.CreateDoc(new WordInfo
             {
                 FileName = Model.FileName,
                 Title = "Список изделий",
-                ProductComponents = GetReportComponentsWithOrders(selectedComponents)
+                ProductComponents = GetReportComponentsWithOrders(Model.selectedComponents)
             });
         }
 
-		public void SaveReportToExcelFile(ReportBindingModel Model, List<ComponentSearchModel> selectedComponents)
+		public void SaveReportToExcelFile(ReportBindingModel Model)
 		{
             _saveToExcel.CreateReport(new ExcelInfo
             {
                 FileName = Model.FileName,
                 Title = "Список изделий",
-                ProductComponents = GetReportComponentsWithOrders(selectedComponents)
+                ProductComponents = GetReportComponentsWithOrders(Model.selectedComponents)
             });
         }
 	}

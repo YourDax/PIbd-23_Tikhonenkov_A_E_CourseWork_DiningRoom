@@ -46,8 +46,7 @@ namespace DiningRoomBusinessLogic.OfficePackage
                     CreateParagraph(new WordParagraph
                     {
                         Texts = new List<(string, WordTextProperties)> {
-                    ("Количество блюд в заказе - "+Convert.ToInt32(product.ProductCount).ToString() + "     ", new WordTextProperties { Size = "24" }),
-                    ("Название заказа - "+product.OrderName, new WordTextProperties { Size = "24"})
+                    ("Присутствует в заказе - "+product.OrderName, new WordTextProperties { Size = "24"})
                 },
                         TextProperties = new WordTextProperties
                         {

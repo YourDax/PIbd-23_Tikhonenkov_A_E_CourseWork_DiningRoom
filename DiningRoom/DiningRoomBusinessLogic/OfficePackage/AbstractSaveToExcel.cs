@@ -32,14 +32,6 @@ namespace DiningRoomBusinessLogic.OfficePackage
                 StyleInfo = ExcelStyleInfoType.Title
             });
 
-            InsertCellInWorksheet(new ExcelCellParameters
-            {
-                ColumnName = "C",
-                RowIndex = 1,
-                Text = "Количество блюд в заказе",
-                StyleInfo = ExcelStyleInfoType.Title
-            });
-
             uint rowIndex = 2;
 
             // Группируем компоненты по названию
@@ -68,14 +60,6 @@ namespace DiningRoomBusinessLogic.OfficePackage
                         ColumnName = "B",
                         RowIndex = rowIndex,
                         Text = item.OrderName,
-                        StyleInfo = ExcelStyleInfoType.TextWithBroder
-                    });
-
-                    InsertCellInWorksheet(new ExcelCellParameters
-                    {
-                        ColumnName = "C",
-                        RowIndex = rowIndex,
-                        Text = item.ProductCount.ToString(),
                         StyleInfo = ExcelStyleInfoType.TextWithBroder
                     });
 

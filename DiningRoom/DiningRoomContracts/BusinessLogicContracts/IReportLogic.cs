@@ -16,9 +16,9 @@ namespace DiningRoomContracts.BusinessLogicContracts
 		/// </summary>
 		List<ReportComponentByDateViewModel> GetReportComponentsByCardDate(ReportBindingModel Report);
 		
-		void SaveReportToWordFile(ReportBindingModel Model, List<ComponentSearchModel> selectedComponents);
+		void SaveReportToWordFile(ReportBindingModel Model);
 
-		void SaveReportToExcelFile(ReportBindingModel Model, List<ComponentSearchModel> selectedComponents);
+		void SaveReportToExcelFile(ReportBindingModel Model);
         void SaveComponentsToPdfFile(ReportBindingModel model);
     }
 }

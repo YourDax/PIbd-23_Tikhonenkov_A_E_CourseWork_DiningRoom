@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DiningRoomContracts.SearchModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,7 @@ namespace DiningRoomContracts.BindingModels
 		public string FileName { get; set; } = string.Empty;
 		public DateTime? DateFrom { get; set; }
 		public DateTime? DateTo { get; set; }
-	}
+        public List<ComponentSearchModel>? selectedComponents {  get; set; }
+
+    }
 }
