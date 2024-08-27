@@ -1,0 +1,59 @@
+﻿﻿@using DiningRoomContracts.ViewModels
+
+@model List<DrinkViewModel>
+@{
+    ViewData["Title"] = "Drinks";
+}
+<head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+</head>
+
+<div class="text-center">
+    <h2 class="u-text u-text-custom-color-1 u-text-default u-text-1"> Список напитков</h2>
+</div>
+<form method="post">
+    <div class="main">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Номер
+                    </th>
+                    <th>
+                        Название напитка
+                    </th>
+                    <th>
+                        Цена
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr style="height: 75px">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DrinkName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cost)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="buttons-action-with-drink">
+            <div class="button">
+                <a asp-area="" asp-controller="Home" asp-action="CreateDrink" class="button-action" style="width: 130px">Добавить</a>
+            </div>
+            <div class="button">
+                <a asp-area="" asp-controller="Home" asp-action="UpdateDrink" class="button-action" style="width: 130px">Изменить</a>
+            </div>
+            <div class="button">
+                <a asp-area="" asp-controller="Home" asp-action="DeleteDrink" class="button-action" style="width: 130px">Удалить</a>
+            </div>
+        </div>
+    </div>
+</form>

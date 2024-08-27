@@ -151,6 +151,14 @@ namespace DiningRoomUserApp.Controllers
             }
             return View(APIClient.GetRequest<List<ProductViewModel>>($"api/main/getproductlist?userId={APIClient.User.Id}"));
         }
+        public IActionResult Drinks()
+        {
+            if (APIClient.User == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            return View(APIClient.GetRequest<List<DrinkViewModel>>($"api/main/getdrinklist?userId={APIClient.User.Id}"));
+        }
         public IActionResult CreateProduct()
         {
             if (APIClient.User == null)
@@ -249,6 +257,105 @@ namespace DiningRoomUserApp.Controllers
                 Id = product
             });
             Response.Redirect("Products");
+        }
+        public IActionResult CreateDrink()
+        {
+            if (APIClient.User == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            var list = _component.ReadList(new ComponentSearchModel { UserId = APIClient.User.Id });
+            var simpComponent = list.Select(x => new { ComponentId = x.Id, ComponentName = x.ComponentName });
+            ViewBag.components = new MultiSelectList(simpComponent, "ComponentId", "ComponentName");
+            return View();
+        }
+        [HttpPost]
+        public void CreateDrink(string drinkName, double drinkPrice, int[] components)
+        {
+            if (APIClient.User == null)
+            {
+                throw new Exception("Необходима авторизация");
+            }
+            if (drinkName.Length <=0 || drinkPrice<=0 || components.Length == 0)
+            {
+                throw new Exception("Введите данные");
+            }
+            Dictionary<int, (IComponentModel, int)> _drinkComponents = new Dictionary<int, (IComponentModel, int)>();
+            foreach (int id in components)
+            {
+                _drinkComponents.Add(id, (_component.ReadElement(new ComponentSearchModel { Id = id }), 1));
+
+            }
+
+            APIClient.PostRequest("api/main/createdrink", new DrinkBindingModel
+            {
+                DrinkName = drinkName,
+                Cost = drinkPrice,
+                UserId = APIClient.User.Id,
+                DrinkComponents = _drinkComponents,
+            });
+            Response.Redirect("Drinks");
+        }
+        public IActionResult UpdateDrink()
+        {
+            if (APIClient.User == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+
+            ViewBag.Drinks = APIClient.GetRequest<List<DrinkViewModel>>($"api/main/getdrinklist?userid={APIClient.User.Id}");
+            ViewBag.Components = APIClient.GetRequest<List<ComponentViewModel>>($"api/main/getcomponentlist?userid={APIClient.User.Id}");
+            return View();
+        }
+        [HttpPost]
+        public void UpdateDrink(int drink, string drinkName, double drinkPrice, List<int> components)
+        {
+            if (APIClient.User == null)
+            {
+                throw new Exception("Необходима авторизация");
+            }
+            if (drinkName.Length <= 0 || drinkPrice <= 0)
+            {
+                throw new Exception("Введите данные");
+            }
+            Dictionary<int, (IComponentModel, int)> _drinkComponents = new Dictionary<int, (IComponentModel, int)>();
+            foreach (int id in components)
+            {
+                _drinkComponents.Add(id, (new ComponentSearchModel { Id = id } as IComponentModel, 1));
+
+            }
+            APIClient.PostRequest("api/main/updatedrink", new DrinkBindingModel
+            {
+                Id = drink,
+                DrinkName = drinkName,
+                Cost = drinkPrice,
+                UserId = APIClient.User.Id,
+                DrinkComponents = _drinkComponents,
+            });
+            Response.Redirect("Drinks");
+        }
+
+        public IActionResult DeleteDrink()
+        {
+            if (APIClient.User == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            ViewBag.Drinks = APIClient.GetRequest<List<DrinkViewModel>>($"api/main/getdrinklist?userId={APIClient.User.Id}");
+            return View();
+        }
+        [HttpPost]
+        public void DeleteDrink(int drink)
+        {
+            if (APIClient.User == null)
+            {
+                throw new Exception("Необходима авторизация");
+            }
+            APIClient.PostRequest("api/main/deletedrink", new DrinkBindingModel
+            {
+                Id = drink
+            });
+            Response.Redirect("Drinks");
         }
 
         [HttpGet]

@@ -36,35 +36,7 @@
         <button class="button-action">Сохранить</button>
     </div>
     <div class="button">
-        <a asp-area="" asp-controller="Home" asp-action="Rooms" class="button-action">Назад</a>
+        <a asp-area="" asp-controller="Home" asp-action="Products" class="button-action">Назад</a>
     </div>
 
 </form>
-@section Scripts
-{
-    <script>
-        function check() {
-            var room = $('#room').val();
-            $("#dinners option:selected").removeAttr("selected");
-            if (room) {
-                $.ajax({
-                    method: "GET",
-                    url: "/Home/GetRoom",
-                    data: { roomId: room },
-                    success: function (result) {
-                        $('#roomNumber').val(result.roomNumber);
-                        $('#roomPrice').val(result.RoomPrice);
-                        $('#dateCreate').val(result.DateCreate);
-                        $.map(result.item2, function (n) {
-                            $(`option[data-name=${n.item2}]`).attr("selected", "selected")
-                        });
-                    }
-                });
-            };
-        }
-        check();
-        $('#room').on('change', function () {
-            check();
-        });
-    </script>
-}
