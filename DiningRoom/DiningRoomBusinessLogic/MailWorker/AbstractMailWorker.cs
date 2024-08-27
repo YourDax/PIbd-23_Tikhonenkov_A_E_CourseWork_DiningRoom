@@ -17,7 +17,7 @@ namespace DiningRoomBusinessLogic.MailWorker
         protected int _smtpClientPort;
         protected string _popHost = string.Empty;
         protected int _popPort;
-        private readonly ILogger _logger;
+
 
         public AbstractMailWorker()
         {
@@ -51,8 +51,6 @@ namespace DiningRoomBusinessLogic.MailWorker
             {
                 return;
             }
-
-            _logger.LogDebug("Send Mail: {To}, {Subject}", info.MailAddress, info.Subject);
 
             await SendMailAsync(info);
         }

@@ -29,7 +29,7 @@ namespace DiningRoomBusinessLogic.MailWorker
                 objMailMessage.Body = info.Text;
                 objMailMessage.SubjectEncoding = Encoding.UTF8;
                 objMailMessage.BodyEncoding = Encoding.UTF8;
-                Attachment attachment = new Attachment("C:\\Users\\sshan\\OneDrive\\Desktop\\reports\\reportpdf.pdf", new ContentType(MediaTypeNames.Application.Pdf));
+                Attachment attachment = new Attachment("C:\\reportpdf.pdf", new ContentType(MediaTypeNames.Application.Pdf));
                 objMailMessage.Attachments.Add(attachment);
 
                 objSmtpClient.UseDefaultCredentials = false;

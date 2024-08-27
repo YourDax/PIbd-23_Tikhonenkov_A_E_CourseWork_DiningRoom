@@ -563,7 +563,7 @@ namespace DiningRoomUserApp.Controllers
             }
             APIClient.PostRequest("api/main/SendComponentsByDateReportToEmail", new ReportBindingModel
             {
-                FileName = "C:\\Dax\\reportpdf.pdf",
+                FileName = "C:\\reportpdf.pdf",
                 DateFrom = dateFrom,
                 DateTo = dateTo,
                 Email = APIClient.User.Email,
