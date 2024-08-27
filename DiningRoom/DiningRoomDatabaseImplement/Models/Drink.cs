@@ -85,29 +85,32 @@ public class Drink : IDrinkModel
     public void UpdateComponents(DiningRoomDatabase context, DrinkBindingModel model)
     {
         var drinkComponents = context.DrinkComponents.Where(rec => rec.DrinkId == model.Id).ToList();
+
+        // Удаляем все текущие записи
         if (drinkComponents != null && drinkComponents.Count > 0)
-        { // удалили те, которых нет в модели
-            context.DrinkComponents.RemoveRange(drinkComponents.Where(rec => !model.DrinkComponents.ContainsKey(rec.ComponentId)));
-            context.SaveChanges();
-            // обновили количество у существующих записей
-            foreach (var updateComponent in drinkComponents)
-            {
-                updateComponent.Count = model.DrinkComponents[updateComponent.ComponentId].Item2;
-                model.DrinkComponents.Remove(updateComponent.ComponentId);
-            }
+        {
+            context.DrinkComponents.RemoveRange(drinkComponents);
             context.SaveChanges();
         }
-        var drink = context.Drinks.First(x => x.Id == Id);
-        foreach (var pc in model.DrinkComponents)
+
+        // Получаем продукт по его Id
+        var drink = context.Drinks.First(x => x.Id == model.Id);
+
+        // Добавляем новые записи ProductComponents из модели
+        foreach (var dc in model.DrinkComponents)
         {
             context.DrinkComponents.Add(new DrinkComponent
             {
                 Drink = drink,
-                Component = context.Components.First(x => x.Id == pc.Key),
-                Count = pc.Value.Item2
+                Component = context.Components.First(x => x.Id == dc.Key),
+                Count = dc.Value.Item2
             });
-            context.SaveChanges();
         }
+
+        // Сохраняем изменения
+        context.SaveChanges();
+
+        // Сбрасываем кэш связанных компонентов, если требуется
         _drinkComponents = null;
     }
 }

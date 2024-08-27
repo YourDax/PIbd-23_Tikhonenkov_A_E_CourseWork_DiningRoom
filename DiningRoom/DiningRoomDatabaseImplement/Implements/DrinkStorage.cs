@@ -74,9 +74,10 @@ namespace DiningRoomDatabaseImplement.Implements
 				{
 					return null;
 				}
-				Drink.Update(model);
+                Drink.UpdateComponents(context, model);
+                context.SaveChanges();
+                Drink.Update(model);
 				context.SaveChanges();
-				Drink.UpdateComponents(context, model);
 				transaction.Commit();
 				return Drink.GetViewModel;
 			}
